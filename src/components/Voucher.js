@@ -269,7 +269,7 @@ export default function Voucher() {
 
     const header = (
         <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Manage Products</h4>
+            <h4 className="m-0">Manage Vouchers</h4>
             <IconField iconPosition="left">
                 <InputIcon className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -311,8 +311,8 @@ export default function Voucher() {
     >
         <Tabs defaultValue={1}>
   <TabsList  className='tablist'>
-    <Tab value={1} className='tabview'><h3>Pending</h3></Tab>
-    <Tab value={2} className='tabview'><h3>Approved</h3></Tab>
+    <Tab value={1} className='tabview'>Pending</Tab>
+    <Tab value={2} className='tabview'>Approved</Tab>
     
   </TabsList>
     <TabPanel value={1}>
@@ -334,7 +334,7 @@ export default function Voucher() {
                     <Column field="name" header="Name" sortable style={{ minWidth: '8rem' }}></Column>
                     <Column field="Seller" header="Seller" body={mobileBodyTemplate} sortable></Column>
                     <Column field="S/B" header="S/b" body={emailtypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="Job No" header="User type" body={usertypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
+                    <Column field="Job No" header="Job No" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
                     <Column field="Approved" header="Approved amount" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
                     <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
@@ -423,13 +423,12 @@ export default function Voucher() {
         </div>
         </Typography>
         </TabPanel>
-        <TabPanel value={2}>
-  
+        <TabPanel value={2}> 
       <Typography variant="body1" gutterBottom >
         <div>
             <Toast ref={toast} />
             <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                {/* <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar> */}
 
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
@@ -438,11 +437,11 @@ export default function Voucher() {
                     <Column selectionMode="multiple" exportable={false}></Column>
                     <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }}></Column>
                     <Column field="Voucherno" header="Voucher No" sortable style={{ minWidth: '8rem' }}></Column>
-
                     <Column field="name" header="Name" sortable style={{ minWidth: '8rem' }}></Column>
+                    <Column field="paid" header="Paid to" sortable style={{ minWidth: '8rem' }}></Column>
                     <Column field="Seller" header="Seller" body={mobileBodyTemplate} sortable></Column>
                     <Column field="S/B" header="S/b" body={emailtypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="Job No" header="User type" body={usertypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
+                    <Column field="Job No" header="Job No" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
                     <Column field="Approved" header="Approved amount" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
                     <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
