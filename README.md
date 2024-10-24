@@ -1,8 +1,6 @@
 # ❤️ ReactJs-User-Dashboard-Panel 🚀
 Welcome to `Reactjs-User-Dashboard-Panel` uses `ReactJs` and `MUI material`, a repository dedicated to improving your `ReactJS skills` through hands-on `practical project`.
 
-- [🚀 Live Project Link 😍](https://react-user-dashboard-panel.netlify.app/)
-
 Whether you are a `beginner or an experienced React developer`, this repository is designed to help you `stay up-to-date` with the latest developments in the React community and enhance your understanding of the framework.
 
 # Prerequisites
@@ -17,9 +15,7 @@ We hope that you find `Reactjs-User-Dashboard-Panel` useful in your `Interview p
 ## 🔥 Clone this Repository
 You need to write the following commands on the terminal screen(in vscode) so that you can run this project locally.
 
-```bash
-  git clone "https://github.com/chetannada/Reactjs-User-Dashboard-Panel.git"
-```
+
 Go to the project directory
 
 ```bash
@@ -34,9 +30,3 @@ Start the server
   npm run start
 ```
 
-This application should now be running on `localhost`. If you want to Fork repository and want to run locally, follow this guidelines [Fork and Clone Github Repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-
-## 🔗 Let's Connect
-[![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/chetannada/)
-[![twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/chetannada)
-[![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/916005177838956555)
