@@ -35,7 +35,7 @@ export default function Login() {
     const email = data.get("email");
     const password = data.get("password");
     if (email == "admin@gmail.com" && password == "12345") {
-      localStorage.setItem("emailData", "chetan@gmail.com");
+      localStorage.setItem("emailData", "admin@gmail.com");
       localStorage.setItem("passwordData", "12345");
       navigate("/");
     } else {
