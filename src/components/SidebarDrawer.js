@@ -49,7 +49,7 @@ export default function SidebarDrawer() {
      
           <List>
             <Link to="/Dashboard">
-              <ListItem key="Dashboard" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+              <ListItem key="Dashboard panel" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
                 <ListItemButton>
                   <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
                     <BsFillInfoSquareFill />
