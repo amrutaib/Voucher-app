@@ -26,7 +26,7 @@ const dashboardStyle = makeStyles((theme) => ({
       marginLeft: drawerWidth
     }
   },
-  
+
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,

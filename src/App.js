@@ -3,7 +3,7 @@ import SidebarDrawer from "./components/SidebarDrawer";
 import Navbar from "./components/Navbar";
 import Userlist from "./components/Userlist";
 import Payment from "./components/Payment";
-import Dashboard  from './components/Dashboard';
+import Dashboard from './components/Dashboard';
 import Destination from "./components/Destination";
 import Scheme from "./components/Scheme";
 import Home from "./components/Home";
@@ -14,13 +14,13 @@ import Voucher from "./components/Voucher";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 export const App = () => {
   return (
-  <div  > <React.Fragment>
-      
-      {/* <Maindrawer /> */}
-      <SidebarDrawer />
-      <Navbar />
-      <Outlet />
-    </React.Fragment></div>
+    <div>
+      <React.Fragment>
+        {/* <Maindrawer /> */}
+        <SidebarDrawer />
+        <Navbar />
+        <Outlet />
+      </React.Fragment></div>
   );
 };
 
@@ -40,21 +40,21 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "Dashboard",
-        element:<Dashboard/>,
+        element: <Dashboard />,
       },
       {
         path: "Userlist",
         element: <Userlist />,
-      },   
+      },
       {
         path: "Voucher",
         element:
-            <Voucher />
+          <Voucher />
       },
       {
         path: "Payment",
         element:
-            <Payment />
+          <Payment />
       },
       {
         path: "Destination",
