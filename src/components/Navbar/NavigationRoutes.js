@@ -7,45 +7,45 @@ import { MdOutlineSpaceDashboard, MdPayment } from "react-icons/md";
 const Data = [
     {
         id: 1,
-        route: "/Dashboard",
         key: "Dashboard",
-        iconName: <MdOutlineSpaceDashboard fontSize={24} color="#000" />,
-        routeName: "Dashboard"
+        route: "/Dashboard",
+        routeName: "Dashboard",
+        iconName: <MdOutlineSpaceDashboard fontSize={24} />
     },
     {
         id: 2,
-        route: "/Userlist",
         key: "Users",
-        iconName: <PiUserCircleBold fontSize={24} color="#000" />,
-        routeName: "User"
+        route: "/Userlist",
+        routeName: "User",
+        iconName: <PiUserCircleBold fontSize={24} />
     },
     {
         id: 3,
         route: "/Voucher",
         key: "Payment Summary",
-        iconName: <HiOutlineTicket fontSize={24} color="#000" />,
-        routeName: "Voucher"
+        routeName: "Voucher",
+        iconName: <HiOutlineTicket fontSize={24} />
     },
     {
         id: 4,
         route: "/Payment",
         key: "Payment Summary",
-        iconName: <MdPayment fontSize={24} color="#000" />,
-        routeName: "Payment Summary"
+        routeName: "Payment Summary",
+        iconName: <MdPayment fontSize={24} />
     },
     {
         id: 5,
         route: "/Destination",
         key: "Payment Summary",
-        iconName: <BsGeoAltFill fontSize={24} color="#000" />,
-        routeName: "Destination"
+        routeName: "Destination",
+        iconName: <BsGeoAltFill fontSize={24} />
     },
     {
         id: 6,
-        route: "/Scheme",
         key: "Scheme",
-        iconName: <LuTag fontSize={24} color="#000" />,
-        routeName: "Scheme"
+        route: "/Scheme",
+        routeName: "Scheme",
+        iconName: <LuTag fontSize={24} />
     }
 ];
 
