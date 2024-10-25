@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import "./style.css";
 import { Link } from "react-router-dom";
-import UserIcon from '@mui/icons-material/Person';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+import { MdOutlinePendingActions } from "react-icons/md";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, useTheme, Grid, Avatar } from '@mui/material/index';
 
 export default function Dashboard() {
@@ -46,7 +46,7 @@ export default function Dashboard() {
           count={'5'}
           title={'Users'}
           route={'/Userlist'}
-          avatar={<UserIcon />}
+          avatar={<PersonOutlineOutlinedIcon />}
           className={'gradientpink'}
         />
         <CardComponent
@@ -55,7 +55,7 @@ export default function Dashboard() {
           route={'/Payment'}
           title={'Pending Voucher'}
           className={'gradientblue'}
-          avatar={<AllInclusiveIcon />}
+          avatar={<MdOutlinePendingActions size={20} />}
         />
       </Grid>
     </Box>

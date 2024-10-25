@@ -1,8 +1,32 @@
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .gradientpink {
+  animation: fadeInRight 1s ease forwards;
   box-shadow: 0 6px 20px 0 rgba(244, 143, 177, 0.5) !important;
   background: linear-gradient(45deg, #ff5252, #f48fb1) !important;
 }
 .gradientblue {
+  animation: fadeInLeft 1s ease forwards;
   -webkit-box-shadow: 0 6px 20px 0 rgba(38, 198, 218, 0.5) !important;
   box-shadow: 0 6px 20px 0 rgba(38, 198, 218, 0.5) !important;
   background: linear-gradient(45deg, #0288d1, #26c6da) !important;
