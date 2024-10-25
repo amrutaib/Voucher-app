@@ -7,8 +7,8 @@ import { MdOutlineSpaceDashboard, MdPayment } from "react-icons/md";
 const Data = [
     {
         id: 1,
+        route: "/",
         key: "Dashboard",
-        route: "/Dashboard",
         routeName: "Dashboard",
         iconName: <MdOutlineSpaceDashboard fontSize={24} />
     },
