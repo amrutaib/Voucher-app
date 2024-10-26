@@ -1,26 +1,32 @@
 import React from "react";
 import SidebarDrawer from "./components/SidebarDrawer";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Userlist from "./components/Userlist";
 import Payment from "./components/Payment";
-import Dashboard  from './components/Dashboard';
+import Dashboard from './components/Dashboard';
 import Destination from "./components/Destination";
 import Scheme from "./components/Scheme";
-import Home from "./components/Home";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
 import Voucher from "./components/Voucher";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Mulish, sans-serif',
+  },
+});
+
+
 export const App = () => {
   return (
-  <div  > <React.Fragment>
-      
-      {/* <Maindrawer /> */}
-      <SidebarDrawer />
+    <ThemeProvider theme={theme}>
+      {/* <SidebarDrawer /> */}
       <Navbar />
       <Outlet />
-    </React.Fragment></div>
+    </ThemeProvider>
   );
 };
 
@@ -40,21 +46,21 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "Dashboard",
-        element:<Dashboard/>,
+        element: <Dashboard />,
       },
       {
         path: "Userlist",
         element: <Userlist />,
-      },   
+      },
       {
         path: "Voucher",
         element:
-            <Voucher />
+          <Voucher />
       },
       {
         path: "Payment",
         element:
-            <Payment />
+          <Payment />
       },
       {
         path: "Destination",

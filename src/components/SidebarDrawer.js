@@ -38,77 +38,77 @@ export default function SidebarDrawer() {
         }}
       >
         <Box sx={{ overflow: "auto", mt: 8 }}>
-        <nav>
-        {/* <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')}><BsFillInfoSquareFill /> Dashboard</NavLink>
+          <nav>
+            {/* <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')}><BsFillInfoSquareFill /> Dashboard</NavLink>
         <NavLink to="/Userlist" className={({ isActive }) => (isActive ? 'active' : '')}>                    <UserIcon />
         Userlist</NavLink>
         <NavLink to="/Voucher" className={({ isActive }) => (isActive ? 'active' : '')}>                    <MoneyIcon />
            Voucher</NavLink>
         <NavLink to="/Payment" className={({ isActive }) => (isActive ? 'active' : '')}>                    <PaymentIcon />
            Payment</NavLink> */}
-     
-          <List>
-            <Link to="/Dashboard">
-              <ListItem key="Dashboard" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <BsFillInfoSquareFill />
-                  </ListItemIcon>
-                  <ListItemText primary="Dashboard" sx={{ ml: -2 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-            <Link to="/Userlist">
-              <ListItem key="Users" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <UserIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="User" sx={{ ml: -2 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-            <Link to="/Voucher">
-              <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <MoneyIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Voucher" sx={{ ml: -2 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-            <Link to="/Payment">
-              <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <PaymentIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Payment Summary" sx={{ ml: -2 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-            <Link to="/Destination">
-              <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <AddLocationAltIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Destination" sx={{ ml: -2 }} className={({ isActive }) => (isActive ? 'active' : '')}/>
-                </ListItemButton>
-              </ListItem>
-            </Link>
-            <Link to="/Scheme">
-              <ListItem key="Scheme" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                    <SchemaIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Scheme" sx={{ ml: -2 }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          </List>
+
+            <List>
+              <Link to="/Dashboard">
+                <ListItem key="Dashboard" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <BsFillInfoSquareFill />
+                    </ListItemIcon>
+                    <ListItemText primary="Dashboard" sx={{ ml: -2 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link to="/Userlist">
+                <ListItem key="Users" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <UserIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="User" sx={{ ml: -2 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link to="/Voucher">
+                <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <MoneyIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Voucher" sx={{ ml: -2 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link to="/Payment">
+                <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <PaymentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Payment Summary" sx={{ ml: -2 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link to="/Destination">
+                <ListItem key="Payment Summary" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <AddLocationAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Destination" sx={{ ml: -2 }} className={({ isActive }) => (isActive ? 'active' : '')} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Link to="/Scheme">
+                <ListItem key="Scheme" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
+                  <ListItemButton>
+                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
+                      <SchemaIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Scheme" sx={{ ml: -2 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </List>
           </nav>
         </Box>
       </Drawer>
