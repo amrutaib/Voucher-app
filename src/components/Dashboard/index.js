@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, useTheme, Grid, Avatar } from '@mui/material/index';
+import Navbar from '../Navbar';
 
 export default function Dashboard() {
 
@@ -29,18 +30,13 @@ export default function Dashboard() {
   return (
     <Box
       sx={{
-        mt: 15,
-        ml: 40,
-        mr: 20,
-        textAlign: "center",
-        [theme.breakpoints.down("md")]: {
-          ml: 22,
-        },
-        [theme.breakpoints.down("sm")]: {
-          ml: 18,
-        },
+        p: 5,
+        mt: 10,
+        flexGrow: 1,
+        display: 'flex'
       }}
     >
+      <Navbar />
       <Grid container spacing={2}>
         <CardComponent
           count={'5'}

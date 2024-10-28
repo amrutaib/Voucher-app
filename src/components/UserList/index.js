@@ -29,6 +29,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import Navbar from '../Navbar';
 export default function Userlist() {
     const theme = useTheme();
     let emptyProduct = {
@@ -294,17 +295,13 @@ export default function Userlist() {
     return (
         <Box
             sx={{
+                p: 3,
                 mt: 10,
-                ml: 35,
-                mr: 5,
-                [theme.breakpoints.down("md")]: {
-                    ml: 22,
-                },
-                [theme.breakpoints.down("sm")]: {
-                    ml: 18,
-                },
+                flexGrow: 1,
+                display: 'flex'
             }}
         >
+            <Navbar />
             <Typography variant="body1" gutterBottom>
                 <div>
                     <Toast ref={toast} />

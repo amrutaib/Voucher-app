@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "./Navbar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
@@ -9,16 +10,13 @@ export default function UserProfile() {
   return (
     <Box
       sx={{
+        p: 3,
         mt: 10,
-        ml: 30,
-        [theme.breakpoints.down("md")]: {
-          ml: 22,
-        },
-        [theme.breakpoints.down("sm")]: {
-          ml: 18,
-        },
+        flexGrow: 1,
+        display: 'flex'
       }}
     >
+      <Navbar />
       <Typography variant="h6">My Email: {getEmail}</Typography>
     </Box>
   );

@@ -1,5 +1,15 @@
 import React from "react";
-import { Voucher, Error, PrivateRoute, Login, Destination, Dashboard, Payment, Userlist, Navbar } from "./components/index";
+import {
+  Voucher,
+  Error,
+  PrivateRoute,
+  Login,
+  Destination,
+  Dashboard,
+  Payment,
+  Userlist,
+  UserProfile
+} from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -13,9 +23,8 @@ const theme = createTheme({
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
       <Outlet />
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 
@@ -50,6 +59,11 @@ export const appRouter = createBrowserRouter([
         path: "Payment",
         element:
           <Payment />
+      },
+      {
+        path: "UserProfile",
+        element:
+          <UserProfile />
       },
       {
         path: "Destination",

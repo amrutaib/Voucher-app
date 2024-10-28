@@ -32,6 +32,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import Navbar from '../Navbar';
 export default function Voucher() {
     const theme = useTheme();
     let emptyProduct = {
@@ -298,17 +299,13 @@ export default function Voucher() {
     return (
         <Box
             sx={{
+                p: 5,
                 mt: 10,
-                ml: 35,
-                mr: 5,
-                [theme.breakpoints.down("md")]: {
-                    ml: 22,
-                },
-                [theme.breakpoints.down("sm")]: {
-                    ml: 18,
-                },
+                flexGrow: 1,
+                display: 'flex'
             }}
         >
+            <Navbar />
             <Tabs defaultValue={1}>
                 <TabsList className='tablist'>
                     <Tab value={1} className='tabview'><h3>Pending</h3></Tab>

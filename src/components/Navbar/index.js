@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   List,
@@ -103,6 +103,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Navbar() {
 
+  const navigate = useNavigate()
   const location = useLocation()
   const theme = createTheme({
     typography: {
@@ -156,47 +157,46 @@ export default function Navbar() {
         <List>
           {
             Data.map((item) => (
-              <Link to={item.route} key={item.id}>
-                <ListItem
-                  key={item.key}
-                  disablePadding
+              <ListItem
+                key={item.key}
+                disablePadding
+                onClick={() => navigate(item.route)}
+                sx={{
+                  display: 'block',
+                  borderTopRightRadius: '10px',
+                  borderBottomRightRadius: '10px',
+                  boxShadow: location.pathname === item.route && '3px 3px 20px 0 rgba(123, 31, 162, .5)',
+                  background: location.pathname === item.route && 'linear-gradient(45deg, #303f9f, #7b1fa2)',
+                }}
+              >
+                <ListItemButton
                   sx={{
-                    display: 'block',
-                    borderTopRightRadius: '10px',
-                    borderBottomRightRadius: '10px',
-                    boxShadow: location.pathname === item.route && '3px 3px 20px 0 rgba(123, 31, 162, .5)',
-                    background: location.pathname === item.route && 'linear-gradient(45deg, #303f9f, #7b1fa2)',
+                    minHeight: 48, px: 2.5,
+                    justifyContent: open ? 'initial' : 'center'
                   }}
                 >
-                  <ListItemButton
+                  <ListItemIcon
                     sx={{
-                      minHeight: 48, px: 2.5,
-                      justifyContent: open ? 'initial' : 'center'
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto', justifyContent: 'center',
+                      color: location.pathname === item.route ? '#fff' : '#000',
                     }}
                   >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto', justifyContent: 'center',
-                        color: location.pathname === item.route ? '#fff' : '#000',
-                      }}
-                    >
-                      {item.iconName}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.routeName}
-                      sx={{
-                        opacity: open ? 1 : 0,
-                        color: location.pathname === item.route ? '#fff' : '#000',
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
+                    {item.iconName}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.routeName}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      color: location.pathname === item.route ? '#fff' : '#000',
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
             ))
           }
         </List>
       </Drawer>
-    </Box>
+    </Box >
   );
 }
