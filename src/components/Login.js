@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import CollapseItem from "./CollapseItem";
 
 function Copyright(props) {
   return (
@@ -18,7 +17,7 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-     
+
     </Typography>
   );
 }
@@ -96,7 +95,6 @@ export default function Login() {
                 Sign In
               </Button>
             </Box>
-            {err == "" ? "" : (<CollapseItem err={err} />)}
           </Box>
           <Copyright sx={{ mt: 4, mb: 2 }} />
         </Container>
