@@ -18,7 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Password } from 'primereact/password';
-
+import './index.css'
 import { Tag } from 'primereact/tag';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -30,6 +30,7 @@ import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import Navbar from '../Navbar';
+import PageHeader from '../PageHeader';
 export default function Userlist() {
     const theme = useTheme();
     let emptyProduct = {
@@ -302,10 +303,15 @@ export default function Userlist() {
             }}
         >
             <Navbar />
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{width:'100vw'}}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
+                    <div className="container card-alert card purple">
+                        <div className="card-content white-text">
+                            <p>All Users</p>
+                        </div>
+                    </div>
                         <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                         <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}

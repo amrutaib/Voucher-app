@@ -302,7 +302,7 @@ export default function Userlist() {
             }}
         >
             <Navbar />
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{width:'100vw'}}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
