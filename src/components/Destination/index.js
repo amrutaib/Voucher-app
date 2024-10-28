@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
-import { ProductService } from '../service/ProductService';
+import { ProductService } from '../../service/ProductService';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
@@ -17,8 +17,8 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import  { Password } from 'primereact/password';
- 
+import { Password } from 'primereact/password';
+
 import { Tag } from 'primereact/tag';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -29,8 +29,8 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-export default function Userlist() {
-  const theme = useTheme();
+export default function Destination() {
+    const theme = useTheme();
     let emptyProduct = {
         id: null,
         name: '',
@@ -116,7 +116,7 @@ export default function Userlist() {
         setDeleteProductDialog(true);
     };
 
-    
+
     const deleteProduct = () => {
         let _products = products.filter((val) => val.id !== product.id);
 
@@ -201,8 +201,8 @@ export default function Userlist() {
     };
     const handleChange = (e) => {
         setusertype(e.target.value);
-      };
-    
+    };
+
     const rightToolbarTemplate = () => {
         return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     };
@@ -241,7 +241,6 @@ export default function Userlist() {
         return (
             <React.Fragment>
                 <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-eye" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
                 <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
@@ -292,88 +291,47 @@ export default function Userlist() {
     );
 
     return (
-      <Box
-      sx={{
-        mt: 10,
-        ml: 35,
-        mr: 5,
-        [theme.breakpoints.down("md")]: {
-          ml: 22,
-        },
-        [theme.breakpoints.down("sm")]: {
-          ml: 18,
-        },
-      }}
-    >
-      <Typography variant="body1" gutterBottom>
-        <div>
-            <Toast ref={toast} />
-            <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+        <Box
+            sx={{
+                mt: 10,
+                ml: 35,
+                mr: 5,
+                [theme.breakpoints.down("md")]: {
+                    ml: 22,
+                },
+                [theme.breakpoints.down("sm")]: {
+                    ml: 18,
+                },
+            }}
+        >
+            <Typography variant="body1" gutterBottom>
+                <div>
+                    <Toast ref={toast} />
+                    <div className="card">
+                        <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
-                <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
-                    <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column field="name" header="Name" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column field="Amount" header="Amount" body={balancetypeBodyTemplate} sortable></Column>
-                    <Column field="Usertype" header="Mode of Payment" body={usertypeBodyTemplate} sortable style={{ minWidth: '2rem' }}></Column>
-                    <Column field="Date" header=" Date" body={regitrationdatetypeBodyTemplate} sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column field="Added Date" header="Added Date" body={regitrationdatetypeBodyTemplate} sortable style={{ minWidth: '5rem' }}></Column>
+                        <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
+                            dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+                            <Column selectionMode="multiple" exportable={false}></Column>
+                            <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }}></Column>
+                            <Column field="name" header="Name" sortable style={{ minWidth: '8rem' }}></Column>
+                            <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+                        </DataTable>
+                    </div>
 
-                </DataTable>
-            </div>
+                    <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                        {product.image && <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.image} className="product-image block m-auto pb-3" />}
+                        <div className="field">
+                            <label htmlFor="name" className="font-bold">
+                                Name
+                            </label>
+                            <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
+                            {submitted && !product.name && <small className="p-error">Name is required.</small>}
+                        </div>
 
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                {product.image && <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.image} className="product-image block m-auto pb-3" />}
-                <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Name
-                    </label>
-                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
-                    {submitted && !product.name && <small className="p-error">Name is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="password" className="font-bold">
-                        Password
-                    </label>
-                    <Password id="password" value={product.password} onChange={(e) => onInputChange(e, 'password')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.password })} />
-                    {submitted && !product.password && <small className="p-error">Password is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Mobile no
-                    </label>
-                    <InputText id="Mobile" value={product.Mobile} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Mobile })} />
-                    {submitted && !product.Mobile && <small className="p-error">Mobile no  is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="description" className="font-bold">
-                        Email
-                    </label>
-                    <InputText id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required  />
-                </div>
-
-                <div className="field">
-                    <label className="mb-3 font-bold">Select User Type</label>
-                    <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                           
-                            onChange={handleChange}
-                            label="Age"
-                            style={{width:'100%' }}>
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Import</MenuItem>
-                            <MenuItem value={20}>Export</MenuItem>
-                            </Select>
-                </div>
-
-                {/* <div className="formgrid grid">
+                        {/* <div className="formgrid grid">
                     <div className="field col">
                         <label htmlFor="price" className="font-bold">
                             Price
@@ -387,30 +345,30 @@ export default function Userlist() {
                         <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
                     </div>
                 </div> */}
-            </Dialog>
+                    </Dialog>
 
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && (
-                        <span>
-                            Are you sure you want to delete <b>{product.name}</b>?
-                        </span>
-                    )}
-                </div>
-            </Dialog>
+                    <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+                        <div className="confirmation-content">
+                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                            {product && (
+                                <span>
+                                    Are you sure you want to delete <b>{product.name}</b>?
+                                </span>
+                            )}
+                        </div>
+                    </Dialog>
 
-            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && <span>Are you sure you want to delete the selected products?</span>}
+                    <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+                        <div className="confirmation-content">
+                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                            {product && <span>Are you sure you want to delete the selected products?</span>}
+                        </div>
+                    </Dialog>
                 </div>
-            </Dialog>
-        </div>
-        </Typography>
+            </Typography>
         </Box>
     );
 }
-        
+
 
 

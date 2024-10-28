@@ -1,5 +1,5 @@
 import React from 'react';
-import "./style.css";
+import "../style.css";
 import { Link } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';

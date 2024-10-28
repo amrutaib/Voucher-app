@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 
-export default function User() {
+export default function UserProfile() {
   const getEmail = localStorage.getItem("emailData");
   const theme = useTheme();
   return (

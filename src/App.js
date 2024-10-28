@@ -1,14 +1,5 @@
 import React from "react";
-import SidebarDrawer from "./components/SidebarDrawer";
-import Navbar from "./components/Navbar/Navbar";
-import Userlist from "./components/Userlist";
-import Payment from "./components/Payment";
-import Dashboard from './components/Dashboard';
-import Destination from "./components/Destination";
-import Login from "./components/Login";
-import PrivateRoute from "./components/PrivateRoute";
-import Error from "./components/Error";
-import Voucher from "./components/Voucher";
+import { Voucher, Error, PrivateRoute, Login, Destination, Dashboard, Payment, Userlist, Navbar } from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -22,7 +13,6 @@ const theme = createTheme({
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      {/* <SidebarDrawer /> */}
       <Navbar />
       <Outlet />
     </ThemeProvider>

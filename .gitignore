@@ -12,7 +12,7 @@
 /build
 /dist
 
-# misc
+# miscF
 .DS_Store
 .env.local
 .env.development.local
