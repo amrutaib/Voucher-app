@@ -98,16 +98,6 @@ export default function SidebarDrawer() {
                   </ListItemButton>
                 </ListItem>
               </Link>
-              <Link to="/Scheme">
-                <ListItem key="Scheme" disablePadding className={({ isActive }) => (isActive ? 'active' : '')}>
-                  <ListItemButton>
-                    <ListItemIcon sx={{ color: "var(--main-bg-color)" }}>
-                      <SchemaIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Scheme" sx={{ ml: -2 }} />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
             </List>
           </nav>
         </Box>

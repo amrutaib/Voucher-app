@@ -5,7 +5,6 @@ import Userlist from "./components/Userlist";
 import Payment from "./components/Payment";
 import Dashboard from './components/Dashboard';
 import Destination from "./components/Destination";
-import Scheme from "./components/Scheme";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
@@ -69,15 +68,7 @@ export const appRouter = createBrowserRouter([
             <Destination />
           </PrivateRoute>
         ),
-      },
-      {
-        path: "Scheme",
-        element: (
-          <PrivateRoute>
-            <Scheme />
-          </PrivateRoute>
-        ),
-      },
+      }
     ],
   },
   {
