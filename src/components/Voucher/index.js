@@ -306,15 +306,16 @@ export default function Voucher() {
             }}
         >
             <Navbar />
-            <Tabs defaultValue={1}>
-                <TabsList className='tablist'>
+            <Typography variant="body1" gutterBottom sx={{width:'100vw'}}>
+            <Tabs defaultValue={1} >
+                <TabsList className='tablist' >
                     <Tab value={1} className='tabview'><h3>Pending</h3></Tab>
                     <Tab value={2} className='tabview'><h3>Approved</h3></Tab>
 
                 </TabsList>
                 <TabPanel value={1}>
 
-                    <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
+                   
                         <div>
                             <Toast ref={toast} />
                             <div className="card">
@@ -418,11 +419,11 @@ export default function Voucher() {
                                 </div>
                             </Dialog>
                         </div>
-                    </Typography>
+                  
                 </TabPanel>
                 <TabPanel value={2}>
 
-                    <Typography variant="body1" gutterBottom >
+                 
                         <div>
                             <Toast ref={toast} />
                             <div className="card">
@@ -526,9 +527,10 @@ export default function Voucher() {
                                 </div>
                             </Dialog>
                         </div>
-                    </Typography>
+                    
                 </TabPanel>
             </Tabs>
+            </Typography>
         </Box>
     );
 }

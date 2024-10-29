@@ -1,0 +1,14 @@
+.purple {
+    background-color: #9c27b0 !important;
+}
+
+.card-alert .card-content {
+    padding: 10px 20px;
+}
+.card .card-content {
+    padding: 4px;
+    border-radius: 0 0 2px 2px;
+}
+.white-text {
+    color: #fff !important;
+}
