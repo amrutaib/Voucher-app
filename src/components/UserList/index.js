@@ -129,11 +129,11 @@ export default function Userlist() {
                             <Column field="name" header="Name" style={{ minWidth: '8rem' }} />
                             <Column field="Mobile" header="Mobile" body={mobileBodyTemplate} />
                             <Column field="Email" header="Email" body={emailtypeBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column field="Usertype" header="User type" body={usertypeBodyTemplate} style={{ minWidth: '8rem' }} />
+                            <Column field="Usertype" header="User type" body={usertypeBodyTemplate} style={{ minWidth: '6rem' }} />
                             <Column field="Balance" header="Balance" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }} />
                             <Column field="Registrationdate" header="Registration Date" body={regitrationdatetypeBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column field="Userstatus" header="User Status" body={userStatusBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }} />
+                            <Column field="Userstatus" header="User Status" body={userStatusBodyTemplate} style={{ minWidth: '6rem' }} />
+                            <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
                         </DataTable>
                     </div>
                 </div>
