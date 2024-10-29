@@ -8,6 +8,6 @@
 
 .addbtn {
   display: flex;
-  margin: 20px 0px;
+  margin-bottom: 20px;
   justify-content: left;
 }
