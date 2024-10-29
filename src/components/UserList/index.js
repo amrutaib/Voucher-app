@@ -18,6 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Password } from 'primereact/password';
+
 import './index.css'
 import { Tag } from 'primereact/tag';
 import Box from "@mui/material/Box";
@@ -31,6 +32,9 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import Navbar from '../Navbar';
 import PageHeader from '../PageHeader';
+import $ from "jquery";
+import { Email } from '@mui/icons-material';
+
 export default function Userlist() {
     const theme = useTheme();
     let emptyProduct = {
@@ -46,7 +50,12 @@ export default function Userlist() {
     };
 
     const [products, setProducts] = useState(null);
-    const [usertype, setusertype] = useState(null);
+    const [name, setName] = useState('');
+    const [result, setResult] = useState("");
+    const [password, setPassword] = useState("");
+    const [Mobile, setMobile] = useState("");
+    const [email, setEmail] = useState("");
+    const [userType, setUserType] = useState("");
 
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -85,28 +94,61 @@ export default function Userlist() {
         setDeleteProductsDialog(false);
     };
 
-    const saveProduct = () => {
-        setSubmitted(true);
+    const saveProduct = async (e) => {
+         setSubmitted(true);
 
-        if (product.name.trim()) {
-            let _products = [...products];
-            let _product = { ...product };
-            if (product.id) {
-                const index = findIndexById(product.id);
+        // if (product.name.trim()) {
+        //     let _products = [...products];
+        //     let _product = { ...product };
+        //     if (product.id) {
+        //         const index = findIndexById(product.id);
 
-                _products[index] = _product;
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                _product.id = createId();
-                _product.image = 'product-placeholder.svg';
-                _products.push(_product);
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-            setProducts(_products);
-            setProductDialog(false);
-            setProduct(emptyProduct);
-        }
+        //         _products[index] = _product;
+        //         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        //     } else {
+        //         _product.id = createId();
+        //       //  _product.image = 'product-placeholder.svg';
+        //         _products.push(_product);
+        //         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        //     }
+        //     setProducts(_products);
+        //     setProductDialog(false);
+        //     setProduct(emptyProduct);
+        // }
+
+        // e.preventDefault();
+        //     const fd = new FormData();
+        //     fd.append('Name',name);
+         //    const form = $();
+         e.preventDefault();
+         var headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+         const form = new FormData();
+         form.append('Name',name);
+         form.append('Password',password);
+         form.append('Email',email);
+         form.append('Mobile',Mobile);
+         form.append('usertype',userType);
+         console.log(password);
+         if(name==''){
+            alert('in');
+            toast.current.show({ severity: 'error', summary: 'Successful', detail: 'Add name', life: 3000 });
+         }   
+         //console.log(form);
+       else {  
+        
+         const res = await fetch('http://localhost:8000/Server.php', {
+            method: 'POST',
+            body: form
+          });
+      
+          const result = await res.json();
+          //setResult(result.message);
+         alert(result);
     };
+}
 
     const editProduct = (product) => {
         setProduct({ ...product });
@@ -175,15 +217,37 @@ export default function Userlist() {
         setProduct(_product);
     };
 
-    const onInputChange = (e, name) => {
-        const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
-
-        _product[`${name}`] = val;
-
-        setProduct(_product);
+    const handleInputChange = (e) => {
+        //setError("");
+        setName(e.target.value);
+        
+      
+     //   onChange={(e) => handleInputChange(e, "user")}
     };
-
+    const handlePasswordChange = (e) => {
+        //setError("");
+        setPassword(e.target.value);
+        
+      
+     //   onChange={(e) => handleInputChange(e, "user")}
+    };
+    const handleEmailChange = (e) => {
+        //setError("");
+        setEmail(e.target.value);
+        
+      
+     //   onChange={(e) => handleInputChange(e, "user")}
+    };
+    const handleMobileChange = (e) => {
+        //setError("");
+        setMobile(e.target.value);
+        
+      
+     //   onChange={(e) => handleInputChange(e, "user")}
+    };
+   const handleUserTypeChange=(e)=>{
+    setUserType(e.target.value);
+   }
     const onInputNumberChange = (e, name) => {
         const val = e.value || 0;
         let _product = { ...product };
@@ -201,9 +265,7 @@ export default function Userlist() {
             </div>
         );
     };
-    const handleChange = (e) => {
-        setusertype(e.target.value);
-    };
+   
 
     const rightToolbarTemplate = () => {
         return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
@@ -332,32 +394,38 @@ export default function Userlist() {
 
                     <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.image} className="product-image block m-auto pb-3" />}
+                       <div> <form
+                                    action="http://localhost:8000/server.php"
+                                    method="post"
+                                   
+                                >
                         <div className="field">
                             <label htmlFor="name" className="font-bold">
                                 Name
                             </label>
-                            <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
-                            {submitted && !product.name && <small className="p-error">Name is required.</small>}
+                            <InputText id="name" value={name} onChange={(e) => handleInputChange(e)} required autoFocus className={classNames({ 'p-invalid': submitted && ! name })} />
+                            {submitted && ! name && <small className="p-error" name='name'>Name is required.</small>}
                         </div>
-                        <div className="field">
+                         <div className="field">
                             <label htmlFor="password" className="font-bold">
                                 Password
                             </label>
-                            <Password id="password" value={product.password} onChange={(e) => onInputChange(e, 'password')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.password })} />
-                            {submitted && !product.password && <small className="p-error">Password is required.</small>}
+                            <input  type='password' id="password" value={password} required onChange={(e) => handlePasswordChange(e)}  autoFocus className={classNames({ 'p-invalid': submitted && !password })} />
+                            {submitted && !password && <small className="p-error">Password is required.</small>}
                         </div>
                         <div className="field">
                             <label htmlFor="name" className="font-bold">
                                 Mobile no
                             </label>
-                            <InputText id="Mobile" value={product.Mobile} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Mobile })} />
-                            {submitted && !product.Mobile && <small className="p-error">Mobile no  is required.</small>}
+                            <InputText id="Mobile" value={Mobile}  required onChange={(e) => handleMobileChange(e)}  autoFocus className={classNames({ 'p-invalid': submitted && !product.Mobile })} />
+                            {submitted && ! Mobile && <small className="p-error">Mobile no  is required.</small>}
                         </div>
                         <div className="field">
                             <label htmlFor="description" className="font-bold">
                                 Email
                             </label>
-                            <InputText id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required />
+                            <input type="email" id="email" name="email" value={email}  onChange={(e) => handleEmailChange(e)}  autoFocus className={classNames({ 'p-invalid': submitted && !product.Mobile })} />
+                            {submitted && !email && <small className="p-error">Email  is required.</small>}
                         </div>
 
                         <div className="field">
@@ -366,9 +434,9 @@ export default function Userlist() {
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
 
-                                onChange={handleChange}
+                             
                                 label="Age"
-                                style={{ width: '100%' }}>
+                                style={{ width: '100%' }} onChange={(e) => handleUserTypeChange(e)} >
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
@@ -391,6 +459,8 @@ export default function Userlist() {
                         <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
                     </div>
                 </div> */}
+                </form>
+                </div>
                     </Dialog>
 
                     <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
