@@ -298,11 +298,11 @@ export default function Userlist() {
                 p: 3,
                 mt: 10,
                 flexGrow: 1,
-                display: 'flex'
+                display: 'flex',
             }}
         >
             <Navbar />
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">

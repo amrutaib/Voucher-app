@@ -295,14 +295,14 @@ export default function Userlist() {
     return (
         <Box
             sx={{
-                p: 5,
+                p: 3,
                 mt: 10,
                 flexGrow: 1,
                 display: 'flex'
             }}
         >
             <Navbar />
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
