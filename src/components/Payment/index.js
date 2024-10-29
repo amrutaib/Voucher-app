@@ -301,8 +301,8 @@ export default function Userlist() {
                 display: 'flex'
             }}
         >
-            <Navbar />
-            <Typography variant="body1" gutterBottom sx={{width:'100vw'}}>
+            <Navbar HeaderTitle='Payment Summary' />
+            <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">

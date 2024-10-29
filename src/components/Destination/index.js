@@ -300,8 +300,8 @@ export default function Destination() {
                 display: 'flex'
             }}
         >
-            <Navbar />
-            <Typography variant="body1" gutterBottom sx={{width:'100vw'}}>
+            <Navbar HeaderTitle='Destination Management' />
+            <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
