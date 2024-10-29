@@ -1,14 +1,13 @@
-.purple {
-    background-color: #9c27b0 !important;
+.header {
+  gap: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.card-alert .card-content {
-    padding: 10px 20px;
-}
-.card .card-content {
-    padding: 4px;
-    border-radius: 0 0 2px 2px;
-}
-.white-text {
-    color: #fff !important;
+.addbtn {
+  display: flex;
+  margin: 20px 0px;
+  justify-content: left;
 }
