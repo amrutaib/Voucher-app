@@ -101,7 +101,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Navbar() {
+export default function Navbar({ HeaderTitle }) {
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -120,7 +120,7 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  const Title = location.pathname.split('/')[1] || 'Dashboard'
+  const PageTitle = location.pathname.split('/')[1] || 'Dashboard'
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -139,7 +139,7 @@ export default function Navbar() {
             <Menu />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ fontFamily: 'Mulish, sans-serif', fontSize: '20px' }}>
-            {Title}
+            {HeaderTitle || PageTitle}
           </Typography>
         </Toolbar>
         <NavBarHeader />

@@ -11,3 +11,8 @@
   margin-bottom: 20px;
   justify-content: left;
 }
+
+.delete-dialog {
+  text-align: center;
+  align-content: center;
+}

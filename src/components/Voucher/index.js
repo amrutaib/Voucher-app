@@ -299,7 +299,7 @@ export default function Voucher() {
     return (
         <Box
             sx={{
-                p: 5,
+                p: 3,
                 mt: 10,
                 flexGrow: 1,
                 display: 'flex'

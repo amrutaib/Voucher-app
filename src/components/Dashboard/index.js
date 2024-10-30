@@ -1,10 +1,10 @@
 import React from 'react';
 import "../style.css";
+import Navbar from '../Navbar';
 import { Link } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, useTheme, Grid, Avatar } from '@mui/material/index';
-import Navbar from '../Navbar';
 
 export default function Dashboard() {
 
