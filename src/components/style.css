@@ -39,9 +39,9 @@
 .tabview {
   background: #3f51b5;
   border: none;
-  font-size: 20px;
-  color: #fff;
-
+  font-size: 14px;
+  color: rgba(255, 255, 255, .7);
+  text-transform: uppercase;
   padding: 5px;
 }
 .tablist {
@@ -49,6 +49,9 @@
 }
 .base--selected {
   text-decoration: underline;
+    color: #fff;
+    
+    
 }
 nav a.active {
   background: linear-gradient(45deg, #303f9f, #7b1fa2);

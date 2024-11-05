@@ -26,7 +26,7 @@ import { Tag } from 'primereact/tag';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { TbPointFilled } from "react-icons/tb";
-import { useTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import 'primeicons/primeicons.css';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
@@ -34,7 +34,11 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import Navbar from '../Navbar';
 export default function Voucher() {
-    const theme = useTheme();
+    const theme = createTheme({
+        typography: {
+          fontFamily: 'Mulish, sans-serif',
+        },
+      });
     let emptyProduct = {
         id: null,
         name: '',
