@@ -8,7 +8,10 @@ import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import 'primereact/resources/primereact.css';
+import { Password } from 'primereact/password';
+import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -27,7 +30,23 @@ export default function Userlist() {
     //states
     const [products, setProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [addUserModal, setAddUserModal] = useState(false)
     const [userActiveStatus, setUserActiveStatus] = useState(true);
+
+    //new user form states 
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [mobileNumber, setMobileNumber] = useState('')
+    const [selectedUserTypes, setSelectedUserTypes] = useState(null);
+    const usertypes = [
+        { name: 'Import', },
+        { name: 'Export' }
+    ];
+
+    const hideAdduserModal = () => {
+        setAddUserModal(false)
+    }
 
     useEffect(() => {
         ProductService
@@ -71,7 +90,7 @@ export default function Userlist() {
             <React.Fragment>
                 <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => { }} />
                 <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => { }} />
-                <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => { }} />
+                <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>
         );
     };
@@ -93,10 +112,17 @@ export default function Userlist() {
                 label="Add User"
                 icon="pi pi-plus"
                 severity="success"
-                onClick={() => { }}
+                onClick={() => setAddUserModal(true)}
             />
         </div>
     )
+
+    const NewUserFooter = (
+        <React.Fragment>
+            <Button label="Cancel" color='#CC0000' outlined severity='danger' onClick={hideAdduserModal} />
+            <Button label="Save" severity='success' onClick={() => { }} />
+        </React.Fragment>
+    );
 
     return (
         <Box
@@ -138,6 +164,86 @@ export default function Userlist() {
                     </div>
                 </div>
             </Typography>
+
+            <Dialog
+                modal
+                className="p-fluid"
+                visible={addUserModal}
+                footer={NewUserFooter}
+                header="Add New User"
+                onHide={hideAdduserModal}
+                style={{ width: '50rem', marginTop: '20px' }}
+                breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+            >
+                <div className="field">
+                    <label htmlFor="name" className="font-bold">
+                        Name
+                    </label>
+                    <InputText
+                        id="name"
+                        required
+                        autoFocus
+                        value={name}
+                        variant='outlined'
+                        placeholder='Add name'
+                        onChange={(e) => setName(e.target.value)}
+                        className="p-inputtext-sm"
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="password" className="font-bold">
+                        Password
+                    </label>
+                    <Password
+                        required
+                        autoFocus
+                        id="password"
+                        value={password}
+                        variant='outlined'
+                        placeholder='Add user password'
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="name" className="font-bold">
+                        Mobile no
+                    </label>
+                    <InputText
+                        id="Mobile"
+                        required
+                        autoFocus
+                        variant='outlined'
+                        value={mobileNumber}
+                        placeholder='Add mobile number'
+                        onChange={(e) => setMobileNumber(e.target.value)}
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="description" className="font-bold">
+                        Email
+                    </label>
+                    <InputText
+                        type='email'
+                        required
+                        value={email}
+                        id="email"
+                        variant='outlined'
+                        placeholder='Add email'
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className="field">
+                    <label className="mb-3 font-bold">Select User Type</label>
+                    <Dropdown
+                        options={usertypes}
+                        optionLabel="name"
+                        value={selectedUserTypes}
+                        placeholder="Select User Type"
+                        className="w-full md:w-14rem"
+                        onChange={(e) => setSelectedUserTypes(e.value)}
+                    />
+                </div>
+            </Dialog>
         </Box>
     );
 }
