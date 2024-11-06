@@ -1,22 +1,14 @@
 <?php
-	/**
-	* Database Connection
-	*/
-	class DbConnect {
-		private $server = 'localhost';
-		private $dbname = 'voucher_app';
-		private $user = 'root';
-		private $pass = '';
 
-		public function connect() {
-			try {
-				$conn = new PDO('mysql:host=' .$this->server .';dbname=' . $this->dbname, $this->user, $this->pass);
-				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				return $conn;
-			} catch (\Exception $e) {
-				echo "Database Error: " . $e->getMessage();
-			}
-		}
-        
-	}
+$server = "localhost:3308";
+$user = "root";
+$password = "";
+$db = "voucher_app";
+
+$conn = mysqli_connect($server,$user,$password,$db);
+
+if(!$conn) {
+    die("Connection Failed:".mysqli_connect_error());
+}
+
 ?>
