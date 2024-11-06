@@ -6,8 +6,8 @@ header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 include 'DbConnect.php';
-$objDb = new DbConnect;
-$conn = $objDb->connect();
+//$objDb = new DbConnect;
+//$conn = $objDb->connect();
 
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
@@ -15,15 +15,19 @@ switch($method) {
         $sql = "SELECT * FROM users";
         $path = explode('/', $_SERVER['REQUEST_URI']);
         if(isset($path[3]) && is_numeric($path[3])) {
-            $sql .= " WHERE userId = :id";
+            $id=$path[3];
+            $sql .= " WHERE userId = $id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[3]);
             $stmt->execute();
-            $users = $stmt->fetch(PDO::FETCH_ASSOC);
+                    
+            $resultSet = $stmt->get_result();
+            $users = $resultSet->fetch_all(MYSQLI_ASSOC);
+           // $users = $stmt->fetch();
         } else {
             $stmt = $conn->prepare($sql);
             $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $resultSet = $stmt->get_result();
+            $users = $resultSet->fetch_all(MYSQLI_ASSOC);
         }
 
         echo json_encode($users);
