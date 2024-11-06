@@ -4,6 +4,7 @@ import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
+import axios from 'axios';
 import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
@@ -28,19 +29,35 @@ export default function Userlist() {
     const [products, setProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [userActiveStatus, setUserActiveStatus] = useState(true);
-
+    const [users, setUsers] = useState([]);
     useEffect(() => {
-        ProductService
-            .getProducts()
-            .then((data) => setProducts(data));
+        getUsers();
     }, []);
 
+    function getUsers() {
+        axios.get('http://localhost:8000/api/users/').then(function(response) {
+            console.log(response.data);
+            setUsers(response.data);
+        });
+    }
+
+    // useEffect(() => {
+    //     ProductService
+    //         .getProducts()
+    //         .then((data) => setProducts(data));
+    // }, []);
+    const userIdBodyTemplate=(rowData)=>{
+        return (rowData.userId);
+    }
+   const usernameBodyTemplate=(rowData)=>{
+    return (rowData.userName);
+   }
     const mobileBodyTemplate = (rowData) => {
         return (rowData.Mobile);
     };
 
     const usertypeBodyTemplate = (rowData) => {
-        return (rowData.Usertype);
+        return (rowData.userType);
     };
 
     const balancetypeBodyTemplate = (rowData) => {
@@ -48,11 +65,11 @@ export default function Userlist() {
     };
 
     const emailtypeBodyTemplate = (rowData) => {
-        return (rowData.Email);
+        return (rowData.email);
     };
 
     const regitrationdatetypeBodyTemplate = (rowData) => {
-        return (rowData.Regitrsationdate);
+        return (rowData.registration_date);
     };
 
     const userStatusBodyTemplate = () => {
@@ -119,14 +136,14 @@ export default function Userlist() {
                             rows={10}
                             dataKey="id"
                             header={header}
-                            value={products}
+                            value={users}
                             globalFilter={globalFilter}
                             rowsPerPageOptions={[5, 10, 25]}
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         >
-                            <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
-                            <Column field="name" header="Name" style={{ minWidth: '8rem' }} />
+                            <Column field="id" header="Sr.No" body={userIdBodyTemplate} sortable style={{ minWidth: '4rem' }} />
+                            <Column field="name" header="Name" body={usernameBodyTemplate} sortable style={{ minWidth: '8rem' }} />
                             <Column field="Mobile" header="Mobile" body={mobileBodyTemplate} />
                             <Column field="Email" header="Email" body={emailtypeBodyTemplate} style={{ minWidth: '8rem' }} />
                             <Column field="Usertype" header="User type" body={usertypeBodyTemplate} style={{ minWidth: '6rem' }} />
