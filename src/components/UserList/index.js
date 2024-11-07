@@ -9,7 +9,10 @@ import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import 'primereact/resources/primereact.css';
+import { Password } from 'primereact/password';
+import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -28,8 +31,28 @@ export default function Userlist() {
     //states
     const [products, setProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [addUserModal, setAddUserModal] = useState(false)
     const [userActiveStatus, setUserActiveStatus] = useState(true);
+<<<<<<< HEAD
     const [users, setUsers] = useState([]);
+=======
+
+    //new user form states 
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [mobileNumber, setMobileNumber] = useState('')
+    const [selectedUserTypes, setSelectedUserTypes] = useState(null);
+    const usertypes = [
+        { name: 'Import', },
+        { name: 'Export' }
+    ];
+
+    const hideAdduserModal = () => {
+        setAddUserModal(false)
+    }
+
+>>>>>>> 19258a6e99d1a5871dcaba5863250539c911f4a0
     useEffect(() => {
         getUsers();
     }, []);
@@ -88,7 +111,7 @@ export default function Userlist() {
             <React.Fragment>
                 <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => { }} />
                 <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => { }} />
-                <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => { }} />
+                <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>
         );
     };
@@ -110,10 +133,19 @@ export default function Userlist() {
                 label="Add User"
                 icon="pi pi-plus"
                 severity="success"
-                onClick={() => { }}
+                onClick={() => setAddUserModal(true)}
             />
         </div>
     )
+
+    const NewUserFooter = (
+        <React.Fragment>
+            <Button label="Cancel" color='#CC0000' outlined severity='danger' onClick={hideAdduserModal} />
+            <Button label="Save" severity='success' onClick={() => { }} />
+        </React.Fragment>
+    );
+
+    const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold">{value}</label>
 
     return (
         <Box
@@ -155,6 +187,92 @@ export default function Userlist() {
                     </div>
                 </div>
             </Typography>
+
+            <Dialog
+                modal
+                className="p-fluid"
+                visible={addUserModal}
+                footer={NewUserFooter}
+                header="Add New User"
+                onHide={hideAdduserModal}
+                style={{ width: '50rem', marginTop: '20px' }}
+                breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+            >
+                <div className="field">
+                    <FormLabel html="name" value="Name" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-user"> </InputIcon>
+                        <InputText
+                            id="name"
+                            required
+                            autoFocus
+                            value={name}
+                            variant='outlined'
+                            placeholder='Add name'
+                            onChange={(e) => setName(e.target.value)}
+                            className="p-inputtext-sm"
+                        />
+                    </IconField>
+                </div>
+
+                <div className="field">
+                    <FormLabel html="password" value="Password" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-lock"> </InputIcon>
+                        <Password
+                            required
+                            autoFocus
+                            toggleMask
+                            id="password"
+                            value={password}
+                            variant='outlined'
+                            placeholder='Add user password'
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </IconField>
+                </div>
+                <div className="field">
+                    <FormLabel html="name" value="Mobile No." />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-mobile"> </InputIcon>
+                        <InputText
+                            id="Mobile"
+                            required
+                            autoFocus
+                            variant='outlined'
+                            value={mobileNumber}
+                            placeholder='Add mobile number'
+                            onChange={(e) => setMobileNumber(e.target.value)}
+                        />
+                    </IconField>
+                </div>
+                <div className="field">
+                    <FormLabel html="email" value="Email" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-envelope"> </InputIcon>
+                        <InputText
+                            type='email'
+                            required
+                            value={email}
+                            id="email"
+                            variant='outlined'
+                            placeholder='Add email'
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </IconField>
+                </div>
+                <div className="field">
+                    <label className="mb-3 font-bold">Select User Type</label>
+                    <Dropdown
+                        options={usertypes}
+                        optionLabel="name"
+                        value={selectedUserTypes}
+                        placeholder="Select User Type"
+                        className="w-full md:w-14rem"
+                        onChange={(e) => setSelectedUserTypes(e.value)}
+                    />
+                </div>
+            </Dialog>
         </Box>
     );
 }
