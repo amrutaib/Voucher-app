@@ -8,8 +8,9 @@ import {
   Dashboard,
   UserProfile,
   Destination,
+  UserPayment,
   PrivateRoute,
-  UserVoucherList
+  UserVoucherList,
 } from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -64,6 +65,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "UserProfile",
         element: <UserProfile />
+      },
+      {
+        path: "userpayment",
+        element: <UserPayment />
       },
       {
         path: "UserVoucher",

@@ -92,7 +92,7 @@ export default function Userlist() {
         return (
             <React.Fragment>
                 <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => navigate('/UserVoucher')} />
-                <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => { }} />
+                <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment')} />
                 <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>
         );

@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard";
 import UserProfile from './UserProfile';
 import Destination from './Destination';
 import PrivateRoute from "./PrivateRoute";
+import UserPayment from "./UserList/UserPayment";
 import UserVoucherList from "./UserList/UserVoucherList";
 
 export {
@@ -23,5 +24,6 @@ export {
     UserProfile,
     Destination,
     PrivateRoute,
+    UserPayment,
     UserVoucherList
 }
