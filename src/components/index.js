@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard";
 import UserProfile from './UserProfile';
 import Destination from './Destination';
 import PrivateRoute from "./PrivateRoute";
+import UserVoucherList from "./UserList/UserVoucherList";
 
 export {
     Error,
@@ -21,5 +22,6 @@ export {
     Dashboard,
     UserProfile,
     Destination,
-    PrivateRoute
+    PrivateRoute,
+    UserVoucherList
 }

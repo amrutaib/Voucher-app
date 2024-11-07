@@ -1,14 +1,15 @@
 import React from "react";
 import {
-  Voucher,
   Error,
-  PrivateRoute,
   Login,
-  Destination,
-  Dashboard,
+  Voucher,
   Payment,
   Userlist,
-  UserProfile
+  Dashboard,
+  UserProfile,
+  Destination,
+  PrivateRoute,
+  UserVoucherList
 } from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -62,8 +63,11 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "UserProfile",
-        element:
-          <UserProfile />
+        element: <UserProfile />
+      },
+      {
+        path: "UserVoucher",
+        element: <UserVoucherList />
       },
       {
         path: "Destination",
