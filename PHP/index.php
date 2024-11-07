@@ -34,12 +34,18 @@ switch($method) {
         break;
     case "POST":
         $user = json_decode( file_get_contents('php://input') );
-        $sql = "INSERT INTO users( `userName`, `userPassword`, `Mobile`, `email`, `userType`, `userStattus`) VALUES(:username, :userpassword,:email, :mobile, :usertype,'Active')";
+        $userstatus='Active';
+        $sql = "INSERT INTO users( `userName`, `userPassword`, `Mobile`, `email`, `userType`, `userStattus`,'registration_date') VALUES(:username, :userpassword,:email, :mobile, :usertype,:userstatus,:created_at)";
         $stmt = $conn->prepare($sql);
         $created_at = date('Y-m-d');
-        $stmt->bindParam(':name', $user->name);
+        $stmt->bindParam(':username', $user->username);
+        $stmt->bindParam(':userpassword', $user->userpassword);
+
         $stmt->bindParam(':email', $user->email);
         $stmt->bindParam(':mobile', $user->mobile);
+        $stmt->bindParam(':usertype', $user->usertype);
+        $stmt->bindParam(':userstatus', $user->userstatus);
+
         $stmt->bindParam(':created_at', $created_at);
 
         if($stmt->execute()) {
@@ -52,7 +58,7 @@ switch($method) {
 
     case "PUT":
         $user = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE users SET name= :username, email =:email, Mobile =:mobile, userType =:usertype WHERE userId = :id";
+        $sql = "UPDATE users SET name= :username,userPassword=:userpassword, email =:email, Mobile =:mobile, userType =:usertype WHERE userId = :id";
         $stmt = $conn->prepare($sql);
         $updated_at = date('Y-m-d');
         $stmt->bindParam(':id', $user->id);
