@@ -15,5 +15,4 @@ function ActionBody({ iconName, handleClick, tooltip }) {
     )
 }
 
-
 export default ActionBody;

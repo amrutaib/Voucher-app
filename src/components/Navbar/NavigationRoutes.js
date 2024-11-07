@@ -39,13 +39,6 @@ const Data = [
         key: "Payment Summary",
         routeName: "Destination",
         iconName: <BsGeoAltFill fontSize={24} />
-    },
-    {
-        id: 6,
-        key: "Scheme",
-        route: "/Scheme",
-        routeName: "Scheme",
-        iconName: <LuTag fontSize={24} />
     }
 ];
 

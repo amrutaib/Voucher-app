@@ -33,7 +33,7 @@ const NavBarHeader = () => {
 
     return (
         <Toolbar sx={{ position: 'absolute', right: '20px' }}>
-            <Link to="/user">
+            <Link to="/UserProfile">
                 <IconButton title="User">
                     <AccountCircleIcon
                         sx={{
