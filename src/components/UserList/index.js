@@ -13,6 +13,7 @@ import { Dialog } from 'primereact/dialog';
 import 'primereact/resources/primereact.css';
 import { Password } from 'primereact/password';
 import { Dropdown } from 'primereact/dropdown';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -23,6 +24,8 @@ import { ProductService } from '../../service/ProductService';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Userlist() {
+
+    const navigate = useNavigate()
 
     //ref
     const dt = useRef(null);
@@ -109,7 +112,7 @@ export default function Userlist() {
     const actionBodyTemplate = () => {
         return (
             <React.Fragment>
-                <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => { }} />
+                <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => navigate('/UserVoucher')} />
                 <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => { }} />
                 <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>
