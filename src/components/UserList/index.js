@@ -91,7 +91,7 @@ export default function Userlist() {
     const actionBodyTemplate = () => {
         return (
             <React.Fragment>
-                <ActionBody iconName='ticket' tooltip='View Voucher' handleClick={() => navigate('/UserVoucher')} />
+                <ActionBody iconName='receipt' tooltip='View Voucher' handleClick={() => navigate('/UserVoucher')} />
                 <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment')} />
                 <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>

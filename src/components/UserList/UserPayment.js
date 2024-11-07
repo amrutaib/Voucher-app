@@ -87,7 +87,7 @@ export default function UserPayment() {
             </div>
             <div className="flex-auto mb-2">
                 <FormLabel html="name" value="Date" />
-                <Calendar value={date} onChange={(e) => setDate(e.value)} showIcon style={{ width: 'auto' }} />
+                <Calendar value={date} onChange={(e) => setDate(e.value)} showIcon placeholder='Add date' />
             </div>
             <Button
                 label="Add payment"
