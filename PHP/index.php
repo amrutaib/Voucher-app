@@ -34,39 +34,62 @@ switch($method) {
         break;
     case "POST":
         $user = json_decode( file_get_contents('php://input') );
-        $userstatus='Active';
-        $sql = "INSERT INTO users( `userName`, `userPassword`, `Mobile`, `email`, `userType`, `userStattus`,'registration_date') VALUES(:username, :userpassword,:email, :mobile, :usertype,:userstatus,:created_at)";
-        $stmt = $conn->prepare($sql);
-        $created_at = date('Y-m-d');
-        $stmt->bindParam(':username', $user->username);
-        $stmt->bindParam(':userpassword', $user->userpassword);
+       
+       $username=$_POST['userName'];
+       $userpassword=$_POST['userPassword'];
+       $email=$_POST['email'];
+       $mobile=$_POST['Mobile'];
+       $usertype=$_POST['userType'];
+       $userstatus='active';
+       // $userstatus='Active';
+       $created_at = date('Y-m-d');
 
-        $stmt->bindParam(':email', $user->email);
-        $stmt->bindParam(':mobile', $user->mobile);
-        $stmt->bindParam(':usertype', $user->usertype);
-        $stmt->bindParam(':userstatus', $user->userstatus);
+          $query  =   $conn->prepare("INSERT INTO users (userName,userPassword,email,Mobile,userType,userStatus,registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            # Bind parameters and spell "password" correctly
+           $query->bind_param('sssssss',$username,$userpassword,$email,$mobile,$usertype,$userstatus,$created_at);
+            # Execute
+          // $query->execute();
+            # See if the row was created and echo success
+            //echo ($query->affected_rows > 0)? 'Success!' : 'Failed';
+        //$stmt=$conn->query($sql);
+ //  echo $stmt;
+       
+        // $stmt->bindParam(':username', $user->username);
+        // $stmt->bindParam(':userpassword', $user->userpassword);
 
-        $stmt->bindParam(':created_at', $created_at);
+        // $stmt->bindParam(':email', $user->email);
+        // $stmt->bindParam(':mobile', $user->mobile);
+        // $stmt->bindParam(':usertype', $user->usertype);
+        // $stmt->bindParam(':userstatus', $user->userstatus);
 
-        if($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Record created successfully.'];
+        // $stmt->bindParam(':created_at', $created_at);
+
+         if($query->execute()) {
+             $response = ['status' => 1, 'message' => 'Record created successfully.'];
         } else {
-            $response = ['status' => 0, 'message' => 'Failed to create record.'];
+             $response = ['status' => 0, 'message' => 'Failed to create record.'];
         }
-        echo json_encode($response);
+         echo json_encode($response);
         break;
 
     case "PUT":
         $user = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE users SET name= :username,userPassword=:userpassword, email =:email, Mobile =:mobile, userType =:usertype WHERE userId = :id";
-        $stmt = $conn->prepare($sql);
+       //print_r($user);
+        
+       // echo $user->inputs->userName;;
+        $id=$user->inputs->userId;
+        $username=$user->inputs->userName;
+        $userpassword=$user->inputs->userPassword;
+        $email=$user->inputs->email;
+        $mobile=$user->inputs->Mobile;
+        $usertype=$user->inputs->userType;
+        $userstatus='active';
+        $stmt = "UPDATE users SET userName= ?,userPassword=?, email =?, Mobile =?, userType =? ,updated_at=? WHERE userId = ?";
+        $stmt = $conn->prepare($stmt);
         $updated_at = date('Y-m-d');
-        $stmt->bindParam(':id', $user->id);
-        $stmt->bindParam(':name', $user->name);
-        $stmt->bindParam(':email', $user->email);
-        $stmt->bindParam(':mobile', $user->mobile);
-        $stmt->bindParam(':updated_at', $updated_at);
-
+       
+        $stmt->bind_param('sssssss',$username,$userpassword,$email,$mobile,$usertype,$updated_at,$id);
+ //print_r($stmt);
         if($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Record updated successfully.'];
         } else {
@@ -76,11 +99,12 @@ switch($method) {
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM users WHERE userId = :id";
+        $sql = "DELETE FROM users WHERE userId = ?";
         $path = explode('/', $_SERVER['REQUEST_URI']);
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[3]);
+        $id=$path[3];
+        $stmt->bind_param('s', $id);
 
         if($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
