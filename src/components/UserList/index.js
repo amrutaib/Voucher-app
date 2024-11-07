@@ -4,7 +4,6 @@ import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
-import axios from 'axios';
 import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
@@ -36,9 +35,6 @@ export default function Userlist() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [addUserModal, setAddUserModal] = useState(false)
     const [userActiveStatus, setUserActiveStatus] = useState(true);
-<<<<<<< HEAD
-    const [users, setUsers] = useState([]);
-=======
 
     //new user form states 
     const [name, setName] = useState('')
@@ -55,35 +51,18 @@ export default function Userlist() {
         setAddUserModal(false)
     }
 
->>>>>>> 19258a6e99d1a5871dcaba5863250539c911f4a0
     useEffect(() => {
-        getUsers();
+        ProductService
+            .getProducts()
+            .then((data) => setProducts(data));
     }, []);
 
-    function getUsers() {
-        axios.get('http://localhost:8000/api/users/').then(function(response) {
-            console.log(response.data);
-            setUsers(response.data);
-        });
-    }
-
-    // useEffect(() => {
-    //     ProductService
-    //         .getProducts()
-    //         .then((data) => setProducts(data));
-    // }, []);
-    const userIdBodyTemplate=(rowData)=>{
-        return (rowData.userId);
-    }
-   const usernameBodyTemplate=(rowData)=>{
-    return (rowData.userName);
-   }
     const mobileBodyTemplate = (rowData) => {
         return (rowData.Mobile);
     };
 
     const usertypeBodyTemplate = (rowData) => {
-        return (rowData.userType);
+        return (rowData.Usertype);
     };
 
     const balancetypeBodyTemplate = (rowData) => {
@@ -91,11 +70,11 @@ export default function Userlist() {
     };
 
     const emailtypeBodyTemplate = (rowData) => {
-        return (rowData.email);
+        return (rowData.Email);
     };
 
     const regitrationdatetypeBodyTemplate = (rowData) => {
-        return (rowData.registration_date);
+        return (rowData.Regitrsationdate);
     };
 
     const userStatusBodyTemplate = () => {
@@ -171,14 +150,14 @@ export default function Userlist() {
                             rows={10}
                             dataKey="id"
                             header={header}
-                            value={users}
+                            value={products}
                             globalFilter={globalFilter}
                             rowsPerPageOptions={[5, 10, 25]}
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         >
-                            <Column field="id" header="Sr.No" body={userIdBodyTemplate} sortable style={{ minWidth: '4rem' }} />
-                            <Column field="name" header="Name" body={usernameBodyTemplate} sortable style={{ minWidth: '8rem' }} />
+                            <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                            <Column field="name" header="Name" style={{ minWidth: '8rem' }} />
                             <Column field="Mobile" header="Mobile" body={mobileBodyTemplate} />
                             <Column field="Email" header="Email" body={emailtypeBodyTemplate} style={{ minWidth: '8rem' }} />
                             <Column field="Usertype" header="User type" body={usertypeBodyTemplate} style={{ minWidth: '6rem' }} />
