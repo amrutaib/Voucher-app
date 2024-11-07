@@ -35,6 +35,7 @@ switch($method) {
     case "POST":
         $user = json_decode( file_get_contents('php://input') );
         $userstatus='Active';
+        echo $conn;
         $sql = "INSERT INTO users( `userName`, `userPassword`, `Mobile`, `email`, `userType`, `userStattus`,'registration_date') VALUES(:username, :userpassword,:email, :mobile, :usertype,:userstatus,:created_at)";
         $stmt = $conn->prepare($sql);
         $created_at = date('Y-m-d');
