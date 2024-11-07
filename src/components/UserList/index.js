@@ -124,6 +124,8 @@ export default function Userlist() {
         </React.Fragment>
     );
 
+    const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold">{value}</label>
+
     return (
         <Box
             sx={{
@@ -176,61 +178,67 @@ export default function Userlist() {
                 breakpoints={{ '960px': '75vw', '641px': '90vw' }}
             >
                 <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Name
-                    </label>
-                    <InputText
-                        id="name"
-                        required
-                        autoFocus
-                        value={name}
-                        variant='outlined'
-                        placeholder='Add name'
-                        onChange={(e) => setName(e.target.value)}
-                        className="p-inputtext-sm"
-                    />
+                    <FormLabel html="name" value="Name" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-user"> </InputIcon>
+                        <InputText
+                            id="name"
+                            required
+                            autoFocus
+                            value={name}
+                            variant='outlined'
+                            placeholder='Add name'
+                            onChange={(e) => setName(e.target.value)}
+                            className="p-inputtext-sm"
+                        />
+                    </IconField>
+                </div>
+
+                <div className="field">
+                    <FormLabel html="password" value="Password" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-lock"> </InputIcon>
+                        <Password
+                            required
+                            autoFocus
+                            toggleMask
+                            id="password"
+                            value={password}
+                            variant='outlined'
+                            placeholder='Add user password'
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </IconField>
                 </div>
                 <div className="field">
-                    <label htmlFor="password" className="font-bold">
-                        Password
-                    </label>
-                    <Password
-                        required
-                        autoFocus
-                        id="password"
-                        value={password}
-                        variant='outlined'
-                        placeholder='Add user password'
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <FormLabel html="name" value="Mobile No." />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-mobile"> </InputIcon>
+                        <InputText
+                            id="Mobile"
+                            required
+                            autoFocus
+                            variant='outlined'
+                            value={mobileNumber}
+                            placeholder='Add mobile number'
+                            onChange={(e) => setMobileNumber(e.target.value)}
+                        />
+                    </IconField>
                 </div>
                 <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Mobile no
-                    </label>
-                    <InputText
-                        id="Mobile"
-                        required
-                        autoFocus
-                        variant='outlined'
-                        value={mobileNumber}
-                        placeholder='Add mobile number'
-                        onChange={(e) => setMobileNumber(e.target.value)}
-                    />
-                </div>
-                <div className="field">
-                    <label htmlFor="description" className="font-bold">
-                        Email
-                    </label>
-                    <InputText
-                        type='email'
-                        required
-                        value={email}
-                        id="email"
-                        variant='outlined'
-                        placeholder='Add email'
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                    <FormLabel html="email" value="Email" />
+                    <IconField iconPosition="left">
+                        <InputIcon className="pi pi-envelope"> </InputIcon>
+                        <InputText
+                            type='email'
+                            required
+                            value={email}
+                            id="email"
+                            variant='outlined'
+                            placeholder='Add email'
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </IconField>
                 </div>
                 <div className="field">
                     <label className="mb-3 font-bold">Select User Type</label>
