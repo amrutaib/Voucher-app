@@ -4,11 +4,10 @@ import Navbar from '../Navbar';
 import { Link } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { CardActions, Box, Card, Typography, useTheme, Grid, Avatar } from '@mui/material/index';
+import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
 export default function Dashboard() {
 
-  const theme = useTheme();
   const CardComponent = ({ ml, route, avatar, title, count, className }) => {
     return (
       <Link to={route}>

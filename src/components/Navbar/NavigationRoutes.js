@@ -1,4 +1,3 @@
-import { LuTag } from "react-icons/lu";
 import { BsGeoAltFill } from "react-icons/bs";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { PiUserCircleBold } from "react-icons/pi";
