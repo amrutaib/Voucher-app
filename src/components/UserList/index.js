@@ -19,7 +19,6 @@ import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { InputSwitch } from 'primereact/inputswitch';
-import { ProductService } from '../../service/ProductService';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Userlist() {
@@ -31,7 +30,8 @@ export default function Userlist() {
     const toast = useRef(null);
 
     //states
-    const [products, setProducts] = useState(null);
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(true)
     const [globalFilter, setGlobalFilter] = useState(null);
     const [addUserModal, setAddUserModal] = useState(false)
     const [userActiveStatus, setUserActiveStatus] = useState(true);
@@ -51,39 +51,41 @@ export default function Userlist() {
         setAddUserModal(false)
     }
 
+    async function fetchUsers() {
+        var URL = 'https://6d17-103-167-123-82.ngrok-free.app/api/';
+        fetch(URL, {
+            method: "get",
+            headers: new Headers({
+                "ngrok-skip-browser-warning": "69420",
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setUsers(data);
+                setLoading(false);
+                console.log(data, "DATA")
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setLoading(false))
+    }
+
     useEffect(() => {
-        ProductService
-            .getProducts()
-            .then((data) => setProducts(data));
+        fetchUsers();
     }, []);
 
-    const mobileBodyTemplate = (rowData) => {
-        return (rowData.Mobile);
-    };
-
-    const usertypeBodyTemplate = (rowData) => {
-        return (rowData.Usertype);
-    };
-
-    const balancetypeBodyTemplate = (rowData) => {
-        return (rowData.Balance);
-    };
-
-    const emailtypeBodyTemplate = (rowData) => {
-        return (rowData.Email);
-    };
-
-    const regitrationdatetypeBodyTemplate = (rowData) => {
-        return (rowData.Regitrsationdate);
-    };
-
-    const userStatusBodyTemplate = () => {
+    const userStatus = (rowData) => {
+        const status = rowData.userStatus
+        function checkStatus() {
+            if (status === 'active') {
+                setUserActiveStatus(true)
+            }
+        }
         return (
             <InputSwitch
                 tooltip='User Status'
+                onChange={checkStatus}
                 checked={userActiveStatus}
                 tooltipOptions={{ position: 'bottom' }}
-                onChange={(e) => setUserActiveStatus(e.value)}
             />
         )
     };
@@ -150,20 +152,20 @@ export default function Userlist() {
                             rows={10}
                             dataKey="id"
                             header={header}
-                            value={products}
+                            value={users}
                             globalFilter={globalFilter}
                             rowsPerPageOptions={[5, 10, 25]}
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         >
-                            <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
-                            <Column field="name" header="Name" style={{ minWidth: '8rem' }} />
-                            <Column field="Mobile" header="Mobile" body={mobileBodyTemplate} />
-                            <Column field="Email" header="Email" body={emailtypeBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column field="Usertype" header="User type" body={usertypeBodyTemplate} style={{ minWidth: '6rem' }} />
-                            <Column field="Balance" header="Balance" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }} />
-                            <Column field="Registrationdate" header="Registration Date" body={regitrationdatetypeBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column field="Userstatus" header="User Status" body={userStatusBodyTemplate} style={{ minWidth: '6rem' }} />
+                            <Column field="userId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                            <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
+                            <Column field="Mobile" header="Mobile" />
+                            <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
+                            <Column field="userType" header="User type" style={{ minWidth: '6rem' }} />
+                            {/* <Column field="Balance" header="Balance" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }} /> */}
+                            <Column field="registration_date" header="Registration Date" style={{ minWidth: '8rem' }} />
+                            <Column field="Userstatus" header="User Status" body={userStatus} style={{ minWidth: '6rem' }} />
                             <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
                         </DataTable>
                     </div>
