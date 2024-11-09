@@ -33,37 +33,22 @@ switch($method) {
         echo json_encode($users);
         break;
     case "POST":
-        $user = json_decode( file_get_contents('php://input') );
-       
-       $username=$_POST['userName'];
-       $userpassword=$_POST['userPassword'];
-       $email=$_POST['email'];
-       $mobile=$_POST['Mobile'];
-       $usertype=$_POST['userType'];
-       $userstatus='active';
-       // $userstatus='Active';
-       $created_at = date('Y-m-d');
-
-          $query  =   $conn->prepare("INSERT INTO users (userName,userPassword,email,Mobile,userType,userStatus,registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            # Bind parameters and spell "password" correctly
-           $query->bind_param('sssssss',$username,$userpassword,$email,$mobile,$usertype,$userstatus,$created_at);
-            # Execute
-          // $query->execute();
-            # See if the row was created and echo success
-            //echo ($query->affected_rows > 0)? 'Success!' : 'Failed';
-        //$stmt=$conn->query($sql);
- //  echo $stmt;
-       
-        // $stmt->bindParam(':username', $user->username);
-        // $stmt->bindParam(':userpassword', $user->userpassword);
-
-        // $stmt->bindParam(':email', $user->email);
-        // $stmt->bindParam(':mobile', $user->mobile);
-        // $stmt->bindParam(':usertype', $user->usertype);
-        // $stmt->bindParam(':userstatus', $user->userstatus);
-
-        // $stmt->bindParam(':created_at', $created_at);
-
+            $user = json_decode( file_get_contents('php://input') );  
+            $username=$user->userName;
+            $userpassword=$user->userPassword;
+            $email=$user->email;
+            $mobile=$user->Mobile;
+            $usertype=get_object_vars($user)['userType']->name;
+            $userstatus='Active';
+           // $userstatus='Active';
+            $created_at = date('Y-m-d');
+           //echo $usertype;
+                $query= $conn->prepare("INSERT INTO users (userName,userPassword,email,Mobile,userType,userStatus,registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                # Bind parameters and spell "password" correctly
+                 $query->bind_param('sssssss',$username,$userpassword,$email,$mobile,$usertype,$userstatus,$created_at);
+                
+                
+          // print_r($query);
          if($query->execute()) {
              $response = ['status' => 1, 'message' => 'Record created successfully.'];
         } else {
@@ -77,12 +62,12 @@ switch($method) {
        //print_r($user);
         
        // echo $user->inputs->userName;;
-        $id=$user->inputs->userId;
-        $username=$user->inputs->userName;
-        $userpassword=$user->inputs->userPassword;
-        $email=$user->inputs->email;
-        $mobile=$user->inputs->Mobile;
-        $usertype=$user->inputs->userType;
+        $id=$user->id;
+        $username=$user->userName;
+        $userpassword=$user->userPassword;
+        $email=$user->email;
+        $mobile=$user->Mobile;
+        $usertype=get_object_vars($user)['userType']->name;
         $userstatus='active';
         $stmt = "UPDATE users SET userName= ?,userPassword=?, email =?, Mobile =?, userType =? ,updated_at=? WHERE userId = ?";
         $stmt = $conn->prepare($stmt);
