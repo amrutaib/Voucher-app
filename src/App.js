@@ -3,6 +3,7 @@ import {
   Error,
   Login,
   Voucher,
+  AddUser,
   Payment,
   Userlist,
   Dashboard,
@@ -69,6 +70,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "userpayment",
         element: <UserPayment />
+      },
+      {
+        path: "adduser",
+        element: <AddUser />
       },
       {
         path: "UserVoucher",
