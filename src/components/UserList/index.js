@@ -19,6 +19,7 @@ import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { InputSwitch } from 'primereact/inputswitch';
+import { FaExclamationTriangle } from "react-icons/fa";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Userlist() {
@@ -131,7 +132,28 @@ export default function Userlist() {
 
     const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold">{value}</label>
 
-    const NullComponent = () => <Typography variant='h1'>NULL DATA</Typography>
+    const NullComponent = () => {
+        return (
+            <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+                p={4}
+            >
+                <FaExclamationTriangle size={140} elevation={3} />
+                <Typography variant="h5" color="ButtonText" gutterBottom my={'20px'}>
+                    No Users Available
+                </Typography>
+                <Typography variant="body2" color="textSecondary" mb={2}>
+                    No users have been created yet, Click on the add button to create a new user.
+                </Typography>
+                <AddNewUser />
+            </Box>
+        )
+    }
+
     return (
         <Box
             sx={{
@@ -146,7 +168,7 @@ export default function Userlist() {
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
-                        <AddNewUser />
+                        {users.length > 0 && <AddNewUser />}
                         {users.length < 1 ? <NullComponent /> :
                             <DataTable
                                 ref={dt}
