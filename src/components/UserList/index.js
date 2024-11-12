@@ -136,6 +136,12 @@ export default function Userlist() {
 
     const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold">{value}</label>
 
+    const Loader = () => (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
+            <CircularProgress />
+        </div>
+    )
+
     const NullComponent = () => {
         return (
             <Box
@@ -172,33 +178,37 @@ export default function Userlist() {
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
-                        {users.length > 0 && <AddNewUser />}
-                        {users.length < 1 ? <NullComponent /> :
-                            <DataTable
-                                ref={dt}
-                                paginator
-                                rows={10}
-                                dataKey="id"
-                                header={header}
-                                value={users}
-                                globalFilter={globalFilter}
-                                rowsPerPageOptions={[5, 10, 25]}
-                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            >
-                                <Column field="userId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
-                                <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
-                                <Column field="Mobile" header="Mobile" />
-                                <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
-                                <Column field="userType" header="User type" style={{ minWidth: '6rem' }} />
-                                {/* <Column field="Balance" header="Balance" body={balancetypeBodyTemplate} sortable style={{ minWidth: '8rem' }} /> */}
-                                <Column field="registration_date" header="Registration Date" style={{ minWidth: '8rem' }} />
-                                <Column field="Userstatus" header="User Status" body={userStatus} style={{ minWidth: '6rem' }} />
-                                <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
-                            </DataTable>
-                        }
+                        {loading ? (
+                            <Loader />
+                        ) : users.length < 1 ? (
+                            <NullComponent />
+                        ) : (
+                            <>
+                                {users.length > 0 && <AddNewUser />}
+                                <DataTable
+                                    ref={dt}
+                                    paginator
+                                    rows={10}
+                                    dataKey="id"
+                                    value={users}
+                                    header={header}
+                                    globalFilter={globalFilter}
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                >
+                                    <Column field="userId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                                    <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
+                                    <Column field="Mobile" header="Mobile" />
+                                    <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
+                                    <Column field="userType" header="User type" style={{ minWidth: '6rem' }} />
+                                    <Column field="registration_date" header="Registration Date" style={{ minWidth: '8rem' }} />
+                                    <Column field="Userstatus" header="User Status" body={userStatus} style={{ minWidth: '6rem' }} />
+                                    <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
+                                </DataTable>
+                            </>
+                        )}
                     </div>
-
                 </div>
             </Typography>
 
