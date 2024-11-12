@@ -1,24 +1,22 @@
 import React from "react";
 import SidebarDrawer from "./components/SidebarDrawer";
 import Navbar from "./components/Navbar/Navbar";
-import Userlist from "./components/Userlist";
+import Userlist from "./components/UserList";
 import Payment from "./components/Payment";
-import Dashboard from './components/Dashboard';
+import Dashboard from "./components/Dashboard";
 import Destination from "./components/Destination";
-import Scheme from "./components/Scheme";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./components/Error";
 import Voucher from "./components/Voucher";
-import { createBrowserRouter, Outlet } from "react-router-dom"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Mulish, sans-serif',
+    fontFamily: "Mulish, sans-serif",
   },
 });
-
 
 export const App = () => {
   return (
@@ -54,27 +52,17 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "Voucher",
-        element:
-          <Voucher />
+        element: <Voucher />,
       },
       {
         path: "Payment",
-        element:
-          <Payment />
+        element: <Payment />,
       },
       {
         path: "Destination",
         element: (
           <PrivateRoute>
             <Destination />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "Scheme",
-        element: (
-          <PrivateRoute>
-            <Scheme />
           </PrivateRoute>
         ),
       },
