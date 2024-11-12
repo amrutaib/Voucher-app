@@ -1,14 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar';
 import { Toast } from 'primereact/toast';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Button, MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Grid, OutlinedInput, InputAdornment } from '@mui/material';
-///icons
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import SecurityUpdateGoodOutlinedIcon from '@mui/icons-material/SecurityUpdateGoodOutlined';
+import { Button, MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Grid } from '@mui/material';
 
 export default function AddUser() {
 
@@ -17,18 +13,24 @@ export default function AddUser() {
     const navigate = useNavigate()
 
     //react-hook-form
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        axios.post('https://f567-103-167-123-125.ngrok-free.app/save', data).then(function (response) {
-            console.log(response.data);
-            navigate('/UserList');
-        });
+        axios.post('https://f567-103-167-123-125.ngrok-free.app/save', data)
+            .then(function (response) {
+                const data = response.data
+                if (data.status === 200) {
+                    setTimeout(() => navigate('/UserList'), 2000)
+                    toast.current.show({ severity: 'success', summary: 'Error', detail: data.message, life: 2000 });
+                } else {
+                    toast.current.show({ severity: 'error', summary: 'Error', detail: data.message, life: 3000 });
+                }
+                console.log(response.data);
+
+            })
+            .catch((error) => console.log(error))
     };
 
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     return (
         <Box

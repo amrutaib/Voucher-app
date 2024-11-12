@@ -74,10 +74,6 @@ export default function Userlist() {
         fetchUsers();
     }, []);
 
-    if (loading) {
-        return <CircularProgress />
-    }
-
     const userStatus = (rowData) => {
         const status = rowData.userStatus
         function checkStatus() {
