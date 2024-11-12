@@ -14,24 +14,6 @@ export default function Dashboard() {
   })
   const [loading, setLoading] = useState(true)
 
-  const CardComponent = ({ ml, route, avatar, title, count, className }) => {
-    return (
-      <Link to={route}>
-        <Grid sx={{ ml: ml || 0 }}>
-          <Card sx={{ minWidth: 400, p: '20px', borderRadius: '5px' }} className={className}>
-            <CardActions sx={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-              <Avatar sx={{ bgcolor: 'rgba(0, 0, 0, 0.18)', width: 54, height: 54 }}>
-                {avatar}
-              </Avatar>
-              <Typography sx={{ fontSize: 22, color: '#fff' }}>{count}</Typography>
-            </CardActions>
-            <Typography sx={{ textAlign: 'left', mt: '10px', color: '#fff' }}>{title}</Typography>
-          </Card>
-        </Grid>
-      </Link>
-    );
-  };
-
   const fetchCounts = () => {
     var URL = 'https://f567-103-167-123-125.ngrok-free.app/';
     fetch(URL, {
@@ -54,6 +36,24 @@ export default function Dashboard() {
   useEffect(() => {
     fetchCounts()
   }, [])
+
+  const CardComponent = ({ ml, route, avatar, title, count, className }) => {
+    return (
+      <Link to={route}>
+        <Grid sx={{ ml: ml || 0 }}>
+          <Card sx={{ minWidth: 400, p: '20px', borderRadius: '5px' }} className={className}>
+            <CardActions sx={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+              <Avatar sx={{ bgcolor: 'rgba(0, 0, 0, 0.18)', width: 54, height: 54 }}>
+                {avatar}
+              </Avatar>
+              <Typography sx={{ fontSize: 22, color: '#fff' }}>{count}</Typography>
+            </CardActions>
+            <Typography sx={{ textAlign: 'left', mt: '10px', color: '#fff' }}>{title}</Typography>
+          </Card>
+        </Grid>
+      </Link>
+    );
+  };
 
   return (
     <Box

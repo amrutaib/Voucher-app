@@ -104,7 +104,7 @@ export default function Userlist() {
     const header = (
         <div className="header">
             <h4 className="m-0">Manage Users</h4>
-            <IconField iconPosition="left">
+            <IconField iconPosition="left" style={{ marginLeft: '20px' }}>
                 <InputIcon className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search Users" />
             </IconField>
