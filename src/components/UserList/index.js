@@ -3,7 +3,6 @@ import './index.css'
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import Box from "@mui/material/Box";
 import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
@@ -19,6 +18,7 @@ import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { InputSwitch } from 'primereact/inputswitch';
+import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
@@ -53,7 +53,7 @@ export default function Userlist() {
     }
 
     async function fetchUsers() {
-        var URL = 'https://6d17-103-167-123-82.ngrok-free.app/api/';
+        var URL = 'https://f567-103-167-123-125.ngrok-free.app/';
         fetch(URL, {
             method: "get",
             headers: new Headers({
@@ -73,6 +73,10 @@ export default function Userlist() {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    if (loading) {
+        return <CircularProgress />
+    }
 
     const userStatus = (rowData) => {
         const status = rowData.userStatus

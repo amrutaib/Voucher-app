@@ -21,7 +21,7 @@ const Data = [
     {
         id: 3,
         route: "/Voucher",
-        key: "Payment Summary",
+        key: "Voucher",
         routeName: "Voucher",
         iconName: <HiOutlineTicket fontSize={24} />
     },
@@ -35,7 +35,7 @@ const Data = [
     {
         id: 5,
         route: "/Destination",
-        key: "Payment Summary",
+        key: "Destination",
         routeName: "Destination",
         iconName: <BsGeoAltFill fontSize={24} />
     }
