@@ -1,4 +1,3 @@
-import { LuTag } from "react-icons/lu";
 import { BsGeoAltFill } from "react-icons/bs";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { PiUserCircleBold } from "react-icons/pi";
@@ -22,7 +21,7 @@ const Data = [
     {
         id: 3,
         route: "/Voucher",
-        key: "Payment Summary",
+        key: "Voucher",
         routeName: "Voucher",
         iconName: <HiOutlineTicket fontSize={24} />
     },
@@ -36,16 +35,9 @@ const Data = [
     {
         id: 5,
         route: "/Destination",
-        key: "Payment Summary",
+        key: "Destination",
         routeName: "Destination",
         iconName: <BsGeoAltFill fontSize={24} />
-    },
-    {
-        id: 6,
-        key: "Scheme",
-        route: "/Scheme",
-        routeName: "Scheme",
-        iconName: <LuTag fontSize={24} />
     }
 ];
 

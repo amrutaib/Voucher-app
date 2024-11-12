@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import "../style.css";
 import Navbar from '../Navbar';
 import { Link } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
@@ -6,6 +7,35 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
 export default function Dashboard() {
+
+  const [dataCount, setCount] = useState({
+    user: null,
+    vouchers: null
+  })
+  const [loading, setLoading] = useState(true)
+
+  const fetchCounts = () => {
+    var URL = 'https://f567-103-167-123-125.ngrok-free.app/';
+    fetch(URL, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCount({
+          user: data.length,
+          vouchers: data.length
+        })
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchCounts()
+  }, [])
 
   const CardComponent = ({ ml, route, avatar, title, count, className }) => {
     return (
@@ -37,16 +67,16 @@ export default function Dashboard() {
       <Navbar />
       <Grid container spacing={2}>
         <CardComponent
-          count={'5'}
           title={'Users'}
           route={'/Userlist'}
-          avatar={<PersonOutlineOutlinedIcon />}
+          count={dataCount.user}
           className={'gradientpink'}
+          avatar={<PersonOutlineOutlinedIcon />}
         />
         <CardComponent
           ml={5}
-          count={'5'}
-          route={'/Payment'}
+          route={'/Voucher'}
+          count={dataCount.vouchers}
           title={'Pending Voucher'}
           className={'gradientblue'}
           avatar={<MdOutlinePendingActions size={20} />}

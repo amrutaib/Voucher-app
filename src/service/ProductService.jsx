@@ -12,7 +12,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
-                rating: 5
+                status:'Active'
             },
             {
                 id: '2',
@@ -25,6 +25,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
+                status:'Active'
             },
             {
                 id: '3',
@@ -37,6 +38,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
+                status:'Active'
             },
             {
                 id: '4',
@@ -49,6 +51,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
+                status:'InActive'
             },
             {
                 id: '5',
@@ -61,6 +64,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
+                status:'InActive'
             },
             {
                 id: '6',
@@ -73,6 +77,7 @@ export const ProductService = {
                 Balance: 24,
                 Email: 'abc@gmail.com',
                 Regitrsationdate:'2024-08-09',
+                status:'Active'
             },
          /*   {
                 id: '1006',

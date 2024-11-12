@@ -8,6 +8,7 @@ import Userlist from "./UserList";
 import Dashboard from "./Dashboard";
 import UserProfile from './UserProfile';
 import Destination from './Destination';
+import AddUser from './UserList/AddUser';
 import PrivateRoute from "./PrivateRoute";
 import UserPayment from "./UserList/UserPayment";
 import UserVoucherList from "./UserList/UserVoucherList";
@@ -17,6 +18,7 @@ export {
     Login,
     About,
     Navbar,
+    AddUser,
     Voucher,
     Payment,
     Userlist,
