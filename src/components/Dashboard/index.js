@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
 import Navbar from '../Navbar';
 import { Link } from "react-router-dom";
+import { Toast } from 'primereact/toast';
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
 export default function Dashboard() {
 
+  //ref
+  const toast = useRef(null);
+
+  //states
+  const [loading, setLoading] = useState(true)
   const [dataCount, setCount] = useState({
     user: null,
     vouchers: null
   })
-  const [loading, setLoading] = useState(true)
+
 
   const fetchCounts = () => {
-    var URL = 'https://f567-103-167-123-125.ngrok-free.app/';
+    var URL = 'https://f09d-103-167-123-105.ngrok-free.app/';
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -29,7 +35,9 @@ export default function Dashboard() {
           vouchers: data.length
         })
       })
-      .catch((err) => console.log(err))
+      .catch((err) => toast.current.show({
+        severity: 'error', summary: 'Error', detail: err.message, life: 3000
+      }))
       .finally(() => setLoading(false))
   }
 
@@ -65,10 +73,11 @@ export default function Dashboard() {
       }}
     >
       <Navbar />
+      <Toast ref={toast} />
       <Grid container spacing={2}>
         <CardComponent
           title={'Users'}
-          route={'/Userlist'}
+          route={'/userslist'}
           count={dataCount.user}
           className={'gradientpink'}
           avatar={<PersonOutlineOutlinedIcon />}

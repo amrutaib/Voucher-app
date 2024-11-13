@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
+import axios from 'axios';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -53,21 +54,21 @@ export default function Userlist() {
     }
 
     async function fetchUsers() {
-        var URL = 'https://f567-103-167-123-125.ngrok-free.app/';
-        fetch(URL, {
-            method: "get",
-            headers: new Headers({
-                "ngrok-skip-browser-warning": "69420",
-            }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setUsers(data);
-                setLoading(false);
-                console.log(data, "DATA")
-            })
-            .catch((err) => console.log(err))
-            .finally(() => setLoading(false))
+        const URL = 'https://f09d-103-167-123-105.ngrok-free.app/';
+        try {
+            const response = await axios.get(URL, {
+                headers: {
+                    'ngrok-skip-browser-warning': '69420',
+                },
+            });
+            setUsers(response.data);
+            setLoading(false);
+            console.log(response.data, "DATA");
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -94,7 +95,7 @@ export default function Userlist() {
     const actionBodyTemplate = () => {
         return (
             <React.Fragment>
-                <ActionBody iconName='receipt' tooltip='View Voucher' handleClick={() => navigate('/UserVoucher')} />
+                <ActionBody iconName='receipt' tooltip='View Voucher' handleClick={() => navigate('/uservouchers')} />
                 <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment')} />
                 <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>

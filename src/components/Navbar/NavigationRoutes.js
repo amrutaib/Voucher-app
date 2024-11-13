@@ -14,8 +14,8 @@ const Data = [
     {
         id: 2,
         key: "Users",
-        route: "/Userlist",
         routeName: "User",
+        route: "/userslist",
         iconName: <PiUserCircleBold fontSize={24} />
     },
     {

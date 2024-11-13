@@ -49,22 +49,13 @@ export const appRouter = createBrowserRouter([
         path: "Dashboard",
         element: <Dashboard />,
       },
+      //User routes
       {
-        path: "Userlist",
+        path: "userslist",
         element: <Userlist />,
       },
       {
-        path: "Voucher",
-        element:
-          <Voucher />
-      },
-      {
-        path: "Payment",
-        element:
-          <Payment />
-      },
-      {
-        path: "UserProfile",
+        path: "userprofile",
         element: <UserProfile />
       },
       {
@@ -76,8 +67,20 @@ export const appRouter = createBrowserRouter([
         element: <AddUser />
       },
       {
-        path: "UserVoucher",
+        path: "uservouchers",
         element: <UserVoucherList />
+      },
+      //Voucher screens
+      {
+        path: "Voucher",
+        element:
+          <Voucher />
+      },
+      //Payment screens
+      {
+        path: "Payment",
+        element:
+          <Payment />
       },
       {
         path: "Destination",
