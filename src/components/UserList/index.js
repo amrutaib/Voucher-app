@@ -62,8 +62,6 @@ export default function Userlist() {
                 },
             });
             setUsers(response.data);
-            setLoading(false);
-            console.log(response.data, "DATA");
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         } finally {

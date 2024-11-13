@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
+import axios from 'axios';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -13,7 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import Typography from "@mui/material/Typography";
-import { ProductService } from '../../service/ProductService';
+import { api_routes, BASE_URL } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function UserPayment() {
@@ -23,28 +24,37 @@ export default function UserPayment() {
     const toast = useRef(null);
 
     //states
-    const [products, setProducts] = useState(null);
+    const [date, setDate] = useState(null);
     const [amount, setAmount] = useState('')
-    const [date, setDate] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [paymentSummary, setPaymentSummary] = useState([])
     const [selectedPaymentModes, setSelectedPaymentModes] = useState(null);
     const paymentModes = [
         { name: 'Cash', },
         { name: 'Bank Transfer' }
     ];
 
+    const fetchUserPaymentSummary = async () => {
+        try {
+            const URL = `${BASE_URL}${api_routes.add_user_payment}`
+            const response = await axios.get(URL, {
+                headers: {
+                    'ngrok-skip-browser-warning': '69420',
+                },
+            });
+            setPaymentSummary(response.data);
+            setLoading(false);
+            console.log(response.data, "DATA");
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
-        ProductService
-            .getProducts()
-            .then((data) => setProducts(data));
+        fetchUserPaymentSummary();
     }, []);
-
-    const mobileBodyTemplate = (rowData) => {
-        return (rowData.Mobile);
-    };
-
-    const regitrationdatetypeBodyTemplate = (rowData) => {
-        return (rowData.Regitrsationdate);
-    };
 
     const header = (
         <div className="header">
@@ -120,16 +130,15 @@ export default function UserPayment() {
                             rows={10}
                             dataKey="id"
                             header={header}
-                            value={products}
+                            value={paymentSummary}
                             rowsPerPageOptions={[5, 10, 25]}
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         >
-                            <Column field="id" header="Sr no." sortable style={{ minWidth: '4rem' }} />
-                            <Column field="id" header="Amount" style={{ minWidth: '4rem' }} />
-                            <Column field="Voucherno" header="Mode of payment" body={regitrationdatetypeBodyTemplate} style={{ minWidth: '8rem' }} />
-                            <Column field="Seller" header="Date" body={mobileBodyTemplate} />
-                            <Column field="Approved" header="Added date" body={regitrationdatetypeBodyTemplate} style={{ minWidth: '8rem' }} />
+                            <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
+                            <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
+                            <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
+                            <Column field="PaymentDate" header="Date" />
                         </DataTable>
                     </div>
                 </div>
