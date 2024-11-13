@@ -105,6 +105,7 @@ export default function Navbar({ HeaderTitle }) {
 
   const navigate = useNavigate()
   const location = useLocation()
+
   const theme = createTheme({
     typography: {
       fontFamily: 'Mulish, sans-serif',
@@ -121,6 +122,10 @@ export default function Navbar({ HeaderTitle }) {
   };
 
   const PageTitle = location.pathname.split('/')[1] || 'Dashboard'
+
+  const isPageActive = (item) => {
+    return location.pathname === item.route || (item.subRoutes && item.subRoutes.includes(location.pathname))
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -160,13 +165,12 @@ export default function Navbar({ HeaderTitle }) {
               <ListItem
                 key={item.key}
                 disablePadding
-                onClick={() => navigate(item.route)}
                 sx={{
                   display: 'block',
                   borderTopRightRadius: '10px',
                   borderBottomRightRadius: '10px',
-                  boxShadow: location.pathname === item.route && '3px 3px 20px 0 rgba(123, 31, 162, .5)',
-                  background: location.pathname === item.route && 'linear-gradient(45deg, #303f9f, #7b1fa2)',
+                  boxShadow: isPageActive(item) && '3px 3px 20px 0 rgba(123, 31, 162, .5)',
+                  background: isPageActive(item) && 'linear-gradient(45deg, #303f9f, #7b1fa2)',
                 }}
               >
                 <ListItemButton
@@ -174,12 +178,14 @@ export default function Navbar({ HeaderTitle }) {
                     minHeight: 48, px: 2.5,
                     justifyContent: open ? 'initial' : 'center'
                   }}
+                  selected={isPageActive(item)}
+                  onClick={() => navigate(item.route)}
                 >
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
                       mr: open ? 3 : 'auto', justifyContent: 'center',
-                      color: location.pathname === item.route ? '#fff' : '#000',
+                      color: isPageActive(item) ? '#fff' : '#000',
                     }}
                   >
                     {item.iconName}
@@ -188,7 +194,7 @@ export default function Navbar({ HeaderTitle }) {
                     primary={item.routeName}
                     sx={{
                       opacity: open ? 1 : 0,
-                      color: location.pathname === item.route ? '#fff' : '#000',
+                      color: isPageActive(item) ? '#fff' : '#000',
                     }}
                   />
                 </ListItemButton>
