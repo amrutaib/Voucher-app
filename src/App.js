@@ -13,21 +13,22 @@ import {
   PrivateRoute,
   UserVoucherList,
 } from "./components/index";
-import { createBrowserRouter, Outlet } from "react-router-dom"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+// Accessing your defined KEYS in .env file
+console.log(process.env.REACT_API_KEY);
 const theme = createTheme({
   typography: {
-    fontFamily: 'Mulish, sans-serif',
+    fontFamily: "Mulish, sans-serif",
   },
 });
-
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Outlet />
-    </ThemeProvider >
+    </ThemeProvider>
   );
 };
 
@@ -55,29 +56,27 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "Voucher",
-        element:
-          <Voucher />
+        element: <Voucher />,
       },
       {
         path: "Payment",
-        element:
-          <Payment />
+        element: <Payment />,
       },
       {
         path: "UserProfile",
-        element: <UserProfile />
+        element: <UserProfile />,
       },
       {
         path: "userpayment",
-        element: <UserPayment />
+        element: <UserPayment />,
       },
       {
         path: "adduser",
-        element: <AddUser />
+        element: <AddUser />,
       },
       {
         path: "UserVoucher",
-        element: <UserVoucherList />
+        element: <UserVoucherList />,
       },
       {
         path: "Destination",
@@ -86,7 +85,7 @@ export const appRouter = createBrowserRouter([
             <Destination />
           </PrivateRoute>
         ),
-      }
+      },
     ],
   },
   {
