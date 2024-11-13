@@ -4,6 +4,7 @@ import Navbar from '../Navbar';
 import { Toast } from 'primereact/toast';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { api_routes, BASE_URL } from '../../config/api';
 import { Button, MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Grid } from '@mui/material';
 
 export default function AddUser() {
@@ -16,11 +17,12 @@ export default function AddUser() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        axios.post('https://f567-103-167-123-125.ngrok-free.app/save', data)
+        const URL = `${BASE_URL}${api_routes.add_user}`
+        axios.post(URL, data)
             .then(function (response) {
                 const data = response.data
                 if (data.status === 200) {
-                    setTimeout(() => navigate('/UserList'), 2000)
+                    setTimeout(() => navigate('/userslist'), 500)
                     toast.current.show({ severity: 'success', summary: 'Error', detail: data.message, life: 2000 });
                 } else {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: data.message, life: 3000 });
@@ -41,9 +43,8 @@ export default function AddUser() {
                 display: 'flex',
             }}
         >
-            <Navbar HeaderTitle='Add New User' />
             <Toast ref={toast} />
-
+            <Navbar HeaderTitle='Add New User' />
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <Grid container spacing={2}>
                     {/* UserName Field */}

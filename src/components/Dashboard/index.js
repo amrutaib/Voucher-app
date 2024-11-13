@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
 import Navbar from '../Navbar';
+import Loader from '../Loader';
 import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
+import { BASE_URL } from '../../config/api';
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
@@ -21,8 +23,7 @@ export default function Dashboard() {
 
 
   const fetchCounts = () => {
-    var URL = 'https://f09d-103-167-123-105.ngrok-free.app/';
-    fetch(URL, {
+    fetch(BASE_URL, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",
@@ -74,23 +75,26 @@ export default function Dashboard() {
     >
       <Navbar />
       <Toast ref={toast} />
-      <Grid container spacing={2}>
-        <CardComponent
-          title={'Users'}
-          route={'/userslist'}
-          count={dataCount.user}
-          className={'gradientpink'}
-          avatar={<PersonOutlineOutlinedIcon />}
-        />
-        <CardComponent
-          ml={5}
-          route={'/Voucher'}
-          count={dataCount.vouchers}
-          title={'Pending Voucher'}
-          className={'gradientblue'}
-          avatar={<MdOutlinePendingActions size={20} />}
-        />
-      </Grid>
+      {
+        loading ? <Loader /> :
+          <Grid container spacing={2}>
+            <CardComponent
+              title={'Users'}
+              route={'/userslist'}
+              count={dataCount.user}
+              className={'gradientpink'}
+              avatar={<PersonOutlineOutlinedIcon />}
+            />
+            <CardComponent
+              ml={5}
+              route={'/Voucher'}
+              count={dataCount.vouchers}
+              title={'Pending Voucher'}
+              className={'gradientblue'}
+              avatar={<MdOutlinePendingActions size={20} />}
+            />
+          </Grid>
+      }
     </Box>
   );
 }

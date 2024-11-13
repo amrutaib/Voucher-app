@@ -9,6 +9,7 @@ import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { BASE_URL } from '../../config/api';
 import 'primereact/resources/primereact.css';
 import { Password } from 'primereact/password';
 import { Dropdown } from 'primereact/dropdown';
@@ -54,9 +55,8 @@ export default function Userlist() {
     }
 
     async function fetchUsers() {
-        const URL = 'https://f09d-103-167-123-105.ngrok-free.app/';
         try {
-            const response = await axios.get(URL, {
+            const response = await axios.get(BASE_URL, {
                 headers: {
                     'ngrok-skip-browser-warning': '69420',
                 },
