@@ -14,6 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import { api_routes, BASE_URL } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
@@ -70,6 +71,25 @@ export default function UserPayment() {
     );
 
     const Label = ({ value, html }) => <FormLabel htmlFor={html} required className='font-bold mb-2'>{value}</FormLabel>
+
+    const NullComponent = () => {
+        return (
+            <Box
+                sx={{
+                    mt: 5,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <FaExclamationTriangle size={100} elevation={3} />
+                <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+                    Sorry, we couldnt find any payment history for {userName}
+                </Typography>
+            </Box>
+        )
+    }
 
     const AddPayment = () => (
         <form onSubmit={onSubmitPayment}>
@@ -140,7 +160,11 @@ export default function UserPayment() {
                     <AddPayment />
                     <div className="card">
                         {
-                            loading ? <Loader /> : (
+                            loading ? (
+                                <Loader />
+                            ) : paymentSummary.length < 1 ? (
+                                <NullComponent />
+                            ) : (
                                 <DataTable
                                     ref={dt}
                                     paginator

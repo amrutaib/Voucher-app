@@ -16,8 +16,7 @@ import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { api_routes, BASE_URL } from '../../config/api';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; 
 
 export default function Payment() {
 
