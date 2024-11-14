@@ -1,27 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
 import axios from 'axios';
+import Loader from '../Loader';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import Box from "@mui/material/Box";
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
-import { InputText } from 'primereact/inputtext';
+import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
-import Typography from "@mui/material/Typography";
+import { InputText } from 'primereact/inputtext';
 import { api_routes, BASE_URL } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
 
 export default function UserPayment() {
 
     //ref
     const dt = useRef(null);
     const toast = useRef(null);
+    const location = useLocation();
+
+    const { data } = location.state || {}
+    const { userId, userName } = data
 
     //states
     const [date, setDate] = useState(null);
@@ -36,15 +41,13 @@ export default function UserPayment() {
 
     const fetchUserPaymentSummary = async () => {
         try {
-            const URL = `${BASE_URL}${api_routes.add_user_payment}`
+            const URL = `${BASE_URL}${api_routes.add_user_payment}/${userId}`
             const response = await axios.get(URL, {
                 headers: {
                     'ngrok-skip-browser-warning': '69420',
                 },
             });
             setPaymentSummary(response.data);
-            setLoading(false);
-            console.log(response.data, "DATA");
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         } finally {
@@ -56,56 +59,68 @@ export default function UserPayment() {
         fetchUserPaymentSummary();
     }, []);
 
+    const onSubmitPayment = (e) => {
+        e.preventDefault();
+    };
+
     const header = (
         <div className="header">
-            <h4 className="m-0">Manage user payment summary</h4>
+            <h4 className="m-0">Manage {userName}'s payment summary</h4>
         </div>
     );
 
-    const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold block mb-2">{value}</label>
+    const Label = ({ value, html }) => <FormLabel htmlFor={html} required className='font-bold mb-2'>{value}</FormLabel>
 
     const AddPayment = () => (
-        <Box sx={{
-            padding: '20px',
-            marginBottom: '20px',
-            borderRadius: '8px',
-            flexDirection: 'column',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-        }}>
-            <div className="flex-auto mb-2">
-                <FormLabel html="name" value="Amount" />
-                <InputText
-                    id="name"
-                    required
-                    autoFocus
-                    value={amount}
-                    variant='outlined'
-                    placeholder='Add amount'
-                    onChange={(e) => setAmount(e.target.value)}
-                />
-            </div>
-            <div className="flex-auto mb-2">
-                <FormLabel html="name" value="Select payment mode" />
-                <Dropdown
-                    options={paymentModes}
-                    optionLabel="name"
-                    value={selectedPaymentModes}
-                    placeholder="Select mode"
-                    className="w-full md:w-14rem"
-                    onChange={(e) => setSelectedPaymentModes(e.value)}
-                />
-            </div>
-            <div className="flex-auto mb-2">
-                <FormLabel html="name" value="Date" />
-                <Calendar value={date} onChange={(e) => setDate(e.value)} showIcon placeholder='Add date' />
-            </div>
-            <Button
-                label="Add payment"
-                severity="success"
-                onClick={() => { }}
-                style={{ marginTop: '10px' }}
-            />
-        </Box>
+        <form onSubmit={onSubmitPayment}>
+            <Box
+                sx={{
+                    padding: '20px',
+                    borderRadius: '8px',
+                    marginBottom: '20px',
+                    alignItems: 'center',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                }}>
+                <Stack spacing={3} direction={"row"} mb={3}>
+
+                    {/* amount */}
+                    <FormControl fullWidth>
+                        <Label html="name" value="Amount" />
+                        <InputText
+                            required
+                            value={amount}
+                            placeholder="Enter amount"
+                            onChange={(e) => setAmount(e.target.value)}
+                        />
+                    </FormControl>
+
+                    {/* payemt methods */}
+                    <FormControl fullWidth>
+                        <Label html="name" value="Select payment mode" />
+                        <Dropdown
+                            optionLabel="name"
+                            options={paymentModes}
+                            value={selectedPaymentModes}
+                            placeholder="Select payment mode"
+                            onChange={(e) => setSelectedPaymentModes(e.value)}
+                        />
+                    </FormControl>
+
+                    {/* date  */}
+                    <FormControl fullWidth>
+                        <Label html="date" value="Date" />
+                        <Calendar
+                            required
+                            showIcon
+                            value={date}
+                            placeholder='Add date'
+                            onChange={(e) => setDate(e.value)}
+                        />
+                    </FormControl>
+                </Stack>
+                <Button label="Add Payment" type='submit' />
+            </Box>
+        </form>
     )
 
     return (
@@ -122,24 +137,28 @@ export default function UserPayment() {
             <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
+                    <AddPayment />
                     <div className="card">
-                        <AddPayment />
-                        <DataTable
-                            ref={dt}
-                            paginator
-                            rows={10}
-                            dataKey="id"
-                            header={header}
-                            value={paymentSummary}
-                            rowsPerPageOptions={[5, 10, 25]}
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        >
-                            <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
-                            <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
-                            <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
-                            <Column field="PaymentDate" header="Date" />
-                        </DataTable>
+                        {
+                            loading ? <Loader /> : (
+                                <DataTable
+                                    ref={dt}
+                                    paginator
+                                    rows={10}
+                                    dataKey="id"
+                                    header={header}
+                                    value={paymentSummary}
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                >
+                                    <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
+                                    <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
+                                    <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
+                                    <Column field="PaymentDate" header="Date" />
+                                </DataTable>
+                            )
+                        }
                     </div>
                 </div>
             </Typography>

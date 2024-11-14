@@ -81,14 +81,14 @@ export default function Dashboard() {
             <CardComponent
               title={'Users'}
               route={'/userslist'}
-              count={dataCount.user}
+              count={dataCount.user | 0}
               className={'gradientpink'}
               avatar={<PersonOutlineOutlinedIcon />}
             />
             <CardComponent
               ml={5}
               route={'/Voucher'}
-              count={dataCount.vouchers}
+              count={dataCount.vouchers | 0}
               title={'Pending Voucher'}
               className={'gradientblue'}
               avatar={<MdOutlinePendingActions size={20} />}

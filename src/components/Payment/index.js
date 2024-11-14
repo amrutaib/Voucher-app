@@ -14,8 +14,10 @@ import { InputIcon } from 'primereact/inputicon';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
+import { FaExclamationTriangle } from 'react-icons/fa';
 import { api_routes, BASE_URL } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 export default function Payment() {
 
@@ -68,6 +70,25 @@ export default function Payment() {
         </div>
     );
 
+    const NullComponent = () => {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '70vh'
+                }}
+            >
+                <FaExclamationTriangle size={140} elevation={3} />
+                <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+                    Sorry, we couldnt find any payment summary
+                </Typography>
+            </Box>
+        )
+    }
+
     return (
         <Box
             sx={{
@@ -82,28 +103,34 @@ export default function Payment() {
             <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
-                    <Export />
                     <div className="card">
-                        {loading ? (<Loader />) :
-                            (
-                                <DataTable
-                                    ref={dt}
-                                    paginator
-                                    rows={10}
-                                    dataKey="id"
-                                    header={header}
-                                    value={paymentSummary}
-                                    globalFilter={globalFilter}
-                                    rowsPerPageOptions={[5, 10, 25]}
-                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
-                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                >
-                                    <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
-                                    <Column field="userName" header="Username" style={{ minWidth: '4rem' }} />
-                                    <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
-                                    <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
-                                    <Column field="PaymentDate" header="Payment Date" />
-                                </DataTable>
+                        {
+                            loading ? (
+                                <Loader />
+                            ) : paymentSummary.length < 1 ? (
+                                <NullComponent />
+                            ) : (
+                                <>
+                                    <Export />
+                                    <DataTable
+                                        ref={dt}
+                                        paginator
+                                        rows={10}
+                                        dataKey="id"
+                                        header={header}
+                                        value={paymentSummary}
+                                        globalFilter={globalFilter}
+                                        rowsPerPageOptions={[5, 10, 25]}
+                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
+                                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    >
+                                        <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
+                                        <Column field="userName" header="Username" style={{ minWidth: '4rem' }} />
+                                        <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
+                                        <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
+                                        <Column field="PaymentDate" header="Payment Date" />
+                                    </DataTable>
+                                </>
                             )
                         }
                     </div>

@@ -90,11 +90,11 @@ export default function Userlist() {
         )
     };
 
-    const actionBodyTemplate = () => {
+    const actionBodyTemplate = (data) => {
         return (
             <React.Fragment>
                 <ActionBody iconName='receipt' tooltip='View Voucher' handleClick={() => navigate('/uservouchers')} />
-                <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment')} />
+                <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment', { state: { data } })} />
                 <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
             </React.Fragment>
         );
@@ -140,22 +140,23 @@ export default function Userlist() {
     const NullComponent = () => {
         return (
             <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-                p={4}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '70vh'
+                }}
             >
                 <FaExclamationTriangle size={140} elevation={3} />
-                <Typography variant="h5" color="ButtonText" gutterBottom my={'20px'}>
+                <Typography variant="h6" component="div" sx={{ mt: 3 }}>
                     No Users Available
                 </Typography>
-                <Typography variant="body2" color="textSecondary" mb={2}>
+                <Typography variant="body2" color="textSecondary" my={2}>
                     No users have been created yet, Click on the add button to create a new user.
                 </Typography>
                 <AddNewUser />
-            </Box>
+            </Box >
         )
     }
 
