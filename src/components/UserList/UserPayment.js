@@ -138,7 +138,7 @@ export default function UserPayment() {
                         />
                     </FormControl>
                 </Stack>
-                <Button label="Add Payment" type='submit' />
+                <Button label="Add Payment" type='submit' className='button' />
             </Box>
         </form>
     )

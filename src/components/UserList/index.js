@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
+import "../style.css"
 import axios from 'axios';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
@@ -113,10 +114,8 @@ export default function Userlist() {
     const AddNewUser = () => (
         <div className='addbtn'>
             <Button
-                iconPos='right'
                 label="Add User"
-                icon="pi pi-plus"
-                severity="success"
+                className='button'
                 onClick={() => navigate('/adduser')}
             />
         </div>

@@ -82,7 +82,7 @@ export default function Destination() {
         <div className='addbtn'>
             <Button
                 label="Add New"
-                severity="success"
+                className='button'
                 onClick={() => setAddNewDialog(true)}
             />
         </div>

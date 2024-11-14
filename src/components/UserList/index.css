@@ -12,3 +12,10 @@
   margin-bottom: 20px;
   justify-content: left;
 }
+
+.button {
+  border: none;
+  background: linear-gradient(45deg, #303f9f, #7b1fa2);
+  -webkit-box-shadow: 3px 3px 20px 0 rgba(123, 31, 162, 0.5);
+  box-shadow: 3px 3px 20px 0 rgba(123, 31, 162, 0.5);
+}
