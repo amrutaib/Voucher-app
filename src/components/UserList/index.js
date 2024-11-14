@@ -49,7 +49,7 @@ export default function Userlist() {
   };
 
   async function fetchUsers() {
-    var URL = "https://f09d-103-167-123-105.ngrok-free.app/";
+    var URL = "https://c5da-110-226-177-100.ngrok-free.app/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -86,8 +86,17 @@ export default function Userlist() {
       />
     );
   };
+  const editProduct = (users) => {
+    console.log("users", users);
+    var id = users;
+    // setUsers({ ...users });
+    navigate(`/editUser/${id}`);
+    //  navigate("/editUser/");
+    setAddUserModal(true);
+  };
 
-  const actionBodyTemplate = () => {
+  // editProduct(rowData)
+  const actionBodyTemplate = (users) => {
     return (
       <React.Fragment>
         <ActionBody
@@ -103,7 +112,8 @@ export default function Userlist() {
         <ActionBody
           iconName="pencil"
           tooltip="Edit User"
-          handleClick={() => setAddUserModal(true)}
+          value={userActiveStatus.userId}
+          handleClick={() => editProduct(users.userId)}
         />
       </React.Fragment>
     );

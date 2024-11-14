@@ -10,6 +10,7 @@ import {
   UserProfile,
   Destination,
   UserPayment,
+  EditUser,
   PrivateRoute,
   UserVoucherList,
 } from "./components/index";
@@ -77,6 +78,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "UserVoucher",
         element: <UserVoucherList />,
+      },
+      {
+        path: "editUser/:Id",
+        element: <EditUser />,
       },
       {
         path: "Destination",

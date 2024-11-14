@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   const fetchUsersCounts = () => {
-    var URL = "https://f09d-103-167-123-105.ngrok-free.app/";
+    var URL = "https://c5da-110-226-177-100.ngrok-free.app/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -36,7 +36,7 @@ export default function Dashboard() {
   };
   const fetchVpuchersCounts = () => {
     var URL =
-      "https://f09d-103-167-123-105.ngrok-free.app/voucher/VoucherCount/";
+      "https://c5da-110-226-177-100.ngrok-free.app/voucher/VoucherCount/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
