@@ -43,7 +43,7 @@ export default function EditUser() {
   function getUser() {
     console.log(name);
     // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
-    fetch(`http://localhost:8000/api/user/${Id}`, {
+    fetch(`https://d386-103-167-123-102.ngrok-free.app/api/user/${Id}`, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",

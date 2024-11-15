@@ -49,7 +49,7 @@ export default function Userlist() {
   };
 
   async function fetchUsers() {
-    var URL = "https://c5da-110-226-177-100.ngrok-free.app/";
+    var URL = "https://d386-103-167-123-102.ngrok-free.app/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -72,9 +72,14 @@ export default function Userlist() {
 
   const userStatus = (rowData) => {
     const status = rowData.userStatus;
+    console.log(status);
+
     function checkStatus() {
       if (status === "active") {
         setUserActiveStatus(true);
+      }
+      if (status == "Inactive") {
+        setUserActiveStatus(false);
       }
     }
     return (

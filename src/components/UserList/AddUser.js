@@ -30,7 +30,7 @@ export default function AddUser() {
 
   const onSubmit = async (data) => {
     axios
-      .post("https://c5da-110-226-177-100.ngrok-free.app/save", data)
+      .post("https://d386-103-167-123-102.ngrok-free.app/save", data)
       .then(function (response) {
         const data = response.data;
         console.log(data.status);
