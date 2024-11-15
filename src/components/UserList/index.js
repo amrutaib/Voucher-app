@@ -78,7 +78,7 @@ export default function Userlist() {
       if (status === "active") {
         setUserActiveStatus(true);
       }
-      if (status == "Inactive") {
+      if (status === "Inactive") {
         setUserActiveStatus(false);
       }
     }
@@ -97,9 +97,12 @@ export default function Userlist() {
     // setUsers({ ...users });
     navigate(`/editUser/${id}`);
     //  navigate("/editUser/");
-    setAddUserModal(true);
+    //  setAddUserModal(true);
   };
-
+  const viewVoucher = (users) => {
+    var Id = users;
+    navigate(`/uservouchers/${Id}`);
+  };
   // editProduct(rowData)
   const actionBodyTemplate = (users) => {
     return (
@@ -107,7 +110,7 @@ export default function Userlist() {
         <ActionBody
           iconName="receipt"
           tooltip="View Voucher"
-          handleClick={() => navigate("/UserVoucher")}
+          handleClick={() => viewVoucher(users.userId)}
         />
         <ActionBody
           iconName="dollar"
@@ -266,7 +269,7 @@ export default function Userlist() {
                     style={{ minWidth: "8rem" }}
                   />
                   <Column
-                    field="Userstatus"
+                    field="userStatus"
                     header="User Status"
                     body={userStatus}
                     style={{ minWidth: "6rem" }}

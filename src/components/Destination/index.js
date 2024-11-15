@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
+import axios from 'axios';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -9,85 +10,58 @@ import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
-import { classNames } from 'primereact/utils';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
-import { PiWarningOctagonThin } from "react-icons/pi";
-import { ProductService } from '../../service/ProductService';
+import { BASE_URL, api_routes } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Destination() {
 
-    let emptyProduct = {
-        id: null,
-        name: '',
-        image: null,
-        description: '',
-        category: null,
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
-    };
+    const navigate = useNavigate();
+    const URL = `${BASE_URL}${api_routes.destination}`
 
     //states
-    const [products, setProducts] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [destination, setDestination] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
+
+    //new destination
+    const [addNewDialog, setAddNewDialog] = useState(false)
+    const [addNewDestination, setAddNewDestination] = useState('')
 
     //ref
     const toast = useRef(null);
     const dt = useRef(null);
 
     useEffect(() => {
-        ProductService
-            .getProducts()
-            .then((data) => setProducts(data));
-    }, []);
+        fetchDestination()
+    }, [addNewDestination]);
 
+    const fetchDestination = async () => {
+        try {
+            const response = await axios.get(URL, {
+                headers: {
+                    'ngrok-skip-browser-warning': '69420',
+                },
+            });
+            setDestination(response.data);
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setLoading(false);
+        }
+    }
 
-    const openNew = () => {
-        setSubmitted(false);
-        setProductDialog(true);
-    };
-
-    const hideDialog = () => {
-        setSubmitted(false);
-        setProductDialog(false);
-    };
-
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
-    };
-
-    const editProduct = (product) => {
-        setProductDialog(true);
-    };
-
-    const confirmDeleteProduct = (product) => {
-        setDeleteProductDialog(true);
-    };
-
-    const onInputChange = (e, name) => {
-        const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
-
-        _product[`${name}`] = val;
-
-        setProduct(_product);
-    };
-
-    const actionBodyTemplate = (rowData) => {
+    const formActions = () => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => { }} />
+                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => { }} />
             </React.Fragment>
         );
     };
@@ -102,29 +76,60 @@ export default function Destination() {
         </div>
     );
 
-    const productDialogFooter = (
-        <React.Fragment>
-            <Button label="Cancel" outlined severity='danger' onClick={hideDialog} />
-            <Button label="Save" severity='success' onClick={hideDialog} />
-        </React.Fragment>
-    );
+    // add new destination 
 
-    const deleteProductDialogFooter = (
-        <React.Fragment>
-            <Button label="Cancel" severity='secondary' outlined onClick={hideDeleteProductDialog} />
-            <Button label="OK" severity="danger" onClick={hideDeleteProductDialog} />
-        </React.Fragment>
-    );
-
-    const AddNewUser = () => (
+    const AddNew = () => (
         <div className='addbtn'>
             <Button
                 label="Add New"
-                severity="success"
-                onClick={openNew}
+                className='button'
+                onClick={() => setAddNewDialog(true)}
             />
         </div>
     )
+
+    const addNewDestinationFooter = (
+        <React.Fragment>
+            <Button label="Cancel" outlined severity='danger' onClick={() => setAddNewDialog(false)} />
+            <Button label="Save" severity='success' onClick={addNewDest} />
+        </React.Fragment>
+    );
+
+    async function addNewDest() {
+
+        setError('')
+        let isValid = true
+
+        if (!addNewDestination) {
+            isValid = false
+            setError('Please add destination name')
+        }
+
+        if (isValid) {
+            try {
+                const response = await fetch(URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ DestinationName: addNewDestination })
+                })
+                const result = await response.json()
+                if (result.status === 1) {
+                    navigate('#')
+                    toast.current.show({ severity: 'success', summary: 'Error', detail: result.message, life: 2000 });
+                } else {
+                    toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
+                }
+            } catch (error) {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+            } finally {
+                setError('')
+                setAddNewDialog(false)
+                setAddNewDestination('')
+                console.log(addNewDestination)
+            }
+        }
+
+    }
 
     return (
         <Box
@@ -140,22 +145,22 @@ export default function Destination() {
                 <div>
                     <Toast ref={toast} />
                     <div className="card">
-                        <AddNewUser />
+                        <AddNew />
                         <DataTable
                             ref={dt}
                             paginator
                             rows={10}
                             dataKey="id"
                             header={header}
-                            value={products}
+                            value={destination}
                             globalFilter={globalFilter}
                             rowsPerPageOptions={[5, 10, 25]}
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         >
-                            <Column field="id" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
-                            <Column field="name" header="Name" style={{ minWidth: '8rem' }} />
-                            <Column header="Action" body={actionBodyTemplate} style={{ minWidth: '12rem' }} />
+                            <Column field="DestinationId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                            <Column field="DestinationName" header="Name" style={{ minWidth: '8rem' }} />
+                            <Column header="Action" body={formActions} style={{ minWidth: '12rem' }} />
                         </DataTable>
                     </div>
 
@@ -163,11 +168,11 @@ export default function Destination() {
                     <Dialog
                         modal
                         className="p-fluid"
-                        onHide={hideDialog}
-                        visible={productDialog}
+                        visible={addNewDialog}
                         header="Add Destination"
                         style={{ width: '32rem' }}
-                        footer={productDialogFooter}
+                        footer={addNewDestinationFooter}
+                        onHide={() => setAddNewDialog(false)}
                         breakpoints={{ '960px': '75vw', '641px': '90vw' }}
                     >
                         <div className="field">
@@ -178,29 +183,14 @@ export default function Destination() {
                                 id="name"
                                 required
                                 autoFocus
-                                value={product.name}
-                                onChange={(e) => onInputChange(e, 'name')}
-                                className={classNames({ 'p-invalid': submitted && !product.name })}
+                                value={addNewDestination}
+                                placeholder='Add destination name'
+                                onChange={(e) => setAddNewDestination(e.target.value)}
                             />
-                            {submitted && !product.name && <small className="p-error">Destination Name is required.</small>}
+                            {error && <Typography variant='subtitle2' mt={2} color={'red'}>{error}</Typography>}
                         </div>
                     </Dialog>
 
-                    {/* delete destination dialog  */}
-                    <Dialog
-                        modal
-                        style={{ width: '32rem' }}
-                        visible={deleteProductDialog}
-                        onHide={hideDeleteProductDialog}
-                        footer={deleteProductDialogFooter}
-                        breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-                    >
-                        <div className="delete-dialog">
-                            <PiWarningOctagonThin size={80} elevation={3} color='#CC0000' />
-                            <h3>Are you sure?</h3>
-                            <span>Once deleted, you will not be able to recover record!</span>
-                        </div>
-                    </Dialog>
                 </div>
             </Typography>
         </Box>

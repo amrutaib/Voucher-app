@@ -14,8 +14,13 @@ const Data = [
     {
         id: 2,
         key: "Users",
-        route: "/Userlist",
         routeName: "User",
+        route: "/userslist",
+        subRoutes: [
+            '/adduser',
+            '/userpayment',
+            '/uservouchers',
+        ],
         iconName: <PiUserCircleBold fontSize={24} />
     },
     {
@@ -23,6 +28,7 @@ const Data = [
         route: "/Voucher",
         key: "Voucher",
         routeName: "Voucher",
+        subRoutes: [],
         iconName: <HiOutlineTicket fontSize={24} />
     },
     {

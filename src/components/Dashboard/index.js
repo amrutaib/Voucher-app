@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../style.css";
 import Navbar from "../Navbar";
+import Loader from "../Loader";
 import { Link } from "react-router-dom";
+import { Toast } from "primereact/toast";
+import { BASE_URL } from "../../config/api";
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import {
@@ -17,11 +20,14 @@ export default function Dashboard() {
   const [dataCount, setUserCount] = useState();
   const [voucherCount, setVoucherCount] = useState();
 
+  //ref
+  const toast = useRef(null);
+
+  //states
   const [loading, setLoading] = useState(true);
 
   const fetchUsersCounts = () => {
-    var URL = "https://d386-103-167-123-102.ngrok-free.app/";
-    fetch(URL, {
+    fetch(BASE_URL, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",
@@ -34,7 +40,7 @@ export default function Dashboard() {
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   };
-  const fetchVpuchersCounts = () => {
+  const fetchVouchersCounts = () => {
     var URL =
       "https://d386-103-167-123-102.ngrok-free.app/voucher/VoucherCount/";
     fetch(URL, {
@@ -47,13 +53,20 @@ export default function Dashboard() {
       .then((data) => {
         setVoucherCount(data.length);
       })
-      .catch((err) => console.log(err))
+      .catch((err) =>
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: err.message,
+          life: 3000,
+        })
+      )
       .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     fetchUsersCounts();
-    fetchVpuchersCounts();
+    fetchVouchersCounts();
   }, []);
 
   const CardComponent = ({ ml, route, avatar, title, count, className }) => {

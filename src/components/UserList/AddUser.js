@@ -4,6 +4,7 @@ import Navbar from "../Navbar";
 import { Toast } from "primereact/toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { api_routes, BASE_URL } from "../../config/api";
 import {
   Button,
   MenuItem,
@@ -29,13 +30,13 @@ export default function AddUser() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const URL = `${BASE_URL}${api_routes.add_user}`;
     axios
-      .post("https://d386-103-167-123-102.ngrok-free.app/save", data)
+      .post(URL, data)
       .then(function (response) {
         const data = response.data;
-        console.log(data.status);
         if (data.status === 200) {
-          setTimeout(() => navigate("/UserList"), 2000);
+          setTimeout(() => navigate("/userslist"), 500);
           toast.current.show({
             severity: "success",
             summary: "Error",
@@ -64,9 +65,8 @@ export default function AddUser() {
         display: "flex",
       }}
     >
-      <Navbar HeaderTitle="Add New User" />
       <Toast ref={toast} />
-
+      <Navbar HeaderTitle="Add New User" />
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Grid container spacing={2}>
           {/* UserName Field */}

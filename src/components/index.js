@@ -2,6 +2,7 @@ import Error from "./Error";
 import Login from "./Login";
 import About from "./About";
 import Navbar from "./Navbar";
+import Loader from "./Loader";
 import Voucher from "./Voucher";
 import Payment from "./Payment";
 import Userlist from "./UserList";
@@ -21,6 +22,7 @@ export {
   Navbar,
   AddUser,
   Voucher,
+  Loader,
   Payment,
   Userlist,
   Dashboard,
