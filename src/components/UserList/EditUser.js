@@ -1,21 +1,13 @@
-import React, { useRef, useState, useEffect } from "react";
-import {
-    Box,
-    Grid,
-    Button,
-    Select,
-    MenuItem,
-    TextField,
-    Typography,
-    InputLabel,
-    FormControl,
-} from "@mui/material";
-import axios from "axios";
-import Navbar from "../Navbar";
-import { Toast } from "primereact/toast";
-import { useForm } from "react-hook-form";
-import { BASE_URL } from "../../config/api";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
+import Navbar from '../Navbar';
+import { Toast } from 'primereact/toast';
+import { useForm } from 'react-hook-form';
+import { Button } from 'primereact/button';
+import { BASE_URL } from '../../config/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';
 
 export default function EditUser() {
 
@@ -26,9 +18,14 @@ export default function EditUser() {
     const toast = useRef(null);
     const [inputs, setInputs] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     //react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
 
     useEffect(() => {
         getUser();
@@ -85,116 +82,130 @@ export default function EditUser() {
                 p: 3,
                 mt: 10,
                 flexGrow: 1,
-                display: "flex",
+                display: 'flex'
             }}
         >
-            <Navbar HeaderTitle="Edit User" />
-            <Toast ref={toast} />
+            <Navbar HeaderTitle='Add New User' />
+            <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
+                <div>
+                    <Toast ref={toast} />
 
-            {/* map over the users array */}
-            {inputs.map((user) => (
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <Grid container spacing={2}>
-                        {/* UserName Field */}
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                label="Username"
-                                variant="outlined"
-                                {...register("userName", { required: "Username is required" })}
-                                error={!!errors.userName}
-                                helperText={errors.userName?.message}
-                                placeholder="Enter name"
-                                defaultValue={user.userName}
-                            />
-                        </Grid>
+                    {/* map over the users array */}
 
-                        {/* Password Field */}
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                {...register("userPassword", {
-                                    required: "Password is required",
-                                })}
-                                error={!!errors.userPassword}
-                                helperText={errors.userPassword?.message}
-                                defaultValue={user.userPassword}
-                            />
-                        </Grid>
+                    {inputs.map((user) => (
+                        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                            <Box
+                                sx={{
+                                    p: 3,
+                                    borderRadius: '8px',
+                                    alignItems: 'center',
+                                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                                }}>
 
-                        {/* Email Field */}
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                label="Email"
-                                variant="outlined"
-                                {...register("email", {
-                                    required: "Email is required",
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: "Enter a valid email address",
-                                    },
-                                })}
-                                error={!!errors.email}
-                                helperText={errors.email?.message}
-                                defaultValue={user.email}
-                            />
-                        </Grid>
+                                <Stack spacing={3} direction={"row"} mb={3}>
+                                    {/* UserName Field */}
+                                    <TextField
+                                        fullWidth
+                                        label="Username"
+                                        variant="outlined"
+                                        {...register("userName", { required: "Username is required" })}
+                                        error={!!errors.userName}
+                                        helperText={errors.userName?.message}
+                                        placeholder="Enter name"
+                                        defaultValue={user.userName}
+                                    />
+                                    {/* Password Field */}
+                                    <TextField
+                                        fullWidth
+                                        label="Password"
+                                        variant="outlined"
+                                        {...register("userPassword", {
+                                            required: "Password is required",
+                                        })}
+                                        error={!!errors.userPassword}
+                                        defaultValue={user.userPassword}
+                                        helperText={errors.userPassword?.message}
+                                        type={showPassword ? 'text' : 'password'}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        edge="end"
+                                                        onClick={togglePasswordVisibility}
+                                                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </Stack>
 
-                        {/* Mobile Field */}
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                label="Mobile"
-                                variant="outlined"
-                                {...register("Mobile", {
-                                    required: "Mobile number is required",
-                                    pattern: {
-                                        value: /^[0-9]{10}$/,
-                                        message: "Enter a valid 10-digit mobile number",
-                                    },
-                                })}
-                                error={!!errors.Mobile}
-                                helperText={errors.Mobile?.message}
-                                defaultValue={user.Mobile}
-                            />
-                        </Grid>
+                                <Stack spacing={3} direction={"row"} mb={3}>
+                                    {/* Email Field */}
+                                    <TextField
+                                        fullWidth
+                                        label="Email"
+                                        variant="outlined"
+                                        {...register("email", {
+                                            required: "Email is required",
+                                            pattern: {
+                                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                message: "Enter a valid email address",
+                                            },
+                                        })}
+                                        error={!!errors.email}
+                                        helperText={errors.email?.message}
+                                        defaultValue={user.email}
+                                    />
+                                    {/* Mobile Field */}
+                                    <TextField
+                                        fullWidth
+                                        label="Mobile"
+                                        variant="outlined"
+                                        {...register("Mobile", {
+                                            required: "Mobile number is required",
+                                            pattern: {
+                                                value: /^[0-9]{10}$/,
+                                                message: "Enter a valid 10-digit mobile number",
+                                            },
+                                        })}
+                                        error={!!errors.Mobile}
+                                        helperText={errors.Mobile?.message}
+                                        defaultValue={user.Mobile}
+                                    />
 
-                        {/* UserType Field */}
-                        <Grid item xs={12} sm={6}>
-                            <FormControl fullWidth variant="outlined">
-                                <InputLabel>User Type</InputLabel>
-                                <Select
-                                    label="User Type"
-                                    defaultValue={user.userType}
-                                    {...register("userType", {
-                                        required: "User type is required",
-                                    })}
-                                    error={!!errors.userType}
-                                >
-                                    <MenuItem value="Import">Import</MenuItem>
-                                    <MenuItem value="Export">Export</MenuItem>
-                                </Select>
-                                {errors.userType && (
-                                    <Typography color="error" variant="body2">
-                                        {errors.userType.message}
-                                    </Typography>
-                                )}
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                                </Stack>
 
-                    {/* Right-Aligned Submit Button */}
-                    <Box display="flex" justifyContent="flex-start" mt={5}>
-                        <Button type="submit" variant="contained" color="primary">
-                            Submit
-                        </Button>
-                    </Box>
-                </form>
-            ))}
+                                <Stack spacing={3} direction={"row"} mb={5}>
+                                    {/* Add User type */}
+                                    <FormControl variant="outlined" sx={{ width: '50%' }}>
+                                        <InputLabel>User Type</InputLabel>
+                                        <Select
+                                            label="User Type"
+                                            defaultValue={user.userType}
+                                            {...register("userType", {
+                                                required: "User type is required",
+                                            })}
+                                            error={!!errors.userType}
+                                        >
+                                            <MenuItem value="Import">Import</MenuItem>
+                                            <MenuItem value="Export">Export</MenuItem>
+                                        </Select>
+                                        {errors.userType && (
+                                            <Typography color="error" variant="body2">
+                                                {errors.userType.message}
+                                            </Typography>
+                                        )}
+                                    </FormControl>
+                                </Stack>
+                                <Button label="Update User" type='submit' className='button' />
+                            </Box>
+                        </form>
+                    ))}
+                </div>
+            </Typography>
         </Box>
     );
 }
