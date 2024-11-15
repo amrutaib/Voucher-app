@@ -49,15 +49,15 @@ export default function Dashboard() {
   const CardComponent = ({ ml, route, avatar, title, count, className }) => {
     return (
       <Link to={route}>
-        <Grid sx={{ ml: ml || 0 }}>
-          <Card sx={{ minWidth: 400, p: '20px', borderRadius: '5px' }} className={className}>
+        <Grid p={2} spacing={1}>
+          <Card sx={{ minWidth: 350, p: '20px', borderRadius: '5px' }} className={className}>
             <CardActions sx={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-              <Avatar sx={{ bgcolor: 'rgba(0, 0, 0, 0.18)', width: 54, height: 54 }}>
+              <Avatar sx={{ bgcolor: 'rgba(0, 0, 0, 0.18)', width: 50, height: 50 }}>
                 {avatar}
               </Avatar>
               <Typography sx={{ fontSize: 22, color: '#fff' }}>{count}</Typography>
             </CardActions>
-            <Typography sx={{ textAlign: 'left', mt: '10px', color: '#fff' }}>{title}</Typography>
+            <Typography sx={{ textAlign: 'left', mt: '10px' }} variant='h6' color={'#FFF'}>{title}</Typography>
           </Card>
         </Grid>
       </Link>
