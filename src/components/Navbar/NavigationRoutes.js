@@ -18,8 +18,9 @@ const Data = [
         route: "/userslist",
         subRoutes: [
             '/adduser',
+            '/editUser',
             '/userpayment',
-            '/uservouchers',
+            '/uservouchers'
         ],
         iconName: <PiUserCircleBold fontSize={24} />
     },
