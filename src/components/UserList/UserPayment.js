@@ -24,10 +24,10 @@ export default function UserPayment() {
     //ref
     const dt = useRef(null);
     const toast = useRef(null);
-    const location = useLocation();
 
-    const { data } = location.state || {}
-    const { userId, userName } = data
+    //user params
+    const location = useLocation();
+    const { id, name } = location.state
 
     //states
     const [date, setDate] = useState(null);
@@ -42,7 +42,7 @@ export default function UserPayment() {
 
     const fetchUserPaymentSummary = async () => {
         try {
-            const URL = `${BASE_URL}${api_routes.add_user_payment}/${userId}`
+            const URL = `${BASE_URL}${api_routes.add_user_payment}/${id}`
             const response = await axios.get(URL, {
                 headers: {
                     'ngrok-skip-browser-warning': '69420',
@@ -66,7 +66,7 @@ export default function UserPayment() {
 
     const header = (
         <div className="header">
-            <h4 className="m-0">Manage {userName}'s payment summary</h4>
+            <h4 className="m-0">Manage {name}'s payment summary</h4>
         </div>
     );
 
@@ -85,7 +85,7 @@ export default function UserPayment() {
             >
                 <FaExclamationTriangle size={100} elevation={3} />
                 <Typography variant="h6" component="div" sx={{ mt: 3 }}>
-                    Sorry, we couldnt find any payment history for {userName}
+                    Sorry, we couldnt find any payment history for {name}
                 </Typography>
             </Box>
         )

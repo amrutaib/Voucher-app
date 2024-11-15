@@ -94,9 +94,31 @@ export default function Userlist() {
     const actionBodyTemplate = (data) => {
         return (
             <React.Fragment>
-                <ActionBody iconName='receipt' tooltip='View Voucher' handleClick={() => navigate('/uservouchers')} />
-                <ActionBody iconName='dollar' tooltip='Payment Summary' handleClick={() => navigate('/userpayment', { state: { data } })} />
-                <ActionBody iconName='pencil' tooltip='Edit User' handleClick={() => setAddUserModal(true)} />
+                <ActionBody
+                    iconName='receipt'
+                    tooltip='View Voucher'
+                    handleClick={() => navigate('/uservouchers', {
+                        state: {
+                            id: data.userId,
+                            name: data.userName
+                        }
+                    })}
+                />
+                <ActionBody
+                    iconName='dollar'
+                    tooltip='Payment Summary'
+                    handleClick={() => navigate('/userpayment', {
+                        state: {
+                            id: data.userId,
+                            name: data.userName
+                        }
+                    })}
+                />
+                <ActionBody
+                    iconName='pencil'
+                    tooltip='Edit User'
+                    handleClick={() => setAddUserModal(true)}
+                />
             </React.Fragment>
         );
     };
@@ -140,11 +162,11 @@ export default function Userlist() {
         return (
             <Box
                 sx={{
+                    height: '70vh',
                     display: 'flex',
-                    flexDirection: 'column',
                     alignItems: 'center',
+                    flexDirection: 'column',
                     justifyContent: 'center',
-                    height: '70vh'
                 }}
             >
                 <FaExclamationTriangle size={140} elevation={3} />
