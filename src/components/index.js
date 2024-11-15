@@ -11,6 +11,7 @@ import UserProfile from './UserProfile';
 import Destination from './Destination';
 import AddUser from './UserList/AddUser';
 import PrivateRoute from "./PrivateRoute";
+import EditUser from './UserList/EditUser';
 import UserPayment from "./UserList/UserPayment";
 import UserVoucherList from "./UserList/UserVoucherList";
 
@@ -24,6 +25,7 @@ export {
     Loader,
     Payment,
     Userlist,
+    EditUser,
     Dashboard,
     UserProfile,
     Destination,

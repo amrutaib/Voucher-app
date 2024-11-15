@@ -117,7 +117,7 @@ export default function Userlist() {
                 <ActionBody
                     iconName='pencil'
                     tooltip='Edit User'
-                    handleClick={() => setAddUserModal(true)}
+                    handleClick={() => navigate(`/editUser/${data.userId}`)}
                 />
             </React.Fragment>
         );
