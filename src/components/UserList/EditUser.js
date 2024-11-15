@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 import { Toast } from "primereact/toast";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { api_routes, BASE_URL } from "../../config/api";
 import {
   Button,
   MenuItem,
@@ -42,6 +43,7 @@ export default function EditUser() {
 
   function getUser() {
     console.log(name);
+    const URL = `${BASE_URL}${api_routes.edit_user}${Id}`;
     // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
     fetch(`https://d386-103-167-123-102.ngrok-free.app/api/user/${Id}`, {
       method: "get",
@@ -57,38 +59,16 @@ export default function EditUser() {
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-    // axios.get(`http://localhost:8000/api/user/${Id}`).then(function (response) {
-    //   console.log(response.json());
-    //   var data = response.json();
-    //   setInputs(data);
-    // });
   }
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    console.log(name);
-    setUserData((values) => ({ ...values, [name]: value }));
-  };
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-
-  //     axios
-  //       .put(`http://localhost:8888/api/user/${id}/edit`, inputs)
-  //       .then(function (response) {
-  //         console.log(response.data);
-  //         navigate("/");
-  //       });
-  //   };
 
   const onSubmit = async (data) => {
     axios
-      .put(`https://c5da-110-226-177-100.ngrok-free.app/user/${Id}/edit`, data)
+      .put(`https://d386-103-167-123-102.ngrok-free.app/user/${Id}/edit`, data)
       .then(function (response) {
         const data = response.data;
         //   console.log(data.json());
         if (data.status === 200) {
-          setTimeout(() => navigate("/UserList"), 2000);
+          setTimeout(() => navigate("/usersList"), 2000);
           toast.current.show({
             severity: "success",
             summary: "success",
@@ -121,13 +101,6 @@ export default function EditUser() {
 
       {/* map over the users array */}
       {inputs.map((user) => (
-        // display a <div> element with the user.name and user.type
-        // parent element needs to have a unique key
-        // <div key={user.userId}>
-        //   <p>{user.userName}</p>
-        //   <p>{user.userType}</p>
-        // </div>
-
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Grid container spacing={2}>
             {/* UserName Field */}
