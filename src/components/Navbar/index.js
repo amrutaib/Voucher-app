@@ -153,6 +153,7 @@ export default function Navbar({ HeaderTitle }) {
       {/* Drawer Config */}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
+          <Typography variant="h5" color={'ThreeDHighlight'}>Voucher</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
           </IconButton>
