@@ -45,7 +45,7 @@ export default function EditUser() {
     console.log(name);
     const URL = `${BASE_URL}${api_routes.edit_user}${Id}`;
     // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
-    fetch(`https://d386-103-167-123-102.ngrok-free.app/api/user/${Id}`, {
+    fetch(URL, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",

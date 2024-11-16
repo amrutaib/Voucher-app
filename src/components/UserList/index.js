@@ -20,22 +20,19 @@ import Typography from "@mui/material/Typography";
 import { InputSwitch } from "primereact/inputswitch";
 import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { BASE_URL, api_routes } from "../../config/api";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 export default function Userlist() {
   const navigate = useNavigate();
 
-  //ref
   const dt = useRef(null);
   const toast = useRef(null);
-
-  //states
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [addUserModal, setAddUserModal] = useState(false);
   const [userActiveStatus, setUserActiveStatus] = useState(true);
-
   //new user form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,7 +46,9 @@ export default function Userlist() {
   };
 
   async function fetchUsers() {
-    var URL = "https://d386-103-167-123-102.ngrok-free.app/";
+    const URL = `${BASE_URL}${api_routes}`;
+    //var URL =
+    // "https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -94,10 +93,7 @@ export default function Userlist() {
   const editProduct = (users) => {
     console.log("users", users);
     var id = users;
-    // setUsers({ ...users });
     navigate(`/editUser/${id}`);
-    //  navigate("/editUser/");
-    //  setAddUserModal(true);
   };
   const viewVoucher = (users) => {
     var Id = users;

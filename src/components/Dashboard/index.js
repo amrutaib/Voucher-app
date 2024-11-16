@@ -41,8 +41,9 @@ export default function Dashboard() {
       .finally(() => setLoading(false));
   };
   const fetchVouchersCounts = () => {
+    //const URL = `${BASE_URL}${api_routes.voucher.voucherCount}`;
     var URL =
-      "https://d386-103-167-123-102.ngrok-free.app/voucher/VoucherCount/";
+      "https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app/voucher/VoucherCount";
     fetch(URL, {
       method: "get",
       headers: new Headers({
