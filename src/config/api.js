@@ -1,4 +1,4 @@
-const BASE_URL = 'https://d386-103-167-123-102.ngrok-free.app';
+const BASE_URL = 'https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app';
 const api_routes = {
     add_user: '/save',
     destination: '/destination',

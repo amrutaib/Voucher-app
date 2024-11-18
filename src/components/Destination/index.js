@@ -16,6 +16,7 @@ import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
+import { PiWarningOctagonThin } from 'react-icons/pi';
 import { BASE_URL, api_routes } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
@@ -34,13 +35,17 @@ export default function Destination() {
     const [addNewDialog, setAddNewDialog] = useState(false)
     const [addNewDestination, setAddNewDestination] = useState('')
 
+    //delete destination 
+    const [selectedIndex, setSelectedIndex] = useState(null)
+    const [deleteDestinationDialog, setDeleteDestinationDialog] = useState(false)
+
     //ref
     const toast = useRef(null);
     const dt = useRef(null);
 
     useEffect(() => {
         fetchDestination()
-    }, [addNewDestination]);
+    }, [addNewDestination, selectedIndex]);
 
     const fetchDestination = async () => {
         try {
@@ -57,11 +62,14 @@ export default function Destination() {
         }
     }
 
-    const formActions = () => {
+    const formActions = (data) => {
         return (
             <React.Fragment>
                 <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => { }} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => { }} />
+                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => {
+                    setSelectedIndex(data)
+                    setDeleteDestinationDialog(true)
+                }} />
             </React.Fragment>
         );
     };
@@ -75,6 +83,40 @@ export default function Destination() {
             </IconField>
         </div>
     );
+
+    // delete destination 
+
+    const hideDeleteDestination = () => {
+        setDeleteDestinationDialog(false);
+    };
+
+    const deleteDestinationFooter = (
+        <React.Fragment>
+            <Button label="Cancel" severity='secondary' outlined onClick={hideDeleteDestination} />
+            <Button label="OK" severity="danger" onClick={deleteDestination} />
+        </React.Fragment>
+    );
+
+    async function deleteDestination() {
+        console.log(selectedIndex, "SELECTED INDEX")
+        try {
+            const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
+                method: 'DELETE',
+            })
+            const result = await response.json()
+            if (result.status === 1) {
+                navigate('#')
+                toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
+            }
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setSelectedIndex(null)
+            setDeleteDestinationDialog(false)
+        }
+    }
 
     // add new destination 
 
@@ -96,7 +138,6 @@ export default function Destination() {
     );
 
     async function addNewDest() {
-
         setError('')
         let isValid = true
 
@@ -115,7 +156,7 @@ export default function Destination() {
                 const result = await response.json()
                 if (result.status === 1) {
                     navigate('#')
-                    toast.current.show({ severity: 'success', summary: 'Error', detail: result.message, life: 2000 });
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
                 } else {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
                 }
@@ -128,7 +169,6 @@ export default function Destination() {
                 console.log(addNewDestination)
             }
         }
-
     }
 
     return (
@@ -165,6 +205,7 @@ export default function Destination() {
                     </div>
 
                     {/* update/add  destination dialog */}
+
                     <Dialog
                         modal
                         className="p-fluid"
@@ -191,6 +232,22 @@ export default function Destination() {
                         </div>
                     </Dialog>
 
+                    {/* Delete destination dialog */}
+
+                    <Dialog
+                        modal
+                        style={{ width: '32rem' }}
+                        visible={deleteDestinationDialog}
+                        onHide={hideDeleteDestination}
+                        footer={deleteDestinationFooter}
+                        breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+                    >
+                        <div className="delete-dialog">
+                            <PiWarningOctagonThin size={80} elevation={3} color='#CC0000' />
+                            <h3>Are you sure?</h3>
+                            <span>Once deleted, you will not be able to recover record!</span>
+                        </div>
+                    </Dialog>
                 </div>
             </Typography>
         </Box>
