@@ -9,11 +9,8 @@ import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
 import { BASE_URL } from '../../config/api';
 import 'primereact/resources/primereact.css';
-import { Password } from 'primereact/password';
-import { Dropdown } from 'primereact/dropdown';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { IconField } from 'primereact/iconfield';
@@ -37,23 +34,7 @@ export default function Userlist() {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [addUserModal, setAddUserModal] = useState(false)
     const [userActiveStatus, setUserActiveStatus] = useState(true);
-
-    //new user form states 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [mobileNumber, setMobileNumber] = useState('')
-    const [selectedUserTypes, setSelectedUserTypes] = useState(null);
-    const usertypes = [
-        { name: 'Import', },
-        { name: 'Export' }
-    ];
-
-    const hideAdduserModal = () => {
-        setAddUserModal(false)
-    }
 
     async function fetchUsers() {
         try {
@@ -143,15 +124,6 @@ export default function Userlist() {
         </div>
     )
 
-    const NewUserFooter = (
-        <React.Fragment>
-            <Button label="Cancel" color='#CC0000' outlined severity='danger' onClick={hideAdduserModal} />
-            <Button label="Save" severity='success' onClick={() => { }} />
-        </React.Fragment>
-    );
-
-    const FormLabel = ({ value, html }) => <label htmlFor={html} className="font-bold">{value}</label>
-
     const Loader = () => (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
             <CircularProgress />
@@ -228,92 +200,6 @@ export default function Userlist() {
                     </div>
                 </div>
             </Typography>
-
-            <Dialog
-                modal
-                className="p-fluid"
-                visible={addUserModal}
-                footer={NewUserFooter}
-                header="Add New User"
-                onHide={hideAdduserModal}
-                style={{ width: '50rem', marginTop: '20px' }}
-                breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-            >
-                <div className="field">
-                    <FormLabel html="name" value="Name" />
-                    <IconField iconPosition="left">
-                        <InputIcon className="pi pi-user"> </InputIcon>
-                        <InputText
-                            id="name"
-                            required
-                            autoFocus
-                            value={name}
-                            variant='outlined'
-                            placeholder='Add name'
-                            onChange={(e) => setName(e.target.value)}
-                            className="p-inputtext-sm"
-                        />
-                    </IconField>
-                </div>
-
-                <div className="field">
-                    <FormLabel html="password" value="Password" />
-                    <IconField iconPosition="left">
-                        <InputIcon className="pi pi-lock"> </InputIcon>
-                        <Password
-                            required
-                            autoFocus
-                            toggleMask
-                            id="password"
-                            value={password}
-                            variant='outlined'
-                            placeholder='Add user password'
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </IconField>
-                </div>
-                <div className="field">
-                    <FormLabel html="name" value="Mobile No." />
-                    <IconField iconPosition="left">
-                        <InputIcon className="pi pi-mobile"> </InputIcon>
-                        <InputText
-                            id="Mobile"
-                            required
-                            autoFocus
-                            variant='outlined'
-                            value={mobileNumber}
-                            placeholder='Add mobile number'
-                            onChange={(e) => setMobileNumber(e.target.value)}
-                        />
-                    </IconField>
-                </div>
-                <div className="field">
-                    <FormLabel html="email" value="Email" />
-                    <IconField iconPosition="left">
-                        <InputIcon className="pi pi-envelope"> </InputIcon>
-                        <InputText
-                            type='email'
-                            required
-                            value={email}
-                            id="email"
-                            variant='outlined'
-                            placeholder='Add email'
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </IconField>
-                </div>
-                <div className="field">
-                    <label className="mb-3 font-bold">Select User Type</label>
-                    <Dropdown
-                        options={usertypes}
-                        optionLabel="name"
-                        value={selectedUserTypes}
-                        placeholder="Select User Type"
-                        className="w-full md:w-14rem"
-                        onChange={(e) => setSelectedUserTypes(e.value)}
-                    />
-                </div>
-            </Dialog>
         </Box>
     );
 }
