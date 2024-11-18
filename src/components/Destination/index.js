@@ -28,12 +28,17 @@ export default function Destination() {
     //states
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [updateError, setUpdateError] = useState('');
     const [destination, setDestination] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
 
     //new destination
     const [addNewDialog, setAddNewDialog] = useState(false)
     const [addNewDestination, setAddNewDestination] = useState('')
+
+    //update destination
+    const [updateDialog, setUpdateDialog] = useState(false)
+    const [updateDestination, setUpdateDestination] = useState('')
 
     //delete destination 
     const [selectedIndex, setSelectedIndex] = useState(null)
@@ -62,18 +67,6 @@ export default function Destination() {
         }
     }
 
-    const formActions = (data) => {
-        return (
-            <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => { }} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => {
-                    setSelectedIndex(data)
-                    setDeleteDestinationDialog(true)
-                }} />
-            </React.Fragment>
-        );
-    };
-
     const header = (
         <div className="header">
             <h4 className="m-0">Manage Destinations</h4>
@@ -84,39 +77,32 @@ export default function Destination() {
         </div>
     );
 
-    // delete destination 
-
-    const hideDeleteDestination = () => {
-        setDeleteDestinationDialog(false);
+    const formActions = (data) => {
+        return (
+            <React.Fragment>
+                <Button icon="pi pi-pencil"
+                    rounded
+                    outlined
+                    className="mr-2"
+                    onClick={() => {
+                        setUpdateDialog(true)
+                        setSelectedIndex(data)
+                        setUpdateDestination(data.DestinationName)
+                    }}
+                />
+                <Button
+                    icon="pi pi-trash"
+                    rounded
+                    outlined
+                    severity="danger"
+                    onClick={() => {
+                        setSelectedIndex(data)
+                        setDeleteDestinationDialog(true)
+                    }}
+                />
+            </React.Fragment>
+        );
     };
-
-    const deleteDestinationFooter = (
-        <React.Fragment>
-            <Button label="Cancel" severity='secondary' outlined onClick={hideDeleteDestination} />
-            <Button label="OK" severity="danger" onClick={deleteDestination} />
-        </React.Fragment>
-    );
-
-    async function deleteDestination() {
-        console.log(selectedIndex, "SELECTED INDEX")
-        try {
-            const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
-                method: 'DELETE',
-            })
-            const result = await response.json()
-            if (result.status === 1) {
-                navigate('#')
-                toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
-            } else {
-                toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
-            }
-        } catch (error) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
-        } finally {
-            setSelectedIndex(null)
-            setDeleteDestinationDialog(false)
-        }
-    }
 
     // add new destination 
 
@@ -132,7 +118,15 @@ export default function Destination() {
 
     const addNewDestinationFooter = (
         <React.Fragment>
-            <Button label="Cancel" outlined severity='danger' onClick={() => setAddNewDialog(false)} />
+            <Button
+                outlined
+                label="Cancel"
+                severity='danger'
+                onClick={() => {
+                    setError('')
+                    setAddNewDialog(false)
+                }}
+            />
             <Button label="Save" severity='success' onClick={addNewDest} />
         </React.Fragment>
     );
@@ -166,8 +160,86 @@ export default function Destination() {
                 setError('')
                 setAddNewDialog(false)
                 setAddNewDestination('')
-                console.log(addNewDestination)
             }
+        }
+    }
+
+    //edit destination 
+
+    const hideUpdateDestination = () => {
+        setUpdateDialog(false);
+    };
+
+    const updateDestinationFooter = (
+        <React.Fragment>
+            <Button label="Cancel" severity='secondary' outlined onClick={hideUpdateDestination} />
+            <Button label="Save" severity="danger" onClick={updateDest} />
+        </React.Fragment>
+    );
+
+    async function updateDest() {
+        setUpdateError('')
+        let isValid = true
+
+        if (!updateDestination) {
+            isValid = false
+            setUpdateError('Please add destination name')
+        }
+        if (isValid) {
+            try {
+                const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ DestinationName: updateDestination })
+                })
+                const result = await response.json()
+                if (result.status === 1) {
+                    navigate('#')
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
+                } else {
+                    toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
+                }
+            } catch (error) {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+            } finally {
+                setUpdateError('')
+                setSelectedIndex(null)
+                setUpdateDialog(false)
+                setUpdateDestination('')
+            }
+        }
+    }
+
+    // delete destination 
+
+    const hideDeleteDestination = () => {
+        setDeleteDestinationDialog(false);
+    };
+
+    const deleteDestinationFooter = (
+        <React.Fragment>
+            <Button label="Cancel" severity='secondary' outlined onClick={hideDeleteDestination} />
+            <Button label="OK" severity="danger" onClick={deleteDestination} />
+        </React.Fragment>
+    );
+
+    async function deleteDestination() {
+        try {
+            const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
+                method: 'DELETE',
+            })
+            const result = await response.json()
+            if (result.status === 1) {
+                navigate('#')
+                toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
+            }
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setSelectedIndex(null)
+            setDeleteDestinationDialog(false)
         }
     }
 
@@ -204,7 +276,7 @@ export default function Destination() {
                         </DataTable>
                     </div>
 
-                    {/* update/add  destination dialog */}
+                    {/* add destination dialog */}
 
                     <Dialog
                         modal
@@ -229,6 +301,34 @@ export default function Destination() {
                                 onChange={(e) => setAddNewDestination(e.target.value)}
                             />
                             {error && <Typography variant='subtitle2' mt={2} color={'red'}>{error}</Typography>}
+                        </div>
+                    </Dialog>
+
+                    {/* edit destination dialog */}
+
+                    <Dialog
+                        modal
+                        className="p-fluid"
+                        visible={updateDialog}
+                        header={'Update Destination'}
+                        style={{ width: '32rem' }}
+                        footer={updateDestinationFooter}
+                        onHide={hideUpdateDestination}
+                        breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+                    >
+                        <div className="field">
+                            <label htmlFor="name" className="font-bold">
+                                Destination Name
+                            </label>
+                            <InputText
+                                id="name"
+                                required
+                                autoFocus
+                                value={updateDestination}
+                                placeholder='Update destination name'
+                                onChange={(e) => setUpdateDestination(e.target.value)}
+                            />
+                            {updateError && <Typography variant='subtitle2' mt={2} color={'red'}>{updateError}</Typography>}
                         </div>
                     </Dialog>
 
