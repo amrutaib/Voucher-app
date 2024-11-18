@@ -5,6 +5,7 @@ import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
+import ActionBody from '../ActionBody';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
@@ -19,6 +20,9 @@ import Typography from "@mui/material/Typography";
 import { PiWarningOctagonThin } from 'react-icons/pi';
 import { BASE_URL, api_routes } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+//icons  
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function Destination() {
 
@@ -79,28 +83,30 @@ export default function Destination() {
 
     const formActions = (data) => {
         return (
-            <React.Fragment>
-                <Button icon="pi pi-pencil"
-                    rounded
-                    outlined
-                    className="mr-2"
-                    onClick={() => {
+            <>
+                <ActionBody
+                    arialabel='name'
+                    tooltip='Edit Destination'
+                    icon={<ModeEditIcon />}
+                    handleClick={() => {
                         setUpdateDialog(true)
                         setSelectedIndex(data)
                         setUpdateDestination(data.DestinationName)
                     }}
                 />
-                <Button
-                    icon="pi pi-trash"
-                    rounded
-                    outlined
-                    severity="danger"
-                    onClick={() => {
+
+                <ActionBody
+                    color={'error'}
+                    arialabel='delete'
+                    tooltip='Delete Destination'
+                    icon={<DeleteIcon />}
+                    handleClick={() => {
+                        setUpdateDialog(true)
                         setSelectedIndex(data)
-                        setDeleteDestinationDialog(true)
+                        setUpdateDestination(data.DestinationName)
                     }}
                 />
-            </React.Fragment>
+            </>
         );
     };
 
@@ -117,7 +123,7 @@ export default function Destination() {
     )
 
     const addNewDestinationFooter = (
-        <React.Fragment>
+        <>
             <Button
                 outlined
                 label="Cancel"
@@ -128,7 +134,7 @@ export default function Destination() {
                 }}
             />
             <Button label="Save" severity='success' onClick={addNewDest} />
-        </React.Fragment>
+        </>
     );
 
     async function addNewDest() {

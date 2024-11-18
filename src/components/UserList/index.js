@@ -5,7 +5,7 @@ import axios from 'axios';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import ActionBody from './ActionBody';
+import ActionBody from '../ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -21,6 +21,10 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+//icons 
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 
 export default function Userlist() {
 
@@ -74,10 +78,11 @@ export default function Userlist() {
 
     const actionBodyTemplate = (data) => {
         return (
-            <React.Fragment>
+            <>
                 <ActionBody
-                    iconName='receipt'
-                    tooltip='View Voucher'
+                    arialabel='vouchers'
+                    icon={<ReceiptIcon />}
+                    tooltip='View Vouchers'
                     handleClick={() => navigate('/uservouchers', {
                         state: {
                             id: data.userId,
@@ -86,7 +91,8 @@ export default function Userlist() {
                     })}
                 />
                 <ActionBody
-                    iconName='dollar'
+                    arialabel='payment'
+                    icon={<RequestQuoteIcon />}
                     tooltip='Payment Summary'
                     handleClick={() => navigate('/userpayment', {
                         state: {
@@ -96,11 +102,13 @@ export default function Userlist() {
                     })}
                 />
                 <ActionBody
-                    iconName='pencil'
+                    arialabel='edit'
+                    icon={<ModeEditIcon />}
                     tooltip='Edit User'
                     handleClick={() => navigate(`/editUser/${data.userId}`)}
                 />
-            </React.Fragment>
+
+            </>
         );
     };
 
