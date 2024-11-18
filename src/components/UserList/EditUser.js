@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import Navbar from "../Navbar";
 import { Toast } from "primereact/toast";
 import { useForm } from "react-hook-form";
+import { Button } from "primereact/button";
+import { BASE_URL } from "../../config/api";
 import { useNavigate, useParams } from "react-router-dom";
-import { api_routes, BASE_URL } from "../../config/api";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Button,
   MenuItem,
   Select,
   InputLabel,
@@ -15,42 +15,49 @@ import {
   Box,
   TextField,
   Typography,
-  Grid,
+  Stack,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 
 export default function EditUser() {
+  const { Id } = useParams();
   const navigate = useNavigate();
-  const queryParameters = new URLSearchParams(window.location.search);
-  const type = queryParameters.get("type");
-  const name = queryParameters.get("name");
+
   //ref
   const toast = useRef(null);
-  const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState([]);
-  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   //react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { Id } = useParams();
-  console.log("this.context:", Id);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   useEffect(() => {
     getUser();
   }, []);
 
   function getUser() {
-    console.log(name);
-    const URL = `${BASE_URL}${api_routes.edit_user}${Id}`;
-    // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
-    fetch(URL, {
-      method: "get",
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69420",
-      }),
-    })
+    console.log(Id);
+
+    //  const URL = `${BASE_URL}/api/user/${Id}`;
+    fetch(
+      `https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app/api/user/${Id}`,
+      {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         setInputs(data);
@@ -62,13 +69,13 @@ export default function EditUser() {
   }
 
   const onSubmit = async (data) => {
+    const URL = `${BASE_URL}/api/user/${Id}`;
     axios
-      .put(`https://d386-103-167-123-102.ngrok-free.app/user/${Id}/edit`, data)
+      .put(URL, data)
       .then(function (response) {
         const data = response.data;
-        //   console.log(data.json());
         if (data.status === 200) {
-          setTimeout(() => navigate("/usersList"), 2000);
+          setTimeout(() => navigate("/userslist"), 500);
           toast.current.show({
             severity: "success",
             summary: "success",
@@ -87,6 +94,7 @@ export default function EditUser() {
       })
       .catch((error) => console.log(error));
   };
+
   return (
     <Box
       sx={{
@@ -96,113 +104,131 @@ export default function EditUser() {
         display: "flex",
       }}
     >
-      <Navbar HeaderTitle="Edit User" />
-      <Toast ref={toast} />
+      <Navbar HeaderTitle="Add New User" />
+      <Typography variant="body1" gutterBottom sx={{ width: "100vw" }}>
+        <div>
+          <Toast ref={toast} />
 
-      {/* map over the users array */}
-      {inputs.map((user) => (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Grid container spacing={2}>
-            {/* UserName Field */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Username"
-                variant="outlined"
-                {...register("userName", { required: "Username is required" })}
-                error={!!errors.userName}
-                helperText={errors.userName?.message}
-                placeholder="Enter name"
-                defaultValue={user.userName}
-              />
-            </Grid>
+          {/* map over the users array */}
 
-            {/* Password Field */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                variant="outlined"
-                {...register("userPassword", {
-                  required: "Password is required",
-                })}
-                error={!!errors.userPassword}
-                helperText={errors.userPassword?.message}
-                defaultValue={user.userPassword}
-              />
-            </Grid>
+          {inputs.map((user) => (
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <Box
+                sx={{
+                  p: 3,
+                  borderRadius: "8px",
+                  alignItems: "center",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                <Stack spacing={3} direction={"row"} mb={3}>
+                  {/* UserName Field */}
+                  <TextField
+                    fullWidth
+                    label="Username"
+                    variant="outlined"
+                    {...register("userName", {
+                      required: "Username is required",
+                    })}
+                    error={!!errors.userName}
+                    helperText={errors.userName?.message}
+                    placeholder="Enter name"
+                    defaultValue={user.userName}
+                  />
+                  {/* Password Field */}
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    variant="outlined"
+                    {...register("userPassword", {
+                      required: "Password is required",
+                    })}
+                    error={!!errors.userPassword}
+                    defaultValue={user.userPassword}
+                    helperText={errors.userPassword?.message}
+                    type={showPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            edge="end"
+                            onClick={togglePasswordVisibility}
+                            aria-label={
+                              showPassword ? "Hide password" : "Show password"
+                            }
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Stack>
 
-            {/* Email Field */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Enter a valid email address",
-                  },
-                })}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                defaultValue={user.email}
-              />
-            </Grid>
+                <Stack spacing={3} direction={"row"} mb={3}>
+                  {/* Email Field */}
+                  <TextField
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        message: "Enter a valid email address",
+                      },
+                    })}
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
+                    defaultValue={user.email}
+                  />
+                  {/* Mobile Field */}
+                  <TextField
+                    fullWidth
+                    label="Mobile"
+                    variant="outlined"
+                    {...register("Mobile", {
+                      required: "Mobile number is required",
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Enter a valid 10-digit mobile number",
+                      },
+                    })}
+                    error={!!errors.Mobile}
+                    helperText={errors.Mobile?.message}
+                    defaultValue={user.Mobile}
+                  />
+                </Stack>
 
-            {/* Mobile Field */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Mobile"
-                variant="outlined"
-                {...register("Mobile", {
-                  required: "Mobile number is required",
-                  pattern: {
-                    value: /^[0-9]{10}$/,
-                    message: "Enter a valid 10-digit mobile number",
-                  },
-                })}
-                error={!!errors.Mobile}
-                helperText={errors.Mobile?.message}
-                defaultValue={user.Mobile}
-              />
-            </Grid>
-
-            {/* UserType Field */}
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>User Type</InputLabel>
-                <Select
-                  label="User Type"
-                  defaultValue={user.userType}
-                  {...register("userType", {
-                    required: "User type is required",
-                  })}
-                  error={!!errors.userType}
-                >
-                  <MenuItem value="Import">Import</MenuItem>
-                  <MenuItem value="Export">Export</MenuItem>
-                </Select>
-                {errors.userType && (
-                  <Typography color="error" variant="body2">
-                    {errors.userType.message}
-                  </Typography>
-                )}
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          {/* Right-Aligned Submit Button */}
-          <Box display="flex" justifyContent="flex-start" mt={5}>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </Box>
-        </form>
-      ))}
+                <Stack spacing={3} direction={"row"} mb={5}>
+                  {/* Add User type */}
+                  <FormControl variant="outlined" sx={{ width: "50%" }}>
+                    <InputLabel>User Type</InputLabel>
+                    <Select
+                      label="User Type"
+                      defaultValue={user.userType}
+                      {...register("userType", {
+                        required: "User type is required",
+                      })}
+                      error={!!errors.userType}
+                    >
+                      <MenuItem value="Import">Import</MenuItem>
+                      <MenuItem value="Export">Export</MenuItem>
+                    </Select>
+                    {errors.userType && (
+                      <Typography color="error" variant="body2">
+                        {errors.userType.message}
+                      </Typography>
+                    )}
+                  </FormControl>
+                </Stack>
+                <Button label="Update User" type="submit" className="button" />
+              </Box>
+            </form>
+          ))}
+        </div>
+      </Typography>
     </Box>
   );
 }

@@ -112,7 +112,7 @@ export default function Dashboard() {
       <Grid container spacing={2}>
         <CardComponent
           title={"Users"}
-          route={"/Userlist"}
+          route={"/userslist"}
           count={dataCount}
           className={"gradientpink"}
           avatar={<PersonOutlineOutlinedIcon />}

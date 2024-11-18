@@ -16,6 +16,7 @@ import { DataTable } from "primereact/datatable";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import axios from "axios";
 import Typography from "@mui/material/Typography";
 import { InputSwitch } from "primereact/inputswitch";
 import { Box, CircularProgress } from "@mui/material";
@@ -46,9 +47,9 @@ export default function Userlist() {
   };
 
   async function fetchUsers() {
-    const URL = `${BASE_URL}${api_routes}`;
-    //var URL =
-    // "https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app/";
+    // const URL = `${BASE_URL}${api_routes}`;
+    const URL =
+      "https://410c-2400-7f60-205-99cf-c129-b3ff-f074-53d0.ngrok-free.app/api/user/";
     fetch(URL, {
       method: "get",
       headers: new Headers({
@@ -81,6 +82,160 @@ export default function Userlist() {
         setUserActiveStatus(false);
       }
     }
+
+    async function fetchUsers() {
+      try {
+        const response = await axios.get(BASE_URL, {
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
+          },
+        });
+        setUsers(response.data);
+      } catch (error) {
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.message,
+          life: 3000,
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    const userStatus = (rowData) => {
+      const status = rowData.userStatus;
+      function checkStatus() {
+        if (status === "active") {
+          setUserActiveStatus(true);
+        }
+      }
+      return (
+        <InputSwitch
+          tooltip="User Status"
+          onChange={checkStatus}
+          checked={userActiveStatus}
+          tooltipOptions={{ position: "bottom" }}
+        />
+      );
+    };
+
+    const actionBodyTemplate = (data) => {
+      return (
+        <React.Fragment>
+          <ActionBody
+            iconName="receipt"
+            tooltip="View Voucher"
+            handleClick={() =>
+              navigate("/uservouchers", {
+                state: {
+                  id: data.userId,
+                  name: data.userName,
+                },
+              })
+            }
+          />
+          <ActionBody
+            iconName="dollar"
+            tooltip="Payment Summary"
+            handleClick={() =>
+              navigate("/userpayment", {
+                state: {
+                  id: data.userId,
+                  name: data.userName,
+                },
+              })
+            }
+          />
+          <ActionBody
+            iconName="pencil"
+            tooltip="Edit User"
+            handleClick={() => navigate(`/editUser/${data.userId}`)}
+          />
+        </React.Fragment>
+      );
+    };
+
+    const header = (
+      <div className="header">
+        <h4 className="m-0">Manage Users</h4>
+        <IconField iconPosition="left" style={{ marginLeft: "20px" }}>
+          <InputIcon className="pi pi-search" />
+          <InputText
+            type="search"
+            onInput={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search Users"
+          />
+        </IconField>
+      </div>
+    );
+
+    const AddNewUser = () => (
+      <div className="addbtn">
+        <Button
+          label="Add User"
+          className="button"
+          onClick={() => navigate("/adduser")}
+        />
+      </div>
+    );
+
+    const NewUserFooter = (
+      <React.Fragment>
+        <Button
+          label="Cancel"
+          color="#CC0000"
+          outlined
+          severity="danger"
+          onClick={hideAdduserModal}
+        />
+        <Button label="Save" severity="success" onClick={() => {}} />
+      </React.Fragment>
+    );
+
+    const FormLabel = ({ value, html }) => (
+      <label htmlFor={html} className="font-bold">
+        {value}
+      </label>
+    );
+
+    const Loader = () => (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100px",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+
+    const NullComponent = () => {
+      return (
+        <Box
+          sx={{
+            height: "70vh",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <FaExclamationTriangle size={140} elevation={3} />
+          <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+            No Users Available
+          </Typography>
+          <Typography variant="body2" color="textSecondary" my={2}>
+            No users have been created yet, Click on the add button to create a
+            new user.
+          </Typography>
+          <AddNewUser />
+        </Box>
+      );
+    };
+
     return (
       <InputSwitch
         tooltip="User Status"

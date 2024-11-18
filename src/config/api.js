@@ -6,6 +6,7 @@ const api_routes = {
   destination: "/destination",
   voucherCount: "/voucher/VoucherCount",
   add_user_payment: "/payment",
+  voucher: "/voucher/",
 };
 
 export { BASE_URL, api_routes };

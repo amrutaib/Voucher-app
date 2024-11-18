@@ -14,6 +14,7 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import Typography from "@mui/material/Typography";
+import { BASE_URL } from "../../config/api";
 import { ProductService } from "../../service/ProductService";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -59,9 +60,9 @@ export default function UserVoucherList() {
     return rowData.approvedDate;
   };
   function getVoucher() {
-    //const URL = `${BASE_URL}${api_routes.edit_user}${Id}`;
+    const URL = `${BASE_URL}/voucher/${Id}/`;
     // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
-    fetch(`https://d386-103-167-123-102.ngrok-free.app/voucher/${Id}`, {
+    fetch(URL, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",
@@ -143,7 +144,7 @@ export default function UserVoucherList() {
               />
               <Column
                 field="Voucherno"
-                header="Shipper name"
+                header="User name"
                 body={shippernameBodyTemplate}
                 style={{ minWidth: "8rem" }}
               />

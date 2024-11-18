@@ -124,7 +124,7 @@ export default function Navbar({ HeaderTitle }) {
   const PageTitle = location.pathname.split('/')[1] || 'Dashboard'
 
   const isPageActive = (item) => {
-    return location.pathname === item.route || (item.subRoutes && item.subRoutes.includes(location.pathname))
+    return location.pathname === item.route || (item.subRoutes && item.subRoutes.some(subRoute => location.pathname.startsWith(subRoute)))
   }
 
   return (

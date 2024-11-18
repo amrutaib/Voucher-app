@@ -6,11 +6,11 @@ import {
   AddUser,
   Payment,
   Userlist,
+  EditUser,
   Dashboard,
   UserProfile,
   Destination,
   UserPayment,
-  EditUser,
   PrivateRoute,
   UserVoucherList,
 } from "./components/index";
@@ -69,7 +69,7 @@ export const appRouter = createBrowserRouter([
         element: <AddUser />,
       },
       {
-        path: "editUser/:Id/",
+        path: "editUser/:Id",
         element: <EditUser />,
       },
       {

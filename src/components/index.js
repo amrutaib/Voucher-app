@@ -25,11 +25,11 @@ export {
   Loader,
   Payment,
   Userlist,
+  EditUser,
   Dashboard,
   UserProfile,
   Destination,
   PrivateRoute,
   UserPayment,
-  EditUser,
   UserVoucherList,
 };
