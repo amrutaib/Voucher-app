@@ -1,6 +1,5 @@
 import Error from "./Error";
 import Login from "./Login";
-import About from './About';
 import Navbar from "./Navbar";
 import Loader from './Loader';
 import Voucher from "./Voucher";
@@ -18,7 +17,6 @@ import UserVoucherList from "./UserList/UserVoucherList";
 export {
     Error,
     Login,
-    About,
     Navbar,
     AddUser,
     Voucher,
