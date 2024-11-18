@@ -17,9 +17,13 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import Typography from "@mui/material/Typography";
 import { DataTable } from "primereact/datatable";
+import * as FileSaver from "file-saver";
 import { PiWarningOctagonThin } from "react-icons/pi";
 import { ProductService } from "../../service/ProductService";
+import { api_routes, BASE_URL } from "../../config/api";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function Voucher() {
   //ref
@@ -34,6 +38,7 @@ export default function Voucher() {
   const [loading, setLoading] = useState(null);
   useEffect(() => {
     getVoucher();
+    //createVoucher();
   }, []);
   const vouchernoBodyTemplate = (rowData) => {
     return rowData.voucher_no;
@@ -61,10 +66,84 @@ export default function Voucher() {
   const approveddateBodyTemplate = (rowData) => {
     return rowData.approvedDate;
   };
+  // const cols = [
+  //   { field: "Voucherno", header: "Voucherno" },
+  //   { field: "Username", header: "user name" },
+  //   { field: "seller", header: "seller" },
+  //   { field: "S/B", header: "S/B" },
+  // ];
+
+  // const exportColumns = cols.map((col) => ({
+  //   title: col.header,
+  //   dataKey: col.field,
+  // }));
+  // const exportPDF = () => {
+  //   import("jspdf").then((jsPDF) => {
+  //     import("jspdf-autotable").then(() => {
+  //       const doc = new jsPDF.default(0, 0);
+  //       doc.autoTable(exportColumns, voucher);
+  //       doc.save("posts.pdf");
+  //     });
+  //   });
+  // };
+
+  const exportExcel = () => {
+    import("xlsx").then((xlsx) => {
+      const workSheet = xlsx.utils.json_to_sheet(voucher);
+      const workBook = { Sheets: { data: workSheet }, SheetNames: ["data"] };
+      const excelBuffer = xlsx.write(workBook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      saveAsExcelFile(excelBuffer, "voucher");
+    });
+  };
+  const saveAsExcelFile = (buffer, fileName) => {
+    import("file-saver").then((FileSaver) => {
+      let EXCEL_TYPE =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      let EXCEL_EXTENSION = ".xlsx";
+      const data = new Blob([buffer], {
+        type: EXCEL_TYPE,
+      });
+      FileSaver.saveAs(
+        data,
+        fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+      );
+    });
+  };
+
+  function createVoucher() {
+    const URL = `${BASE_URL}/voucher/`;
+    const data = { voucher_type: "Import", userKey: "28" };
+    axios
+      .post(URL, data)
+      .then(function (response) {
+        const data = response.data;
+        if (data.status === 200) {
+          setTimeout(() => Navigate("/"), 500);
+          toast.current.show({
+            severity: "success",
+            summary: "success",
+            detail: data.message,
+            life: 2000,
+          });
+        } else {
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail: data.message,
+            life: 3000,
+          });
+        }
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  }
   function getVoucher() {
-    //const URL = `${BASE_URL}${api_routes.edit_user}${Id}`;
+    const URL = `${BASE_URL}/voucher/`;
     // var URL = `https://c5da-110-226-177-100.ngrok-free.app/user/${Id}`;
-    fetch(`https://d386-103-167-123-102.ngrok-free.app/voucher/`, {
+    fetch(URL, {
       method: "get",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69420",
@@ -160,7 +239,7 @@ export default function Voucher() {
 
   const Export = () => (
     <div className="addbtn">
-      <Button label="Export Excel" severity="secondary" onClick={() => {}} />
+      <Button label="Export Excel" severity="secondary" onClick={exportExcel} />
     </div>
   );
 
@@ -198,6 +277,7 @@ export default function Voucher() {
             <div>
               <Toast ref={toast} />
               <Export />
+
               <div className="card">
                 <DataTable
                   ref={dt}
@@ -212,14 +292,14 @@ export default function Voucher() {
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 >
                   <Column
-                    field="id"
+                    field="Voucherno"
                     header="Voucher no."
                     body={vouchernoBodyTemplate}
                     style={{ minWidth: "4rem" }}
                   />
                   <Column
-                    field="Voucherno"
-                    header="Shipper name"
+                    field="Username"
+                    header="User name"
                     body={shippernameBodyTemplate}
                     style={{ minWidth: "8rem" }}
                   />
@@ -292,7 +372,7 @@ export default function Voucher() {
                   />
                   <Column
                     field="Voucherno"
-                    header="Shipper name"
+                    header="User name"
                     body={shippernameBodyTemplate}
                     style={{ minWidth: "8rem" }}
                   />

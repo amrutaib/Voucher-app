@@ -69,7 +69,7 @@ export default function Destination() {
           rounded
           outlined
           className="mr-2"
-          onClick={() => {}}
+          onClick={() => editDestintion(Destination.DestinationName)}
         />
         <Button
           icon="pi pi-trash"
@@ -97,7 +97,10 @@ export default function Destination() {
   );
 
   // add new destination
-
+  const editDestintion = (rowData) => {
+    // setDestination({ ...rowData });
+    setAddNewDialog(true);
+  };
   const AddNew = () => (
     <div className="addbtn">
       <Button
