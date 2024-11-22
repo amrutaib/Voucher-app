@@ -6,7 +6,7 @@ import { BASE_URL } from '../../config/api';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { SitemarkIcon } from '../../components/Login/CustomIcon';
-import { Visibility, VisibilityOff, AccountCircle, Business, Email } from '@mui/icons-material';  //icons
+import { Visibility, VisibilityOff, Business, Email } from '@mui/icons-material';  //icons
 import { Typography, TextField, Link, FormControl, FormLabel, Button, Box, createTheme, InputAdornment, IconButton } from '@mui/material';
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -16,8 +16,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
     width: '100%',
     padding: theme.spacing(4),
     gap: theme.spacing(2),
-    boxShadow:
-        'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+    boxShadow: 'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
     [theme.breakpoints.up('sm')]: {
         width: '450px',
     }
@@ -25,27 +24,29 @@ const Card = styled(MuiCard)(({ theme }) => ({
 
 export default function RegisterCard() {
 
-    const toast = useRef(null);
-
     const theme = createTheme({
         typography: {
             fontFamily: 'Mulish, sans-serif',
         },
     });
 
+    //ref
+    const toast = useRef(null);
     const navigate = useNavigate();
 
+    //error visibility
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [companyNameError, setCompanyNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
-    const [usernameErrorMessage, setUsernameErrorMessage] = useState('');
-    const [companyNameErrorMessage, setCompanyNameErrorMessage] = useState('');
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [companyNameError, setCompanyNameError] = useState(false);
 
+    //error message
+    const [errorMessage, setErrorMessage] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [companyNameErrorMessage, setCompanyNameErrorMessage] = useState('');
+
+    //password visibility
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const handleClickShowPassword = () => {
@@ -53,13 +54,21 @@ export default function RegisterCard() {
     };
 
     const handleRegister = async (event) => {
+
         event.preventDefault();
+
         const URL = `${BASE_URL}/admin/Register`;
         const data = new FormData(event.currentTarget);
         const companyName = data.get("companyName");
         const email = data.get("email");
-        const username = data.get("username");
         const password = data.get("password");
+
+
+        const requestBody = JSON.stringify({
+            companyname: companyName,
+            adminEmail: email,
+            Password: password,
+        });
 
         let isValid = true;
 
@@ -83,16 +92,6 @@ export default function RegisterCard() {
             setEmailErrorMessage('');
         }
 
-        // Validate username
-        if (!username) {
-            setUsernameError(true);
-            setUsernameErrorMessage('Please enter a valid username.');
-            isValid = false;
-        } else {
-            setUsernameError(false);
-            setUsernameErrorMessage('');
-        }
-
         // Validate password
         if (!password) {
             setPasswordError(true);
@@ -104,13 +103,7 @@ export default function RegisterCard() {
         }
 
         if (isValid) {
-            const body = JSON.stringify({
-                companyname: companyName,
-                adminEmail: email,
-                username: username,
-                Password: password,
-            });
-            axios.post(URL, body)
+            axios.post(URL, requestBody)
                 .then(function (response) {
                     const data = response.data;
                     console.log(data, "DATA")
@@ -158,7 +151,7 @@ export default function RegisterCard() {
                         error={companyNameError}
                         variant="outlined"
                         autoComplete="companyName"
-                        placeholder="Your Company Name"
+                        placeholder="Your company name"
                         helperText={companyNameErrorMessage}
                         color={companyNameError ? 'error' : 'primary'}
                         sx={{
@@ -210,37 +203,6 @@ export default function RegisterCard() {
                     />
                 </FormControl>
 
-                {/* Username Field */}
-                <FormControl>
-                    <FormLabel htmlFor="username" sx={{ fontFamily: 'Mulish', mb: 1 }}>Username</FormLabel>
-                    <TextField
-                        id="username"
-                        name="username"
-                        required
-                        fullWidth
-                        error={usernameError}
-                        variant="outlined"
-                        autoComplete="username"
-                        placeholder="Your Username"
-                        helperText={usernameErrorMessage}
-                        color={usernameError ? 'error' : 'primary'}
-                        sx={{
-                            fontFamily: 'Mulish',
-                            "& .MuiFormHelperText-root.Mui-error": {
-                                mt: '5px',
-                                fontFamily: 'Mulish'
-                            },
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <AccountCircle />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </FormControl>
-
                 {/* Password Field */}
                 <FormControl>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -285,19 +247,15 @@ export default function RegisterCard() {
                 <Button type="submit" className='button' fullWidth variant="contained" sx={{ my: 1, fontFamily: 'Mulish', fontWeight: '600' }}>
                     Register
                 </Button>
-                {
-                    error &&
-                    <Typography
-                        sx={{
-                            fontFamily: 'Mulish',
-                            textAlign: 'center',
-                            color: '#cc0000'
-                        }}
-                        variant='subtitle2'
-                    >
+
+                {/* api error UI */}
+
+                {error && (
+                    <Typography sx={{ fontFamily: 'Mulish', textAlign: 'center', color: '#cc0000' }} variant='subtitle2'>
                         {errorMessage}
                     </Typography>
-                }
+                )}
+
                 <Typography sx={{ textAlign: 'center', fontFamily: 'Mulish' }}>
                     Already have an account?{' '}
                     <span>
