@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Error,
-  Login,
   Voucher,
   AddUser,
   Payment,
@@ -14,6 +13,8 @@ import {
   PrivateRoute,
   UserVoucherList,
 } from "./components/index";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { createBrowserRouter, Outlet } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -21,6 +22,14 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Mulish, sans-serif',
   },
+  palette: {
+    primary: {
+      main: '#303f9f'
+    },
+    secondary: {
+      main: "#7b1fa2"
+    }
+  }
 });
 
 
@@ -101,4 +110,8 @@ export const appRouter = createBrowserRouter([
     path: "login",
     element: <Login />,
   },
+  {
+    path: "register",
+    element: <Register />,
+  }
 ]);
