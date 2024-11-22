@@ -13,7 +13,7 @@ export default function Register() {
                 sx={[
                     {
                         justifyContent: 'center',
-                        height: 'calc((1 - var(--template-frame-height, 0)) * 100%)',
+                        height: 'calc((1 - var(--template-frame-height, 0)) * dvh)',
                         marginTop: 'max(40px - var(--template-frame-height, 0px), 0px)',
                         minHeight: '100%',
                     },
