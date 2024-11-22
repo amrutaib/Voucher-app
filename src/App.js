@@ -10,34 +10,32 @@ import {
   UserProfile,
   Destination,
   UserPayment,
-  PrivateRoute,
   UserVoucherList,
 } from "./components/index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { createBrowserRouter, Outlet } from "react-router-dom"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Mulish, sans-serif',
+    fontFamily: "Mulish, sans-serif",
   },
   palette: {
     primary: {
-      main: '#303f9f'
+      main: "#303f9f",
     },
     secondary: {
-      main: "#7b1fa2"
-    }
-  }
+      main: "#7b1fa2",
+    },
+  },
 });
-
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Outlet />
-    </ThemeProvider >
+    </ThemeProvider>
   );
 };
 
@@ -49,11 +47,7 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
+        element: <Dashboard />,
       },
       {
         path: "Dashboard",
@@ -66,44 +60,38 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "userprofile",
-        element: <UserProfile />
+        element: <UserProfile />,
       },
       {
         path: "userpayment",
-        element: <UserPayment />
+        element: <UserPayment />,
       },
       {
         path: "adduser",
-        element: <AddUser />
+        element: <AddUser />,
       },
       {
         path: "editUser/:Id",
         element: <EditUser />,
       },
       {
-        path: "uservouchers",
-        element: <UserVoucherList />
+        path: "uservouchers/:Id",
+        element: <UserVoucherList />,
       },
       //Voucher screens
       {
         path: "Voucher",
-        element:
-          <Voucher />
+        element: <Voucher />,
       },
       //Payment screens
       {
         path: "Payment",
-        element:
-          <Payment />
+        element: <Payment />,
       },
       {
         path: "Destination",
-        element: (
-          <PrivateRoute>
-            <Destination />
-          </PrivateRoute>
-        ),
-      }
+        element: <Destination />,
+      },
     ],
   },
   {
@@ -113,5 +101,5 @@ export const appRouter = createBrowserRouter([
   {
     path: "register",
     element: <Register />,
-  }
+  },
 ]);

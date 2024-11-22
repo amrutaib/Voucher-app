@@ -95,7 +95,7 @@ export default function LoginCard() {
                     } else {
                         localStorage.setItem("token", data.token);
                         toast.current.show({ severity: 'success', summary: 'Success', detail: data.message });
-                        navigate("/dashboard")
+                        navigate("/")
                     }
                 })
                 .catch((error) => {
