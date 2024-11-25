@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './index.css'
+import './index.css';
 import axios from 'axios';
 import Loader from '../Loader';
 import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
+import { format } from 'date-fns';
 import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
+import { useLocation } from 'react-router-dom';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
-import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import { FaExclamationTriangle } from 'react-icons/fa';
@@ -40,6 +41,12 @@ export default function UserPayment() {
         { name: 'Bank Transfer' }
     ];
 
+    // Error states for form fields
+    const [amountError, setAmountError] = useState('');
+    const [paymentModeError, setPaymentModeError] = useState('');
+    const [dateError, setDateError] = useState('');
+
+    // Fetch user payment summary
     const fetchUserPaymentSummary = async () => {
         try {
             const URL = `${BASE_URL}${api_routes.add_user_payment}/${id}`
@@ -60,8 +67,86 @@ export default function UserPayment() {
         fetchUserPaymentSummary();
     }, []);
 
-    const onSubmitPayment = (e) => {
+    // Submit payment form
+    const onSubmitPayment = async (e) => {
         e.preventDefault();
+
+        let valid = true;
+        const URL = `${BASE_URL}/payment`;
+
+        // Clear previous errors
+        setAmountError('');
+        setPaymentModeError('');
+        setDateError('');
+
+        // Validation checks
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+            setAmountError('Please enter a valid amount.');
+            valid = false;
+        }
+        if (!selectedPaymentModes) {
+            setPaymentModeError('Please select a payment mode.');
+            valid = false;
+        }
+        if (!date) {
+            setDateError('Please select a date.');
+            valid = false;
+        }
+
+        // Proceed if valid
+        if (valid) {
+            const formattedDate = format(date, 'dd-MM-yyyy');
+            const requestBody = JSON.stringify({
+                amount: amount,
+                userId: id,
+                paymentAdddate: formattedDate,
+                paymentMode: selectedPaymentModes.name
+            });
+
+            try {
+                const response = await fetch(URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: requestBody
+                });
+                const result = await response.json();
+                if (result.status === 1) {
+                    toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
+                    fetchUserPaymentSummary();
+                } else {
+                    toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
+                }
+            } catch (error) {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'Something went wrong', life: 2000 });
+            } finally {
+                // Reset the form
+                setAmount('');
+                setSelectedPaymentModes(null);
+                setDate(null);
+            }
+        }
+    };
+
+    // Handlers to clear errors on value change
+    const handleAmountChange = (e) => {
+        setAmount(e.target.value);
+        if (e.target.value && !isNaN(e.target.value) && parseFloat(e.target.value) > 0) {
+            setAmountError('');
+        }
+    };
+
+    const handlePaymentModeChange = (e) => {
+        setSelectedPaymentModes(e.value);
+        if (e.value) {
+            setPaymentModeError('');
+        }
+    };
+
+    const handleDateChange = (e) => {
+        setDate(e.value);
+        if (e.value) {
+            setDateError('');
+        }
     };
 
     const header = (
@@ -103,42 +188,44 @@ export default function UserPayment() {
                 }}>
                 <Stack spacing={3} direction={"row"} mb={3}>
 
-                    {/* amount */}
-                    <FormControl fullWidth>
+                    {/* Amount Field */}
+                    <FormControl fullWidth error={!!amountError}>
                         <Label html="name" value="Amount" />
                         <InputText
-                            required
                             value={amount}
                             placeholder="Enter amount"
-                            onChange={(e) => setAmount(e.target.value)}
+                            onChange={handleAmountChange}
                         />
+                        {amountError && <span style={{ color: 'red', marginTop: 10 }}>{amountError}</span>}
                     </FormControl>
 
-                    {/* payemt methods */}
-                    <FormControl fullWidth>
+                    {/* Payment Modes */}
+                    <FormControl fullWidth error={!!paymentModeError}>
                         <Label html="name" value="Select payment mode" />
                         <Dropdown
                             optionLabel="name"
                             options={paymentModes}
                             value={selectedPaymentModes}
                             placeholder="Select payment mode"
-                            onChange={(e) => setSelectedPaymentModes(e.value)}
+                            onChange={handlePaymentModeChange}
                         />
+                        {paymentModeError && <span style={{ color: 'red', marginTop: 10 }}>{paymentModeError}</span>}
                     </FormControl>
 
-                    {/* date  */}
-                    <FormControl fullWidth>
+                    {/* Date Field */}
+                    <FormControl fullWidth error={!!dateError}>
                         <Label html="date" value="Date" />
                         <Calendar
-                            required
                             showIcon
                             value={date}
-                            placeholder='Add date'
-                            onChange={(e) => setDate(e.value)}
+                            placeholder="Add date"
+                            onChange={handleDateChange}
                         />
+                        {dateError && <span style={{ color: 'red', marginTop: 10 }}>{dateError}</span>}
                     </FormControl>
                 </Stack>
-                <Button label="Add Payment" type='submit' className='button' />
+
+                <Button label="Add Payment" type="submit" className="button" />
             </Box>
         </form>
     )
