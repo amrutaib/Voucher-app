@@ -16,8 +16,8 @@ import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { PiWarningOctagonThin } from 'react-icons/pi';
-import { BASE_URL, api_routes } from '../../config/api';
 import { Navbar, ActionBody } from '../../components/index';
+import { BASE_URL, api_routes, TOKEN } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //icons  
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -56,11 +56,10 @@ export default function Destination() {
     }, [addNewDestination, selectedIndex]);
 
     const fetchDestination = async () => {
-        const token = localStorage.getItem('token')
         try {
             const response = await axios.get(URL, {
                 headers: {
-                    'Authorization': token,
+                    'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
@@ -102,9 +101,8 @@ export default function Destination() {
                     tooltip='Delete Destination'
                     icon={<DeleteIcon />}
                     handleClick={() => {
-                        setUpdateDialog(true)
                         setSelectedIndex(data)
-                        setUpdateDestination(data.DestinationName)
+                        setDeleteDestinationDialog(true)
                     }}
                 />
             </>
@@ -151,7 +149,10 @@ export default function Destination() {
             try {
                 const response = await fetch(URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Authorization': TOKEN,
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ DestinationName: addNewDestination })
                 })
                 const result = await response.json()
@@ -196,7 +197,10 @@ export default function Destination() {
             try {
                 const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Authorization': TOKEN,
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ DestinationName: updateDestination })
                 })
                 const result = await response.json()
@@ -234,6 +238,7 @@ export default function Destination() {
         try {
             const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
                 method: 'DELETE',
+                headers: { 'Authorization': TOKEN }
             })
             const result = await response.json()
             if (result.status === 1) {

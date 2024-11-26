@@ -13,8 +13,8 @@ import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { api_routes, BASE_URL } from '../../config/api';
 import { Navbar, Loader } from '../../components/index';
+import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Payment() {
@@ -29,12 +29,11 @@ export default function Payment() {
     const [paymentSummary, setPaymentSummary] = useState([])
 
     const fetchUserPaymentSummary = async () => {
-        const token = localStorage.getItem('token')
         try {
             const URL = `${BASE_URL}${api_routes.add_user_payment}`
             const response = await axios.get(URL, {
                 headers: {
-                    'Authorization': token,
+                    'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },

@@ -7,7 +7,6 @@ import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { BASE_URL } from '../../config/api';
 import 'primereact/resources/primereact.css';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
@@ -15,6 +14,7 @@ import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
+import { BASE_URL, TOKEN } from '../../config/api';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
@@ -40,11 +40,10 @@ export default function Userlist() {
     const [userActiveStatus, setUserActiveStatus] = useState(true);
 
     async function fetchUsers() {
-        const token = localStorage.getItem('token')
         try {
             const response = await axios.get(BASE_URL, {
                 headers: {
-                    'Authorization': token,
+                    'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
@@ -85,7 +84,7 @@ export default function Userlist() {
                     arialabel='vouchers'
                     icon={<ReceiptIcon />}
                     tooltip='View Vouchers'
-                    handleClick={() => navigate('/uservouchers', {
+                    handleClick={() => navigate(`/uservouchers/${data.userId}`, {
                         state: {
                             id: data.userId,
                             name: data.userName

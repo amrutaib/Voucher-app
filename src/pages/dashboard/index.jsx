@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
 import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
-import { BASE_URL } from '../../config/api';
+import { BASE_URL, TOKEN } from '../../config/api';
 import { Navbar, Loader } from '../../components/index';
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -22,11 +22,10 @@ export default function Dashboard() {
 
 
   const fetchCounts = () => {
-    const token = localStorage.getItem('token')
     fetch(BASE_URL, {
       method: "get",
       headers: {
-        'Authorization': token,
+        'Authorization': TOKEN,
         "ngrok-skip-browser-warning": "69420",
         'Content-Type': 'application/json',
       },
@@ -37,7 +36,6 @@ export default function Dashboard() {
           user: data.length,
           vouchers: data.length
         });
-        console.log(data, "DATA")
       })
       .catch((err) => toast.current.show({
         severity: 'error', summary: 'Error', detail: err.message, life: 3000

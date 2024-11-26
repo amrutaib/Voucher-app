@@ -14,8 +14,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { api_routes, BASE_URL } from '../../config/api';
 import { Navbar, Loader } from '../../components/index';
+import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
 
@@ -24,7 +24,6 @@ export default function UserPayment() {
     //ref
     const dt = useRef(null);
     const toast = useRef(null);
-
     //user params
     const location = useLocation();
     const { id, name } = location.state
@@ -47,12 +46,11 @@ export default function UserPayment() {
 
     // Fetch user payment summary
     const fetchUserPaymentSummary = async () => {
-        const token = localStorage.getItem('token')
         try {
             const URL = `${BASE_URL}${api_routes.add_user_payment}/${id}`
             const response = await axios.get(URL, {
                 headers: {
-                    'Authorization': token,
+                    'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
@@ -108,7 +106,11 @@ export default function UserPayment() {
             try {
                 const response = await fetch(URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Authorization': TOKEN,
+                        "ngrok-skip-browser-warning": "69420",
+                        'Content-Type': 'application/json',
+                    },
                     body: requestBody
                 });
                 const result = await response.json();

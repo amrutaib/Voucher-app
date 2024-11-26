@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../../components/index';
-import { api_routes, BASE_URL } from '../../config/api';
+import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';
 
@@ -27,7 +27,13 @@ export default function AddUser() {
 
     const onSubmit = async (data) => {
         const URL = `${BASE_URL}${api_routes.add_user}`
-        axios.post(URL, data)
+        const headers = {
+            'Authorization': TOKEN,
+            "ngrok-skip-browser-warning": "69420",
+            'Content-Type': 'application/json',
+        }
+
+        axios.post(URL, data, { headers })
             .then(function (response) {
                 const data = response.data
                 if (data.status === 200) {

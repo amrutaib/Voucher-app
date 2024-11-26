@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Toast } from 'primereact/toast';
 import { useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
-import { BASE_URL } from '../../config/api';
 import { Navbar } from '../../components/index';
+import { BASE_URL, TOKEN } from '../../config/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';
@@ -13,6 +13,12 @@ export default function EditUser() {
 
     const { Id } = useParams();
     const navigate = useNavigate();
+
+    const api_headers = {
+        'Authorization': TOKEN,
+        "ngrok-skip-browser-warning": "69420",
+        'Content-Type': 'application/json',
+    }
 
     //ref
     const toast = useRef(null);
@@ -33,14 +39,9 @@ export default function EditUser() {
 
     function getUser() {
         const URL = `${BASE_URL}/api/user/${Id}`
-        const token = localStorage.getItem('token')
         fetch(URL, {
             method: "get",
-            headers: {
-                'Authorization': token,
-                "ngrok-skip-browser-warning": "69420",
-                'Content-Type': 'application/json',
-            },
+            headers: api_headers,
         })
             .then((response) => response.json())
             .then((data) => {
@@ -53,9 +54,9 @@ export default function EditUser() {
     }
 
     const onSubmit = async (data) => {
-        const URL = `${BASE_URL}/api/user/${Id}/edit`
+        const URL = `${BASE_URL}/api/user/${Id}`
         axios
-            .put(URL, data)
+            .put(URL, data, { headers: api_headers })
             .then(function (response) {
                 const data = response.data;
                 if (data.status === 200) {

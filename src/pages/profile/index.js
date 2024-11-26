@@ -4,8 +4,6 @@ import { Navbar } from "../../components/index";
 import Typography from "@mui/material/Typography";
 
 export default function UserProfile() {
-
-  const getEmail = localStorage.getItem("emailData");
   return (
     <Box
       sx={{
@@ -16,7 +14,7 @@ export default function UserProfile() {
       }}
     >
       <Navbar />
-      <Typography variant="h6">My Email: {getEmail}</Typography>
+      <Typography variant="h6">My Email: </Typography>
     </Box>
   );
 }
