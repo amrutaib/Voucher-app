@@ -9,13 +9,10 @@ import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
 import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
-import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { Navbar, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { Navbar, ActionBody, Header } from '../../components/index';
 
 export default function UserVoucherList() {
 
@@ -40,16 +37,6 @@ export default function UserVoucherList() {
     }, []);
 
     const actionView = () => <ActionBody iconName='receipt' tooltip='View Voucher PDF' handleClick={() => { }} />
-
-    const header = (
-        <div className="header">
-            <h4 className="m-0">Manage user vouchers</h4>
-            <IconField iconPosition="left">
-                <InputIcon className="pi pi-search" />
-                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search vouchers" />
-            </IconField>
-        </div>
-    );
 
     const Export = () => (
         <div className='addbtn'>
@@ -81,6 +68,10 @@ export default function UserVoucherList() {
         </Box>
     )
 
+    function handleSearch(searchValue) {
+        setGlobalFilter(searchValue);
+    }
+
     return (
         <Box
             sx={{
@@ -102,10 +93,10 @@ export default function UserVoucherList() {
                                 paginator
                                 rows={10}
                                 dataKey="id"
-                                header={header}
                                 value={vouchers}
                                 globalFilter={globalFilter}
                                 rowsPerPageOptions={[5, 10, 25]}
+                                header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} vouchers"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                             >

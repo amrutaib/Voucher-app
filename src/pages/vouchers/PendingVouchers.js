@@ -120,10 +120,10 @@ export default function PendingVouchers() {
                         paginator
                         rows={10}
                         dataKey="id"
-                        header={<Header title={'Manage pending vouchers'} onSearch={handleSearch} />}
                         value={vouchers}
                         globalFilter={globalFilter}
                         rowsPerPageOptions={[5, 10, 25]}
+                        header={<Header title={'Manage pending vouchers'} onSearch={handleSearch} />}
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} vouchers"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     >

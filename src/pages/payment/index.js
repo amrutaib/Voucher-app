@@ -5,16 +5,13 @@ import 'primeicons/primeicons.css';
 import { Box } from "@mui/material";
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
-import 'primereact/resources/primereact.css';
 import { Button } from 'primereact/button';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
+import 'primereact/resources/primereact.css';
 import { DataTable } from 'primereact/datatable';
-import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { Navbar, Loader } from '../../components/index';
 import { api_routes, BASE_URL, TOKEN } from '../../config/api';
+import { Navbar, Loader, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Payment() {
@@ -60,16 +57,6 @@ export default function Payment() {
         </div>
     )
 
-    const header = (
-        <div className="header">
-            <h4 className="m-0">Manage Payments</h4>
-            <IconField iconPosition="left">
-                <InputIcon className="pi pi-search" />
-                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search Users" />
-            </IconField>
-        </div>
-    );
-
     const NullComponent = () => {
         return (
             <Box
@@ -87,6 +74,10 @@ export default function Payment() {
                 </Typography>
             </Box>
         )
+    }
+
+    function handleSearch(searchValue) {
+        setGlobalFilter(searchValue);
     }
 
     return (
@@ -117,10 +108,10 @@ export default function Payment() {
                                         paginator
                                         rows={10}
                                         dataKey="id"
-                                        header={header}
                                         value={paymentSummary}
                                         globalFilter={globalFilter}
                                         rowsPerPageOptions={[5, 10, 25]}
+                                        header={<Header title={`Manage payments`} onSearch={handleSearch} />}
                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                     >

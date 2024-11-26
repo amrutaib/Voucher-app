@@ -14,8 +14,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { Navbar, Loader } from '../../components/index';
 import { api_routes, BASE_URL, TOKEN } from '../../config/api';
+import { Navbar, Loader, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
 
@@ -32,6 +32,7 @@ export default function UserPayment() {
     const [date, setDate] = useState(null);
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(true)
+    const [globalFilter, setGlobalFilter] = useState(null);
     const [paymentSummary, setPaymentSummary] = useState([])
     const [selectedPaymentModes, setSelectedPaymentModes] = useState(null);
     const paymentModes = [
@@ -161,6 +162,11 @@ export default function UserPayment() {
 
     const Label = ({ value, html }) => <FormLabel htmlFor={html} required className='font-bold mb-2'>{value}</FormLabel>
 
+
+    function handleSearch(searchValue) {
+        setGlobalFilter(searchValue);
+    }
+
     const NullComponent = () => {
         return (
             <Box
@@ -261,9 +267,10 @@ export default function UserPayment() {
                                     paginator
                                     rows={10}
                                     dataKey="id"
-                                    header={header}
                                     value={paymentSummary}
+                                    globalFilter={globalFilter}
                                     rowsPerPageOptions={[5, 10, 25]}
+                                    header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
                                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 >
