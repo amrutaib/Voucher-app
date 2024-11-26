@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { loginContent } from '../../data/data';
 import { Typography, Box, Stack } from '@mui/material';
-import { SitemarkIcon } from '../../components/Login/CustomIcon';
+import SitemarkIcon from '../../assets/svg/SitemarkIcon';
 
 export default function Content() {
     return (

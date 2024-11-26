@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../Navbar';
 import { Toast } from 'primereact/toast';
 import { useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
+import { Navbar } from '../../components/index';
 import { api_routes, BASE_URL } from '../../config/api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';

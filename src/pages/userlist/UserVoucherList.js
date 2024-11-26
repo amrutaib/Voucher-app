@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
-import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
-import ActionBody from './ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -16,6 +14,7 @@ import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { Navbar, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function UserVoucherList() {

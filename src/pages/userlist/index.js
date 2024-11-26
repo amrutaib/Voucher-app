@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
 import "../style.css"
 import axios from 'axios';
-import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import ActionBody from '../ActionBody';
 import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -20,6 +18,7 @@ import Typography from "@mui/material/Typography";
 import { InputSwitch } from 'primereact/inputswitch';
 import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { Navbar, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //icons 
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -41,10 +40,13 @@ export default function Userlist() {
     const [userActiveStatus, setUserActiveStatus] = useState(true);
 
     async function fetchUsers() {
+        const token = localStorage.getItem('token')
         try {
             const response = await axios.get(BASE_URL, {
                 headers: {
-                    'ngrok-skip-browser-warning': '69420',
+                    'Authorization': token,
+                    "ngrok-skip-browser-warning": "69420",
+                    'Content-Type': 'application/json',
                 },
             });
             setUsers(response.data);

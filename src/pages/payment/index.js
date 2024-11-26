@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Loader from '../Loader';
-import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import { Box } from "@mui/material";
@@ -16,7 +14,8 @@ import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { api_routes, BASE_URL } from '../../config/api';
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; 
+import { Navbar, Loader } from '../../components/index';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 export default function Payment() {
 
@@ -30,11 +29,14 @@ export default function Payment() {
     const [paymentSummary, setPaymentSummary] = useState([])
 
     const fetchUserPaymentSummary = async () => {
+        const token = localStorage.getItem('token')
         try {
             const URL = `${BASE_URL}${api_routes.add_user_payment}`
             const response = await axios.get(URL, {
                 headers: {
-                    'ngrok-skip-browser-warning': '69420',
+                    'Authorization': token,
+                    "ngrok-skip-browser-warning": "69420",
+                    'Content-Type': 'application/json',
                 },
             });
             setPaymentSummary(response.data);

@@ -5,7 +5,7 @@ import MuiCard from '@mui/material/Card';
 import { BASE_URL } from '../../config/api';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { SitemarkIcon } from '../../components/Login/CustomIcon';
+import SitemarkIcon from '../../assets/svg/SitemarkIcon';
 import { Visibility, VisibilityOff, Business, Email } from '@mui/icons-material';  //icons
 import { Typography, TextField, Link, FormControl, FormLabel, Button, Box, createTheme, InputAdornment, IconButton } from '@mui/material';
 

@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
-import Navbar from '../Navbar';
-import Loader from '../Loader';
 import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
 import { BASE_URL } from '../../config/api';
+import { Navbar, Loader } from '../../components/index';
 import { MdOutlinePendingActions } from "react-icons/md";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
@@ -23,18 +22,22 @@ export default function Dashboard() {
 
 
   const fetchCounts = () => {
+    const token = localStorage.getItem('token')
     fetch(BASE_URL, {
       method: "get",
-      headers: new Headers({
+      headers: {
+        'Authorization': token,
         "ngrok-skip-browser-warning": "69420",
-      }),
+        'Content-Type': 'application/json',
+      },
     })
       .then((response) => response.json())
       .then((data) => {
         setCount({
           user: data.length,
           vouchers: data.length
-        })
+        });
+        console.log(data, "DATA")
       })
       .catch((err) => toast.current.show({
         severity: 'error', summary: 'Error', detail: err.message, life: 3000

@@ -1,33 +1,13 @@
-import Error from "./Error";
-import Login from "./Login";
-import Navbar from "./Navbar";
-import Loader from './Loader';
-import Voucher from "./Voucher";
-import Payment from './Payment';
-import Userlist from "./UserList";
-import Dashboard from "./Dashboard";
-import UserProfile from './UserProfile';
-import Destination from './Destination';
-import AddUser from './UserList/AddUser';
-import PrivateRoute from "./PrivateRoute";
-import EditUser from './UserList/EditUser';
-import UserPayment from "./UserList/UserPayment";
-import UserVoucherList from "./UserList/UserVoucherList";
+import Error from "./error";
+import Navbar from "./navbar";
+import Loader from './loader';
+import ActionBody from "./actionbody";
+import PrivateRoute from "./private";
 
 export {
     Error,
-    Login,
     Navbar,
-    AddUser,
-    Voucher,
     Loader,
-    Payment,
-    Userlist,
-    EditUser,
-    Dashboard,
-    UserProfile,
-    Destination,
+    ActionBody,
     PrivateRoute,
-    UserPayment,
-    UserVoucherList
 }

@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../Navbar';
 import { Toast } from 'primereact/toast';
 import { useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { BASE_URL } from '../../config/api';
+import { Navbar } from '../../components/index';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';
@@ -33,11 +33,14 @@ export default function EditUser() {
 
     function getUser() {
         const URL = `${BASE_URL}/api/user/${Id}`
+        const token = localStorage.getItem('token')
         fetch(URL, {
             method: "get",
-            headers: new Headers({
+            headers: {
+                'Authorization': token,
                 "ngrok-skip-browser-warning": "69420",
-            }),
+                'Content-Type': 'application/json',
+            },
         })
             .then((response) => response.json())
             .then((data) => {

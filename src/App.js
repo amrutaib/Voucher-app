@@ -1,19 +1,21 @@
 import React from "react";
+//screens
 import {
-  Error,
-  Voucher,
+  Login,
   AddUser,
+  Voucher,
   Payment,
+  Register,
   Userlist,
   EditUser,
   Dashboard,
   UserProfile,
   Destination,
   UserPayment,
-  UserVoucherList,
-} from "./components/index";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+  UserVoucherList
+} from './pages/index'
+//components
+import { Error } from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 

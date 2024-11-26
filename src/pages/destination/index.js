@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
 import axios from 'axios';
-import Navbar from '../Navbar';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
-import ActionBody from '../ActionBody';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
@@ -19,6 +17,7 @@ import { InputText } from 'primereact/inputtext';
 import Typography from "@mui/material/Typography";
 import { PiWarningOctagonThin } from 'react-icons/pi';
 import { BASE_URL, api_routes } from '../../config/api';
+import { Navbar, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //icons  
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -57,10 +56,13 @@ export default function Destination() {
     }, [addNewDestination, selectedIndex]);
 
     const fetchDestination = async () => {
+        const token = localStorage.getItem('token')
         try {
             const response = await axios.get(URL, {
                 headers: {
-                    'ngrok-skip-browser-warning': '69420',
+                    'Authorization': token,
+                    "ngrok-skip-browser-warning": "69420",
+                    'Content-Type': 'application/json',
                 },
             });
             setDestination(response.data);
@@ -94,7 +96,6 @@ export default function Destination() {
                         setUpdateDestination(data.DestinationName)
                     }}
                 />
-
                 <ActionBody
                     color={'error'}
                     arialabel='delete'

@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./Navbar";
 import Box from "@mui/material/Box";
+import { Navbar } from "../../components/index";
 import Typography from "@mui/material/Typography";
 
 export default function UserProfile() {
