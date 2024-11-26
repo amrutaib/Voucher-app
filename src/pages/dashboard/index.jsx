@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
 import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
-import { BASE_URL, TOKEN } from '../../config/api';
 import { Navbar, Loader } from '../../components/index';
 import { MdOutlinePendingActions } from "react-icons/md";
+import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
@@ -22,19 +22,20 @@ export default function Dashboard() {
 
 
   const fetchCounts = () => {
-    fetch(BASE_URL, {
+    const URL = `${BASE_URL}${api_routes.dashboardCounts}`
+    fetch(URL, {
       method: "get",
       headers: {
         'Authorization': TOKEN,
-        "ngrok-skip-browser-warning": "69420",
         'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "69420",
       },
     })
       .then((response) => response.json())
       .then((data) => {
         setCount({
-          user: data.length,
-          vouchers: data.length
+          user: data.userCount,
+          vouchers: data.vouchersCount
         });
       })
       .catch((err) => toast.current.show({
