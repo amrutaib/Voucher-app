@@ -9,14 +9,13 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
 import { useNavigate } from 'react-router-dom';
+import { Box, Typography } from "@mui/material";
 import { DataTable } from 'primereact/datatable';
-import Typography from "@mui/material/Typography";
 import { BASE_URL, TOKEN } from '../../config/api';
 import { InputSwitch } from 'primereact/inputswitch';
-import { Box, CircularProgress } from "@mui/material";
 import { FaExclamationTriangle } from "react-icons/fa";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import { Navbar, ActionBody, Header } from '../../components/index';
+import { Navbar, ActionBody, Header, Loader } from '../../components/index';
 //icons 
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -37,8 +36,10 @@ export default function Userlist() {
     const [userActiveStatus, setUserActiveStatus] = useState(true);
 
     async function fetchUsers() {
+        const clientId = localStorage.getItem("clientId")
+        const URL = `${BASE_URL}/allUsers/${clientId}`
         try {
-            const response = await axios.get(BASE_URL, {
+            const response = await axios.get(URL, {
                 headers: {
                     'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
@@ -117,12 +118,6 @@ export default function Userlist() {
                 className='button'
                 onClick={() => navigate('/adduser')}
             />
-        </div>
-    )
-
-    const Loader = () => (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
-            <CircularProgress />
         </div>
     )
 

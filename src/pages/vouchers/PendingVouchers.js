@@ -27,7 +27,8 @@ export default function PendingVouchers() {
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
     async function fetchVouchers() {
-        const URL = `${BASE_URL}/voucher`
+        const id = localStorage.getItem('clientId')
+        const URL = `${BASE_URL}/voucher/${id}`
         try {
             const response = await axios.get(URL, {
                 headers: {

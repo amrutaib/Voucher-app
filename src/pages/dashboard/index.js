@@ -39,7 +39,8 @@ export default function Dashboard() {
   }
 
   const fetchVoucherCount = () => {
-    const URL = `${BASE_URL}/voucher`
+    const id = localStorage.getItem('clientId')
+    const URL = `${BASE_URL}/voucher/${id}`
     fetch(URL, {
       method: "get",
       headers: {

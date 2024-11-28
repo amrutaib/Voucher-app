@@ -32,8 +32,7 @@ export default function UserVoucherList() {
     const [globalFilter, setGlobalFilter] = useState(null);
 
     async function fetchUserVouchers() {
-        const URL = `${BASE_URL}/voucher/${id}`
-        console.log(URL)
+        const URL = `${BASE_URL}/voucher/userVoucherList/${id}`
         try {
             const response = await axios.get(URL, {
                 headers: {

@@ -38,7 +38,7 @@ export default function EditUser() {
     }, []);
 
     function getUser() {
-        const URL = `${BASE_URL}/api/user/${Id}`
+        const URL = `${BASE_URL}/UserData/${Id}`
         fetch(URL, {
             method: "get",
             headers: api_headers,
@@ -54,7 +54,7 @@ export default function EditUser() {
     }
 
     const onSubmit = async (data) => {
-        const URL = `${BASE_URL}/api/user/${Id}`
+        const URL = `${BASE_URL}/UserData/${Id}`
         axios
             .put(URL, data, { headers: api_headers })
             .then(function (response) {
