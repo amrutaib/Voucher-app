@@ -52,7 +52,7 @@ export const appRouter = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "Dashboard",
+        path: "dashboard",
         element: <Dashboard />,
       },
       //User routes

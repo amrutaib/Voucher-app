@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { Toolbar, Tooltip } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link, useNavigate } from "react-router-dom";
+import { IconButton, Toolbar, Tooltip } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const NavBarHeader = () => {
 
     const theme = useTheme();
+    const navigate = useNavigate();
+
+    function handleLogOut() {
+        localStorage.clear()
+        navigate('/login')
+    }
 
     return (
         <Toolbar sx={{ position: 'absolute', right: '20px' }}>
@@ -25,7 +31,7 @@ const NavBarHeader = () => {
                 </Tooltip>
             </Link>
 
-            <Link to="/login">
+            <IconButton onClick={handleLogOut}>
                 <Tooltip title='Log Out'>
                     <LogoutIcon
                         sx={{
@@ -36,7 +42,8 @@ const NavBarHeader = () => {
                         }}
                     />
                 </Tooltip>
-            </Link>
+            </IconButton>
+
         </Toolbar>
     );
 }

@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import "../style.css";
 import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
+import { BASE_URL, TOKEN } from '../../config/api';
 import { Navbar, Loader } from '../../components/index';
 import { MdOutlinePendingActions } from "react-icons/md";
-import { BASE_URL, clientId, TOKEN } from '../../config/api';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
@@ -20,6 +20,7 @@ export default function Dashboard() {
 
 
   const fetchCounts = () => {
+    const clientId = localStorage.getItem("clientId")
     const URL = `${BASE_URL}/allUsers/${clientId}`
     fetch(URL, {
       method: "get",
