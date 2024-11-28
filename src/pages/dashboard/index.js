@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Toast } from 'primereact/toast';
 import { Navbar, Loader } from '../../components/index';
 import { MdOutlinePendingActions } from "react-icons/md";
-import { api_routes, BASE_URL, TOKEN } from '../../config/api';
+import { BASE_URL, clientId, TOKEN } from '../../config/api';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { CardActions, Box, Card, Typography, Grid, Avatar } from '@mui/material/index';
 
@@ -15,14 +15,12 @@ export default function Dashboard() {
 
   //states
   const [loading, setLoading] = useState(true)
-  const [dataCount, setCount] = useState({
-    user: null,
-    vouchers: null
-  })
+  const [userCount, setUserCount] = useState(null)
+  const [voucherCount, setVoucherCount] = useState(null)
 
 
   const fetchCounts = () => {
-    const URL = `${BASE_URL}${api_routes.dashboardCounts}`
+    const URL = `${BASE_URL}/allUsers/${clientId}`
     fetch(URL, {
       method: "get",
       headers: {
@@ -32,23 +30,36 @@ export default function Dashboard() {
       },
     })
       .then((response) => response.json())
-      .then((data) => {
-        setCount({
-          user: data.userCount,
-          vouchers: data.vouchersCount
-        });
-      })
+      .then((data) => setUserCount(data?.length))
       .catch((err) => toast.current.show({
         severity: 'error', summary: 'Error', detail: err.message, life: 3000
       }))
       .finally(() => setLoading(false))
   }
 
+  const fetchVoucherCount = () => {
+    const URL = `${BASE_URL}/voucher`
+    fetch(URL, {
+      method: "get",
+      headers: {
+        'Authorization': TOKEN,
+        'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "69420",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setVoucherCount(data?.length))
+      .catch((err) => toast.current.show({
+        severity: 'error', summary: 'Error', detail: err.message, life: 3000
+      }))
+      .finally(() => setLoading(false))
+  }
   useEffect(() => {
-    fetchCounts()
+    fetchCounts();
+    fetchVoucherCount();
   }, [])
 
-  const CardComponent = ({ ml, route, avatar, title, count, className }) => {
+  const CardComponent = ({ route, avatar, title, count, className }) => {
     return (
       <Link to={route}>
         <Grid p={2} spacing={1}>
@@ -83,14 +94,14 @@ export default function Dashboard() {
             <CardComponent
               title={'Users'}
               route={'/userslist'}
-              count={dataCount.user | 0}
+              count={userCount | 0}
               className={'gradientpink'}
               avatar={<PersonOutlineOutlinedIcon />}
             />
             <CardComponent
               ml={5}
               route={'/Voucher'}
-              count={dataCount.vouchers | 0}
+              count={voucherCount | 0}
               title={'Pending Voucher'}
               className={'gradientblue'}
               avatar={<MdOutlinePendingActions size={20} />}

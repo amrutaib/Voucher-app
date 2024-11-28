@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './index.css'
+import axios from 'axios';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import Box from "@mui/material/Box";
@@ -10,9 +11,10 @@ import 'primereact/resources/primereact.css';
 import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import Typography from "@mui/material/Typography";
+import { BASE_URL, TOKEN } from '../../config/api';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { Navbar, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import { Navbar, ActionBody, Header } from '../../components/index';
 
 export default function UserVoucherList() {
 
@@ -26,17 +28,49 @@ export default function UserVoucherList() {
 
     //states
     const [vouchers, setVouchers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [globalFilter, setGlobalFilter] = useState(null);
 
     async function fetchUserVouchers() {
-
+        const URL = `${BASE_URL}/voucher/${id}`
+        console.log(URL)
+        try {
+            const response = await axios.get(URL, {
+                headers: {
+                    'Authorization': TOKEN,
+                    'Content-Type': 'application/json',
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            });
+            setVouchers(response.data);
+        } catch (error) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
         fetchUserVouchers();
     }, []);
 
-    const actionView = () => <ActionBody iconName='receipt' tooltip='View Voucher PDF' handleClick={() => { }} />
+    const actionBodyTemplate = () => {
+        return (
+            <React.Fragment>
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" tooltip='Edit voucher' tooltipOptions={{ position: 'bottom' }} />
+                <Button icon="pi pi-receipt" rounded outlined className="mr-2" tooltip='View voucher' tooltipOptions={{ position: 'bottom' }} />
+                <Button
+                    icon="pi pi-trash"
+                    rounded outlined
+                    severity="danger"
+                    tooltip='Delete voucher'
+                    tooltipOptions={{ position: 'bottom' }}
+                    onClick={() => { }}
+                />
+            </React.Fragment>
+        );
+    };
+
 
     const Export = () => (
         <div className='addbtn'>
@@ -96,19 +130,18 @@ export default function UserVoucherList() {
                                 value={vouchers}
                                 globalFilter={globalFilter}
                                 rowsPerPageOptions={[5, 10, 25]}
-                                header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
+                                header={<Header title={`Manage ${name}'s vouchers`} onSearch={handleSearch} />}
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} vouchers"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                             >
-                                <Column field="id" header="Voucher no." style={{ minWidth: '4rem' }} />
-                                <Column field="Voucherno" header="Shipper name" style={{ minWidth: '8rem' }} />
-                                <Column field="Seller" header="Seller" />
-                                <Column field="S/B" header="S/b" style={{ minWidth: '8rem' }} />
-                                <Column field="Job No" header="Job no" style={{ minWidth: '8rem' }} />
-                                <Column field="Approved" header="Approved amount" style={{ minWidth: '3rem' }} />
-                                <Column field="Approved" header="Approved date" style={{ minWidth: '8rem' }} />
-                                <Column field="Approved" header="Added date" style={{ minWidth: '8rem' }} />
-                                <Column header="Action" body={actionView} style={{ minWidth: '3rem' }} />
+                                <Column field="voucherId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                                <Column field="voucher_no" header="Voucher No" style={{ minWidth: '8rem' }} />
+                                <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
+                                <Column field="seller" header="Seller" />
+                                <Column field="sb_no" header="S/b" style={{ minWidth: '4rem' }} />
+                                <Column field="job_no" header="Job No" style={{ minWidth: '4rem' }} />
+                                <Column field="approvedAmnt" header="Approved amount" style={{ minWidth: '4rem' }} />
+                                <Column header="Action" body={actionBodyTemplate} style={{ minWidth: '8rem' }} />
                             </DataTable>
                         </div>
                     }

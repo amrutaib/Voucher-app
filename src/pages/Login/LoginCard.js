@@ -101,6 +101,7 @@ export default function LoginCard() {
                         setErrorMessage(data.message)
                     } else {
                         localStorage.setItem("token", data.token);
+                        localStorage.setItem("clientId", data.clientId);
                         toast.current.show({ severity: 'success', summary: 'Success', detail: data.message });
                         navigate("/")
                     }
