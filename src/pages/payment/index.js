@@ -26,8 +26,9 @@ export default function Payment() {
     const [paymentSummary, setPaymentSummary] = useState([])
 
     const fetchUserPaymentSummary = async () => {
+        const clientId = localStorage.getItem("clientId");
         try {
-            const URL = `${BASE_URL}${api_routes.add_user_payment}`
+            const URL = `${BASE_URL}${api_routes.add_user_payment}/${clientId}`
             const response = await axios.get(URL, {
                 headers: {
                     'Authorization': TOKEN,

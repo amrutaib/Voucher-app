@@ -32,9 +32,7 @@ export default function Dashboard() {
     })
       .then((response) => response.json())
       .then((data) => setUserCount(data?.length))
-      .catch((err) => toast.current.show({
-        severity: 'error', summary: 'Error', detail: err.message, life: 3000
-      }))
+      .catch((err) => toast.current.show({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 }))
       .finally(() => setLoading(false))
   }
 
@@ -88,7 +86,7 @@ export default function Dashboard() {
         display: 'flex'
       }}
     >
-      <Navbar />
+      <Navbar HeaderTitle='Dashboard' />
       <Toast ref={toast} />
       {
         loading ? <Loader /> :

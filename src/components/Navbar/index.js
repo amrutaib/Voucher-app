@@ -121,8 +121,6 @@ export default function Navbar({ HeaderTitle }) {
     setOpen(false);
   };
 
-  const PageTitle = location.pathname.split('/')[1] || 'Dashboard'
-
   const isPageActive = (item) => {
     return location.pathname === item.route || (item.subRoutes && item.subRoutes.some(subRoute => location.pathname.startsWith(subRoute)))
   }
@@ -144,7 +142,7 @@ export default function Navbar({ HeaderTitle }) {
             <Menu />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ fontFamily: 'Mulish, sans-serif', fontSize: '20px' }}>
-            {HeaderTitle || PageTitle}
+            {HeaderTitle}
           </Typography>
         </Toolbar>
         <NavBarHeader />

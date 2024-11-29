@@ -13,13 +13,16 @@ import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
+import { BASE_URL, TOKEN } from '../../config/api';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import { Navbar, Loader, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
 
 export default function UserPayment() {
+
+    //client ID
+    const clientId = localStorage.getItem('clientId')
 
     //ref
     const dt = useRef(null);
@@ -48,7 +51,7 @@ export default function UserPayment() {
     // Fetch user payment summary
     const fetchUserPaymentSummary = async () => {
         try {
-            const URL = `${BASE_URL}${api_routes.add_user_payment}/${id}`
+            const URL = `${BASE_URL}/payment/UserPayment/${id}`
             const response = await axios.get(URL, {
                 headers: {
                     'Authorization': TOKEN,
@@ -56,6 +59,7 @@ export default function UserPayment() {
                     'Content-Type': 'application/json',
                 },
             });
+            console.log(response.data)
             setPaymentSummary(response.data);
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
@@ -100,12 +104,13 @@ export default function UserPayment() {
             const requestBody = JSON.stringify({
                 amount: amount,
                 userId: id,
+                clientId: clientId,
                 paymentAdddate: formattedDate,
                 paymentMode: selectedPaymentModes.name
             });
 
             try {
-                const response = await fetch(URL, {
+                const response = await fetch(`${BASE_URL}/payment/UserPayment/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': TOKEN,

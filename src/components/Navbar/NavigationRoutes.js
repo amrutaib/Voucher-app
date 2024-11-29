@@ -9,7 +9,10 @@ const Data = [
         route: "/dashboard",
         key: "Dashboard",
         routeName: "Dashboard",
-        subRoutes: ['/UserProfile'],
+        subRoutes: [
+            '/dashboard',
+            '/UserProfile',
+        ],
         iconName: <MdOutlineSpaceDashboard fontSize={24} />
     },
     {
