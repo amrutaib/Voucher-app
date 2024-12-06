@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import { Tab } from '@mui/base/Tab';
@@ -15,6 +15,14 @@ import PendingVouchers from './PendingVouchers';
 import ApprovedVouchers from './ApprovedVouchers';
 
 export default function Voucher() {
+
+    const [count, setCount] = useState({
+        pending: null,
+        approved: null
+    })
+
+    async function fetchVoucherCount() { }
+
     return (
         <Box
             sx={{

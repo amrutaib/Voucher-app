@@ -8,11 +8,15 @@ import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
-import { Header } from '../../components/index';
 import { DataTable } from 'primereact/datatable';
 import { BASE_URL, TOKEN } from '../../config/api';
 import { PiWarningOctagonThin } from "react-icons/pi";
+import { Header, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+//icons 
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export default function ApprovedVouchers() {
 
@@ -27,7 +31,8 @@ export default function ApprovedVouchers() {
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
     async function fetchVouchers() {
-        const URL = `${BASE_URL}/voucher`
+        const id = localStorage.getItem('clientId')
+        const URL = `${BASE_URL}/voucher/${id}`
         try {
             const response = await axios.get(URL, {
                 headers: {
@@ -52,8 +57,8 @@ export default function ApprovedVouchers() {
         return (
             <div className='addbtn'>
                 <Button
-                    label="Export Excel"
-                    severity="secondary"
+                    label="Export CSV"
+                    className='button'
                     onClick={() => { }}
                 />
             </div>
@@ -62,18 +67,27 @@ export default function ApprovedVouchers() {
 
     const actionBodyTemplate = () => {
         return (
-            <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" tooltip='Edit voucher' tooltipOptions={{ position: 'bottom' }} />
-                <Button icon="pi pi-receipt" rounded outlined className="mr-2" tooltip='View voucher' tooltipOptions={{ position: 'bottom' }} />
-                <Button
-                    icon="pi pi-trash"
-                    rounded outlined
-                    severity="danger"
-                    tooltip='Delete voucher'
-                    tooltipOptions={{ position: 'bottom' }}
-                    onClick={() => setDeleteProductDialog(true)}
+            <>
+                <ActionBody
+                    arialabel='edit'
+                    icon={<ModeEditIcon />}
+                    tooltip='Edit voucher'
+                    handleClick={() => { }}
                 />
-            </React.Fragment>
+                <ActionBody
+                    arialabel='view'
+                    icon={<ReceiptIcon />}
+                    tooltip='View voucher'
+                    handleClick={() => { }}
+                />
+                <ActionBody
+                    color={"error"}
+                    arialabel='delete'
+                    tooltip='Delete voucher'
+                    icon={<DeleteOutlineOutlinedIcon />}
+                    handleClick={() => setDeleteProductDialog(true)}
+                />
+            </>
         );
     };
 

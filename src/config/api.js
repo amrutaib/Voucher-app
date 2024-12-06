@@ -1,8 +1,8 @@
 const TOKEN = localStorage.getItem('token')
-const BASE_URL = 'https://5c1e-110-226-181-187.ngrok-free.app';
+const BASE_URL = 'https://a3c4-103-167-123-74.ngrok-free.app';
 const api_routes = {
     add_user: '/UserData',
-    destination: '/destination',
+    destination: '/destinations',
     add_user_payment: '/payment',
     dashboardCounts: '/DashboardCounts'
 };

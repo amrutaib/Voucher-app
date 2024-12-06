@@ -24,7 +24,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 export default function Destination() {
 
     const navigate = useNavigate();
-    const URL = `${BASE_URL}${api_routes.destination}`
+
+    const clientId = localStorage.getItem('clientId')
 
     //states
     const [error, setError] = useState(null);
@@ -54,8 +55,9 @@ export default function Destination() {
     }, [addNewDestination, selectedIndex]);
 
     const fetchDestination = async () => {
+        const allDestUrl = `${BASE_URL}${api_routes.destination}/${clientId}`
         try {
-            const response = await axios.get(URL, {
+            const response = await axios.get(allDestUrl, {
                 headers: {
                     'Authorization': TOKEN,
                     "ngrok-skip-browser-warning": "69420",
@@ -125,6 +127,9 @@ export default function Destination() {
     );
 
     async function addNewDest() {
+
+        const addDest = `${BASE_URL}/destination`
+
         setError('')
         let isValid = true
 
@@ -135,16 +140,16 @@ export default function Destination() {
 
         if (isValid) {
             try {
-                const response = await fetch(URL, {
+                const response = await fetch(addDest, {
                     method: 'POST',
                     headers: {
                         'Authorization': TOKEN,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ DestinationName: addNewDestination })
+                    body: JSON.stringify({ DestinationName: addNewDestination, clientid: clientId })
                 })
                 const result = await response.json()
-                if (result.status === 1) {
+                if (result.status === 200) {
                     navigate('#')
                     toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
                 } else {
@@ -183,13 +188,13 @@ export default function Destination() {
         }
         if (isValid) {
             try {
-                const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
+                const response = await fetch(`${BASE_URL}/destination/${selectedIndex.DestinationId}`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': TOKEN,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ DestinationName: updateDestination })
+                    body: JSON.stringify({ DestinationName: updateDestination, clientid: clientId })
                 })
                 const result = await response.json()
                 if (result.status === 1) {
@@ -224,7 +229,7 @@ export default function Destination() {
 
     async function deleteDestination() {
         try {
-            const response = await fetch(`${URL}/${selectedIndex.DestinationId}`, {
+            const response = await fetch(`${BASE_URL}/destination/${selectedIndex.DestinationId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': TOKEN }
             })
