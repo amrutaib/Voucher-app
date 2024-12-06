@@ -82,16 +82,16 @@ export const appRouter = createBrowserRouter([
       },
       //Voucher screens
       {
-        path: "Voucher",
+        path: "vouchers",
         element: <Voucher />,
       },
       //Payment screens
       {
-        path: "Payment",
+        path: "payment",
         element: <Payment />,
       },
       {
-        path: "Destination",
+        path: "destination",
         element: <Destination />,
       },
     ],

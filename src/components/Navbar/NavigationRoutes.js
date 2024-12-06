@@ -30,7 +30,7 @@ const Data = [
     },
     {
         id: 3,
-        route: "/Voucher",
+        route: "/vouchers",
         key: "Voucher",
         routeName: "Voucher",
         subRoutes: [],
@@ -38,14 +38,14 @@ const Data = [
     },
     {
         id: 4,
-        route: "/Payment",
+        route: "/payment",
         key: "Payment Summary",
         routeName: "Payment Summary",
         iconName: <MdPayment fontSize={24} />
     },
     {
         id: 5,
-        route: "/Destination",
+        route: "/destination",
         key: "Destination",
         routeName: "Destination",
         iconName: <BsGeoAltFill fontSize={24} />
