@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import { Tab } from '@mui/base/Tab';
@@ -11,17 +11,55 @@ import { Navbar } from '../../components/index';
 import Typography from "@mui/material/Typography";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //voucher screens
+import { BASE_URL } from '../../config/api';
 import PendingVouchers from './PendingVouchers';
 import ApprovedVouchers from './ApprovedVouchers';
 
 export default function Voucher() {
 
+    const toast = useRef(null)
+
     const [count, setCount] = useState({
         pending: null,
         approved: null
     })
+    const [loading, setLoading] = useState(true)
 
-    async function fetchVoucherCount() { }
+    async function fetchVoucherCount() {
+
+        const TOKEN = localStorage.getItem('token')
+        const clientId = localStorage.getItem('clientId')
+        const URL = `${BASE_URL}/voucher/vouchercount/${clientId}`
+
+        fetch(URL, {
+            method: "get",
+            headers: {
+                Authorization: TOKEN,
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "69420",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCount({
+                    pending: data.Pendingcount,
+                    approved: data.Approvedcount
+                });
+            })
+            .catch((err) =>
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: err.message,
+                    life: 3000,
+                })
+            )
+            .finally(() => setLoading(false));
+    }
+
+    useEffect(() => {
+        fetchVoucherCount()
+    }, [])
 
     return (
         <Box
@@ -37,10 +75,10 @@ export default function Voucher() {
                 <Tabs defaultValue={1}>
                     <TabsList className='tablist' style={{ padding: '10px', marginBottom: '20px', borderRadius: '10px' }}>
                         <Tab value={1} className='tabview'>
-                            <Typography variant='subtitle1'>Pending(36)</Typography>
+                            <Typography variant='subtitle1'>Pending({count.pending})</Typography>
                         </Tab>
                         <Tab value={2} className='tabview'>
-                            <Typography variant='subtitle1' sx={{ marginLeft: '10px' }}>Approved(12)</Typography>
+                            <Typography variant='subtitle1' sx={{ marginLeft: '10px' }}>Approved({count.approved})</Typography>
                         </Tab>
                     </TabsList>
 
