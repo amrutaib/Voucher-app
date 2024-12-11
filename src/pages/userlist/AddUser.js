@@ -27,24 +27,22 @@ export default function AddUser() {
 
     const onSubmit = async (data) => {
         const clientId = localStorage.getItem('clientId')
-        const newData = { ...data, clientID: clientId };
-        const URL = `${BASE_URL}${api_routes.add_user}/${clientId}`
+        const newData = { ...data, clientid: clientId };
+        const URL = `${BASE_URL}${api_routes.add_user}/`
         const headers = {
             'Authorization': TOKEN,
-            "ngrok-skip-browser-warning": "69420",
             'Content-Type': 'application/json',
         }
         axios.post(URL, newData, { headers })
             .then(function (response) {
                 const data = response.data
+                console.log(data.message, "DATA")
                 if (data.status === 200) {
                     setTimeout(() => navigate('/userslist'), 1000)
                     toast.current.show({ severity: 'success', summary: 'Success', detail: data.message, life: 2000 });
                 } else {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: data.message, life: 3000 });
                 }
-                console.log(response.data);
-
             })
             .catch((error) => console.log(error))
     };

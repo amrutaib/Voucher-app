@@ -37,12 +37,12 @@ export default function Userlist() {
 
     async function fetchUsers() {
         const clientId = localStorage.getItem("clientId")
-        const URL = `${BASE_URL}/allUsers/${clientId}`
+        const URL = `${BASE_URL}/allUsers/`
         try {
             const response = await axios.get(URL, {
                 headers: {
+                    'clientid': clientId,
                     'Authorization': TOKEN,
-                    "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
             });

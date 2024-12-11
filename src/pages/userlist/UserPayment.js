@@ -51,11 +51,11 @@ export default function UserPayment() {
     // Fetch user payment summary
     const fetchUserPaymentSummary = async () => {
         try {
-            const URL = `${BASE_URL}/payment/UserPayment/${id}`
+            const URL = `${BASE_URL}/payment/userpayment/`
             const response = await axios.get(URL, {
                 headers: {
+                    'userid': id,
                     'Authorization': TOKEN,
-                    "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
             });
@@ -110,11 +110,10 @@ export default function UserPayment() {
             });
 
             try {
-                const response = await fetch(`${BASE_URL}/payment/UserPayment/`, {
+                const response = await fetch(`${BASE_URL}/payment/userpayment/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': TOKEN,
-                        "ngrok-skip-browser-warning": "69420",
                         'Content-Type': 'application/json',
                     },
                     body: requestBody

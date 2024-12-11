@@ -24,7 +24,6 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 export default function Destination() {
 
     const navigate = useNavigate();
-
     const clientId = localStorage.getItem('clientId')
 
     //states
@@ -55,12 +54,12 @@ export default function Destination() {
     }, [addNewDestination, selectedIndex]);
 
     const fetchDestination = async () => {
-        const allDestUrl = `${BASE_URL}${api_routes.destination}/${clientId}`
+        const allDestUrl = `${BASE_URL}${api_routes.destination}/`
         try {
             const response = await axios.get(allDestUrl, {
                 headers: {
+                    'clientid': clientId,
                     'Authorization': TOKEN,
-                    "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
             });
@@ -128,7 +127,7 @@ export default function Destination() {
 
     async function addNewDest() {
 
-        const addDest = `${BASE_URL}/destination`
+        const addDest = `${BASE_URL}/destination/`
 
         setError('')
         let isValid = true
@@ -188,15 +187,17 @@ export default function Destination() {
         }
         if (isValid) {
             try {
-                const response = await fetch(`${BASE_URL}/destination/${selectedIndex.DestinationId}`, {
+                const response = await fetch(`${BASE_URL}/destination/`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': TOKEN,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'destinationid': selectedIndex.DestinationId,
                     },
                     body: JSON.stringify({ DestinationName: updateDestination, clientid: clientId })
                 })
                 const result = await response.json()
+                console.log(result, "RES")
                 if (result.status === 1) {
                     navigate('#')
                     toast.current.show({ severity: 'success', summary: 'Success', detail: result.message, life: 2000 });
@@ -204,6 +205,7 @@ export default function Destination() {
                     toast.current.show({ severity: 'error', summary: 'Error', detail: result.message, life: 2000 });
                 }
             } catch (error) {
+                console.log(error?.message)
                 toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
             } finally {
                 setUpdateError('')
@@ -229,9 +231,13 @@ export default function Destination() {
 
     async function deleteDestination() {
         try {
-            const response = await fetch(`${BASE_URL}/destination/${selectedIndex.DestinationId}`, {
+            const response = await fetch(`${BASE_URL}/destination/`, {
                 method: 'DELETE',
-                headers: { 'Authorization': TOKEN }
+                headers: {
+                    'Authorization': TOKEN,
+                    'Content-Type': 'application/json',
+                    'destinationid': selectedIndex.DestinationId,
+                }
             })
             const result = await response.json()
             if (result.status === 1) {

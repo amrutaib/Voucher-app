@@ -1,7 +1,7 @@
 const TOKEN = localStorage.getItem('token')
-const BASE_URL = 'https://8915-103-167-123-80.ngrok-free.app';
+const BASE_URL = process.env.REACT_APP_BASE_URL;;
 const api_routes = {
-    add_user: '/UserData',
+    add_user: '/userdata',
     destination: '/destinations',
     add_user_payment: '/payment',
     dashboardCounts: '/DashboardCounts'

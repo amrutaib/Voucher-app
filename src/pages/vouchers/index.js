@@ -29,14 +29,14 @@ export default function Voucher() {
 
         const TOKEN = localStorage.getItem('token')
         const clientId = localStorage.getItem('clientId')
-        const URL = `${BASE_URL}/voucher/vouchercount/${clientId}`
+        const URL = `${BASE_URL}/voucher/vouchercount/`
 
         fetch(URL, {
             method: "get",
             headers: {
-                Authorization: TOKEN,
+                'clientid': clientId,
+                'Authorization': TOKEN,
                 "Content-Type": "application/json",
-                "ngrok-skip-browser-warning": "69420",
             },
         })
             .then((response) => response.json())

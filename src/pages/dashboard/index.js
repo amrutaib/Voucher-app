@@ -18,16 +18,17 @@ export default function Dashboard() {
   const [userCount, setUserCount] = useState(null)
   const [voucherCount, setVoucherCount] = useState(null)
 
+  //clientId
+  const clientId = localStorage.getItem("clientId")
 
-  const fetchCounts = () => {
-    const clientId = localStorage.getItem("clientId")
-    const URL = `${BASE_URL}/allUsers/${clientId}`
+  const fetchUsersCount = () => {
+    const URL = `${BASE_URL}/allUsers/`
     fetch(URL, {
       method: "get",
       headers: {
+        'clientid': clientId,
         'Authorization': TOKEN,
         'Content-Type': 'application/json',
-        "ngrok-skip-browser-warning": "69420",
       },
     })
       .then((response) => response.json())
@@ -36,15 +37,14 @@ export default function Dashboard() {
       .finally(() => setLoading(false))
   }
 
-  const fetchVoucherCount = () => {
-    const id = localStorage.getItem('clientId')
-    const URL = `${BASE_URL}/voucher/${id}`
+  const fetchVouchersCount = () => {
+    const URL = `${BASE_URL}/voucher/`
     fetch(URL, {
       method: "get",
       headers: {
+        'clientid': clientId,
         'Authorization': TOKEN,
         'Content-Type': 'application/json',
-        "ngrok-skip-browser-warning": "69420",
       },
     })
       .then((response) => response.json())
@@ -55,8 +55,8 @@ export default function Dashboard() {
       .finally(() => setLoading(false))
   }
   useEffect(() => {
-    fetchCounts();
-    fetchVoucherCount();
+    fetchUsersCount();
+    fetchVouchersCount();
   }, [])
 
   const CardComponent = ({ route, avatar, title, count, className }) => {

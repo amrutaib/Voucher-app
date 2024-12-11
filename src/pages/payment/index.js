@@ -28,11 +28,11 @@ export default function Payment() {
     const fetchUserPaymentSummary = async () => {
         const clientId = localStorage.getItem("clientId");
         try {
-            const URL = `${BASE_URL}${api_routes.add_user_payment}/${clientId}`
+            const URL = `${BASE_URL}${api_routes.add_user_payment}/`
             const response = await axios.get(URL, {
                 headers: {
+                    'clientid': clientId,
                     'Authorization': TOKEN,
-                    "ngrok-skip-browser-warning": "69420",
                     'Content-Type': 'application/json',
                 },
             });

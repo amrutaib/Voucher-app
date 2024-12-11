@@ -32,13 +32,13 @@ export default function ApprovedVouchers() {
 
     async function fetchVouchers() {
         const id = localStorage.getItem('clientId')
-        const URL = `${BASE_URL}/voucher/${id}`
+        const URL = `${BASE_URL}/voucher/`
         try {
             const response = await axios.get(URL, {
                 headers: {
+                    'clientid': id,
                     'Authorization': TOKEN,
                     'Content-Type': 'application/json',
-                    "ngrok-skip-browser-warning": "69420",
                 },
             });
             setVouchers(response.data);

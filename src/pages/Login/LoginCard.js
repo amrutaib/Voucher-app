@@ -60,7 +60,7 @@ export default function LoginCard() {
         setError(false)
         setErrorMessage('')
 
-        const URL = `${BASE_URL}/admin/login`;
+        const URL = `${BASE_URL}/admin/login/`;
 
         const data = new FormData(event.currentTarget);
         const email = data.get("email");

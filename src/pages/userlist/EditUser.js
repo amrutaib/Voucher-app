@@ -15,9 +15,9 @@ export default function EditUser() {
     const navigate = useNavigate();
 
     const api_headers = {
+        'userid': Id,
         'Authorization': TOKEN,
-        "ngrok-skip-browser-warning": "69420",
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     }
 
     //ref
@@ -38,7 +38,7 @@ export default function EditUser() {
     }, []);
 
     function getUser() {
-        const URL = `${BASE_URL}/UserData/${Id}`
+        const URL = `${BASE_URL}/userdata/`
         fetch(URL, {
             method: "get",
             headers: api_headers,
@@ -47,14 +47,13 @@ export default function EditUser() {
             .then((data) => {
                 setInputs(data);
                 setLoading(false);
-                console.log(data, "DATA");
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err, 'ERR'))
             .finally(() => setLoading(false));
     }
 
     const onSubmit = async (data) => {
-        const URL = `${BASE_URL}/UserData/${Id}`
+        const URL = `${BASE_URL}/userdata/`
         axios
             .put(URL, data, { headers: api_headers })
             .then(function (response) {
@@ -75,7 +74,6 @@ export default function EditUser() {
                         life: 3000,
                     });
                 }
-                console.log(response.data);
             })
             .catch((error) => console.log(error));
     };

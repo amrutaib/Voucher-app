@@ -13,8 +13,12 @@ import { DataTable } from 'primereact/datatable';
 import Typography from "@mui/material/Typography";
 import { BASE_URL, TOKEN } from '../../config/api';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { Navbar, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { Navbar, Header, ActionBody } from '../../components/index';
+//icons 
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export default function UserVoucherList() {
 
@@ -32,13 +36,13 @@ export default function UserVoucherList() {
     const [globalFilter, setGlobalFilter] = useState(null);
 
     async function fetchUserVouchers() {
-        const URL = `${BASE_URL}/voucher/userVoucherList/${id}`
+        const URL = `${BASE_URL}/voucher/uservoucherslist/`
         try {
             const response = await axios.get(URL, {
                 headers: {
+                    'userid': id,
                     'Authorization': TOKEN,
                     'Content-Type': 'application/json',
-                    "ngrok-skip-browser-warning": "69420",
                 },
             });
             setVouchers(response.data);
@@ -55,18 +59,27 @@ export default function UserVoucherList() {
 
     const actionBodyTemplate = () => {
         return (
-            <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" tooltip='Edit voucher' tooltipOptions={{ position: 'bottom' }} />
-                <Button icon="pi pi-receipt" rounded outlined className="mr-2" tooltip='View voucher' tooltipOptions={{ position: 'bottom' }} />
-                <Button
-                    icon="pi pi-trash"
-                    rounded outlined
-                    severity="danger"
-                    tooltip='Delete voucher'
-                    tooltipOptions={{ position: 'bottom' }}
-                    onClick={() => { }}
+            <>
+                <ActionBody
+                    arialabel='edit'
+                    icon={<ModeEditIcon />}
+                    tooltip='Edit voucher'
+                    handleClick={() => { }}
                 />
-            </React.Fragment>
+                <ActionBody
+                    arialabel='view'
+                    icon={<ReceiptIcon />}
+                    tooltip='View voucher'
+                    handleClick={() => { }}
+                />
+                <ActionBody
+                    color={"error"}
+                    arialabel='delete'
+                    tooltip='Delete voucher'
+                    icon={<DeleteOutlineOutlinedIcon />}
+                    handleClick={() => { }}
+                />
+            </>
         );
     };
 
