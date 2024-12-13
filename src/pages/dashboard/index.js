@@ -100,7 +100,7 @@ export default function Dashboard() {
             />
             <CardComponent
               ml={5}
-              route={'/Voucher'}
+              route={'/vouchers'}
               count={voucherCount | 0}
               title={'Pending Voucher'}
               className={'gradientblue'}
