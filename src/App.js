@@ -12,7 +12,8 @@ import {
   UserProfile,
   Destination,
   UserPayment,
-  UserVoucherList
+  UserVoucherList,
+  EditVoucher
 } from './pages/index'
 //components
 import { Error } from "./components/index";
@@ -84,6 +85,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "vouchers",
         element: <Voucher />,
+      },
+      {
+        path: "editVoucher/:Id",
+        element: <EditVoucher />,
       },
       //Payment screens
       {

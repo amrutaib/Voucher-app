@@ -8,6 +8,7 @@ import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { BASE_URL, TOKEN } from '../../config/api';
 import { PiWarningOctagonThin } from "react-icons/pi";
@@ -23,6 +24,7 @@ export default function PendingVouchers() {
     //ref
     const dt = useRef(null);
     const toast = useRef(null);
+    const navigate = useNavigate();
 
     //states
     const [vouchers, setVouchers] = useState([]);
@@ -32,7 +34,7 @@ export default function PendingVouchers() {
 
     async function fetchVouchers() {
         const id = localStorage.getItem('clientId')
-        const URL = `${BASE_URL}/voucher/`
+        const URL = `${BASE_URL}/voucher/pendingvoucherlist/`
         try {
             const response = await axios.get(URL, {
                 headers: {
@@ -65,14 +67,14 @@ export default function PendingVouchers() {
         )
     };
 
-    const actionBodyTemplate = () => {
+    const actionBodyTemplate = (data) => {
         return (
             <>
                 <ActionBody
                     arialabel='edit'
                     icon={<ModeEditIcon />}
                     tooltip='Edit voucher'
-                    handleClick={() => { }}
+                    handleClick={() => { navigate(`/editVoucher/${data.voucher_no}`) }}
                 />
                 <ActionBody
                     arialabel='view'

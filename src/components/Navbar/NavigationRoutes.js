@@ -24,7 +24,7 @@ const Data = [
             '/adduser',
             '/editUser',
             '/userpayment',
-            '/uservouchers'
+            '/uservouchers',
         ],
         iconName: <PiUserCircleBold fontSize={24} />
     },
@@ -33,7 +33,7 @@ const Data = [
         route: "/vouchers",
         key: "Voucher",
         routeName: "Voucher",
-        subRoutes: [],
+        subRoutes: ['/editVoucher'],
         iconName: <HiOutlineTicket fontSize={24} />
     },
     {

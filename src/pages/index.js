@@ -9,8 +9,8 @@ import Destination from './destination';
 import AddUser from './userlist/AddUser';
 import EditUser from './userlist/EditUser';
 import UserPayment from "./userlist/UserPayment";
+import EditVoucher from "./vouchers/EditVoucher";
 import UserVoucherList from "./userlist/UserVoucherList";
-
 export {
     Login,
     AddUser,
@@ -23,5 +23,6 @@ export {
     UserProfile,
     Destination,
     UserPayment,
+    EditVoucher,
     UserVoucherList
 }

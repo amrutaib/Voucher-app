@@ -8,11 +8,11 @@ import { Toast } from 'primereact/toast';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
-import { useLocation } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import Typography from "@mui/material/Typography";
 import { BASE_URL, TOKEN } from '../../config/api';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { useLocation, useNavigate } from 'react-router-dom';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Navbar, Header, ActionBody } from '../../components/index';
 //icons 
@@ -25,6 +25,7 @@ export default function UserVoucherList() {
     //user params
     const location = useLocation();
     const { id, name } = location.state
+    const navigate = useNavigate();
 
     //ref
     const dt = useRef(null);
@@ -57,14 +58,14 @@ export default function UserVoucherList() {
         fetchUserVouchers();
     }, []);
 
-    const actionBodyTemplate = () => {
+    const actionBodyTemplate = (data) => {
         return (
             <>
                 <ActionBody
                     arialabel='edit'
                     icon={<ModeEditIcon />}
                     tooltip='Edit voucher'
-                    handleClick={() => { }}
+                    handleClick={() => { navigate(`/editVoucher/${data.voucher_no}`) }}
                 />
                 <ActionBody
                     arialabel='view'

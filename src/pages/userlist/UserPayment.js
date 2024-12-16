@@ -158,11 +158,6 @@ export default function UserPayment() {
         }
     };
 
-    const header = (
-        <div className="header">
-            <h4 className="m-0">Manage {name}'s payment summary</h4>
-        </div>
-    );
 
     const Label = ({ value, html }) => <FormLabel htmlFor={html} required className='font-bold mb-2'>{value}</FormLabel>
 
