@@ -46,7 +46,8 @@ export default function UserVoucherList() {
                     'Content-Type': 'application/json',
                 },
             });
-            setVouchers(response.data);
+            const result = response.data;
+            setVouchers(result);
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         } finally {
@@ -149,7 +150,7 @@ export default function UserVoucherList() {
                             >
                                 <Column field="voucherId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
                                 <Column field="voucher_no" header="Voucher No" style={{ minWidth: '8rem' }} />
-                                <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
+                                <Column field="voucherStatus" header="Status" style={{ minWidth: '8rem' }} />
                                 <Column field="seller" header="Seller" />
                                 <Column field="sb_no" header="S/b" style={{ minWidth: '4rem' }} />
                                 <Column field="job_no" header="Job No" style={{ minWidth: '4rem' }} />
