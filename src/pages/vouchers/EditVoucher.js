@@ -87,9 +87,8 @@ export default function EditVoucher() {
       )
       .then(function (response) {
         const data = response.data;
-        console.log("API RESPONSE", data);
         if (data.status === 200) {
-          setTimeout(() => navigate("/userslist"), 500);
+          setTimeout(() => navigate("/vouchers"), 500);
           toast.current.show({ severity: "success", summary: "success", detail: data.message, life: 2000, });
         } else {
           toast.current.show({ severity: "error", summary: "Error", detail: data.message, life: 3000, });

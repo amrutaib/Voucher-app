@@ -146,8 +146,8 @@ export default function ApprovedVouchers() {
                         <Column field="voucherId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
                         <Column field="voucher_no" header="Voucher No" style={{ minWidth: '8rem' }} />
                         <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
-                        <Column field="seller" header="Seller" />
-                        <Column field="sb_no" header="S/b" style={{ minWidth: '4rem' }} />
+                        <Column field="Shipper" header="Shipper" />
+                        <Column field="sb_no" header="Sb/Be" style={{ minWidth: '4rem' }} />
                         <Column field="job_no" header="Job No" style={{ minWidth: '4rem' }} />
                         <Column field="approvedAmnt" header="Approved amount" style={{ minWidth: '4rem' }} />
                         <Column header="Action" body={actionBodyTemplate} style={{ minWidth: '8rem' }} />
