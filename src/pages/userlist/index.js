@@ -65,7 +65,6 @@ export default function Userlist() {
             .put(URL, body, { headers })
             .then(function (response) {
                 const data = response.data;
-                console.log(data, "DATA")
                 if (data.status === 1) {
                     toast.current.show({ severity: "success", summary: "success", detail: data.message, life: 2000 })
                     fetchUsers();
@@ -203,7 +202,6 @@ export default function Userlist() {
                                     <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
                                     <Column field="Mobile" header="Mobile" />
                                     <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
-                                    <Column field="userType" header="User type" style={{ minWidth: '6rem' }} />
                                     <Column field="registration_date" header="Registration Date" style={{ minWidth: '8rem' }} />
                                     <Column field="Userstatus" header="User Status" body={userStatus} style={{ minWidth: '6rem' }} />
                                     <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
