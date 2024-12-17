@@ -1,6 +1,7 @@
 import { BsGeoAltFill } from "react-icons/bs";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { PiUserCircleBold } from "react-icons/pi";
+import { PiFlowArrowLight } from "react-icons/pi";
 import { MdOutlineSpaceDashboard, MdPayment } from "react-icons/md";
 
 const Data = [
@@ -49,6 +50,13 @@ const Data = [
         key: "Destination",
         routeName: "Destination",
         iconName: <BsGeoAltFill fontSize={24} />
+    },
+    {
+        id: 5,
+        route: "/scheme",
+        key: "Scheme",
+        routeName: "Scheme",
+        iconName: <PiFlowArrowLight fontSize={24} />
     }
 ];
 

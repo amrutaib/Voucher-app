@@ -1,4 +1,5 @@
 import Login from "./login";
+import Scheme from "./scheme";
 import Voucher from "./vouchers";
 import Payment from './payment';
 import Userlist from "./userlist";
@@ -13,6 +14,7 @@ import EditVoucher from "./vouchers/EditVoucher";
 import UserVoucherList from "./userlist/UserVoucherList";
 export {
     Login,
+    Scheme,
     AddUser,
     Voucher,
     Payment,

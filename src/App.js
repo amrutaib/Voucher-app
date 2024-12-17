@@ -2,6 +2,7 @@ import React from "react";
 //screens
 import {
   Login,
+  Scheme,
   AddUser,
   Voucher,
   Payment,
@@ -12,8 +13,8 @@ import {
   UserProfile,
   Destination,
   UserPayment,
+  EditVoucher,
   UserVoucherList,
-  EditVoucher
 } from './pages/index'
 //components
 import { Error } from "./components/index";
@@ -95,9 +96,15 @@ export const appRouter = createBrowserRouter([
         path: "payment",
         element: <Payment />,
       },
+      //destination
       {
         path: "destination",
         element: <Destination />,
+      },
+      //scheme
+      {
+        path: "scheme",
+        element: <Scheme />,
       },
     ],
   },
