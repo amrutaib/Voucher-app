@@ -117,13 +117,14 @@ export default function Userlist() {
                         }
                     })}
                 />
-                <ActionBody
-                    arialabel='edit'
-                    icon={<ModeEditIcon />}
-                    tooltip='Edit User'
-                    handleClick={() => navigate(`/editUser/${data.userId}`)}
-                />
-
+                {data.userStatus === "1" &&
+                    <ActionBody
+                        arialabel='edit'
+                        icon={<ModeEditIcon />}
+                        tooltip='Edit User'
+                        handleClick={() => navigate(`/editUser/${data.userId}`)}
+                    />
+                }
             </>
         );
     };
@@ -192,6 +193,7 @@ export default function Userlist() {
                                     rows={10}
                                     dataKey="id"
                                     value={users}
+                                    resizableColumns
                                     globalFilter={globalFilter}
                                     rowsPerPageOptions={[5, 10, 25]}
                                     header={<Header title={'Manage users'} onSearch={handleSearch} />}
