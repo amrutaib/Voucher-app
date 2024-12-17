@@ -33,7 +33,6 @@ export default function Userlist() {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [userActiveStatus, setUserActiveStatus] = useState(true);
 
     async function fetchUsers() {
         const clientId = localStorage.getItem("clientId")
@@ -46,7 +45,8 @@ export default function Userlist() {
                     'Content-Type': 'application/json',
                 },
             });
-            setUsers(response.data);
+            const result = response.data;
+            setUsers(result);
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         } finally {
@@ -54,23 +54,42 @@ export default function Userlist() {
         }
     }
 
+    async function updateUserStatus(id, status) {
+        const body = JSON.stringify({ userstatus: !status })
+        const URL = `${BASE_URL}/userdata/userstatus/`
+        const headers = {
+            'userid': id,
+            'Authorization': TOKEN,
+            "Content-Type": "application/json",
+        }
+        axios
+            .put(URL, body, { headers })
+            .then(function (response) {
+                const data = response.data;
+                console.log(data, "DATA")
+                if (data.status === 1) {
+                    toast.current.show({ severity: "success", summary: "success", detail: data.message, life: 2000 })
+                    fetchUsers();
+                } else {
+                    toast.current.show({ severity: "error", summary: "Error", detail: data.message, life: 3000 })
+                }
+            })
+            .catch((error) => console.log(error));
+    }
+
     useEffect(() => {
         fetchUsers();
     }, []);
 
     const userStatus = (rowData) => {
+        const id = rowData.userId
         const status = rowData.userStatus
-        function checkStatus() {
-            if (status === 'active') {
-                setUserActiveStatus(true)
-            }
-        }
         return (
             <InputSwitch
                 tooltip='User Status'
-                onChange={checkStatus}
-                checked={userActiveStatus}
+                checked={Boolean(status)}
                 tooltipOptions={{ position: 'bottom' }}
+                onChange={() => updateUserStatus(id, status)}
             />
         )
     };
