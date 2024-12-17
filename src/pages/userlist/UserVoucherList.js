@@ -89,8 +89,8 @@ export default function UserVoucherList() {
     const Export = () => (
         <div className='addbtn'>
             <Button
-                label="Export Excel"
-                severity="secondary"
+                label="Export CSV"
+                className='button'
                 onClick={() => { }}
             />
         </div>

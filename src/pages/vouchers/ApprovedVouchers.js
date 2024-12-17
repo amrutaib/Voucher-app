@@ -129,7 +129,7 @@ export default function ApprovedVouchers() {
         <Box>
             <div>
                 <Toast ref={toast} />
-                <Export />
+                {vouchers.length > 0 && <Export />}
                 <div className="card">
                     <DataTable
                         ref={dt}

@@ -166,6 +166,16 @@ export default function UserPayment() {
         setGlobalFilter(searchValue);
     }
 
+    const Export = () => (
+        <div className='addbtn'>
+            <Button
+                label="Export CSV"
+                className='button'
+                onClick={() => { }}
+            />
+        </div>
+    )
+
     const NullComponent = () => {
         return (
             <Box
@@ -261,23 +271,27 @@ export default function UserPayment() {
                             ) : paymentSummary.length < 1 ? (
                                 <NullComponent />
                             ) : (
-                                <DataTable
-                                    ref={dt}
-                                    paginator
-                                    rows={10}
-                                    dataKey="id"
-                                    value={paymentSummary}
-                                    globalFilter={globalFilter}
-                                    rowsPerPageOptions={[5, 10, 25]}
-                                    header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
-                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
-                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                >
-                                    <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
-                                    <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
-                                    <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
-                                    <Column field="PaymentDate" header="Date" />
-                                </DataTable>
+                                <>
+                                    <Export />
+
+                                    <DataTable
+                                        ref={dt}
+                                        paginator
+                                        rows={10}
+                                        dataKey="id"
+                                        value={paymentSummary}
+                                        globalFilter={globalFilter}
+                                        rowsPerPageOptions={[5, 10, 25]}
+                                        header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
+                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
+                                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    >
+                                        <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
+                                        <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
+                                        <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
+                                        <Column field="PaymentDate" header="Date" />
+                                    </DataTable>
+                                </>
                             )
                         }
                     </div>
