@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './index.css'
 import axios from 'axios';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';

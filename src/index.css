@@ -1,21 +1,51 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.header {
+  gap: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-right: 10px;
+  justify-content: space-between;
+}
+
+.addbtn {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: left;
+}
+
+.button {
+  border: none;
+  background: linear-gradient(45deg, #303f9f, #7b1fa2);
+  -webkit-box-shadow: 3px 3px 20px 0 rgba(123, 31, 162, 0.5);
+  box-shadow: 3px 3px 20px 0 rgba(123, 31, 162, 0.5);
 }
 
 :root {
   --main-bg-color: #3385ff;
 }
 
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
   text-decoration: none;
+}
+
+.delete-dialog {
+  text-align: center;
+  align-content: center;
 }
