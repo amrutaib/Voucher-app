@@ -249,6 +249,11 @@ export default function UserPayment() {
         </form>
     )
 
+    const updatedPaymentSummary = []
+    paymentSummary.map((item, index) => {
+        paymentSummary.push({ sr: index + 1, ...item });
+    });
+
     return (
         <Box
             sx={{
@@ -279,14 +284,14 @@ export default function UserPayment() {
                                         paginator
                                         rows={10}
                                         dataKey="id"
-                                        value={paymentSummary}
+                                        value={updatedPaymentSummary}
                                         globalFilter={globalFilter}
                                         rowsPerPageOptions={[5, 10, 25]}
                                         header={<Header title={`Manage ${name}'s payment summary`} onSearch={handleSearch} />}
                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} payments"
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                     >
-                                        <Column field="paymentId" header="Sr no." sortable style={{ minWidth: '4rem' }} />
+                                        <Column field="sr" header="Sr no." sortable style={{ minWidth: '4rem' }} />
                                         <Column field="amount" header="Amount" style={{ minWidth: '4rem' }} />
                                         <Column field="PaymentMode" header="Mode of payment" style={{ minWidth: '8rem' }} />
                                         <Column field="PaymentDate" header="Date" />

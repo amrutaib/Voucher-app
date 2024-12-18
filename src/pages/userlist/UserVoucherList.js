@@ -62,12 +62,16 @@ export default function UserVoucherList() {
     const actionBodyTemplate = (data) => {
         return (
             <>
-                <ActionBody
-                    arialabel='edit'
-                    icon={<ModeEditIcon />}
-                    tooltip='Edit voucher'
-                    handleClick={() => { navigate(`/editVoucher/${data.voucher_no}`) }}
-                />
+                {
+                    data.voucherStatus === "Pending" && (
+                        <ActionBody
+                            arialabel='edit'
+                            icon={<ModeEditIcon />}
+                            tooltip='Edit voucher'
+                            handleClick={() => { navigate(`/editVoucher/${data.voucher_no}`) }}
+                        />
+                    )
+                }
                 <ActionBody
                     arialabel='view'
                     icon={<ReceiptIcon />}
@@ -120,6 +124,11 @@ export default function UserVoucherList() {
         setGlobalFilter(searchValue);
     }
 
+    const updatedVouchers = []
+    vouchers.map((item, index) => {
+        updatedVouchers.push({ sr: index + 1, ...item });
+    });
+
     return (
         <Box
             sx={{
@@ -141,14 +150,14 @@ export default function UserVoucherList() {
                                 paginator
                                 rows={10}
                                 dataKey="id"
-                                value={vouchers}
+                                value={updatedVouchers}
                                 globalFilter={globalFilter}
                                 rowsPerPageOptions={[5, 10, 25]}
                                 header={<Header title={`Manage ${name}'s vouchers`} onSearch={handleSearch} />}
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} vouchers"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                             >
-                                <Column field="voucherId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                                <Column field="sr" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
                                 <Column field="voucher_no" header="Voucher No" style={{ minWidth: '8rem' }} />
                                 <Column field="voucherStatus" header="Status" style={{ minWidth: '8rem' }} />
                                 <Column field="seller" header="Seller" />

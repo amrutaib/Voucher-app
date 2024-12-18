@@ -125,6 +125,11 @@ export default function ApprovedVouchers() {
         </Dialog>
     )
 
+    const updatedApprovedVouchers = []
+    vouchers.map((item, index) => {
+        updatedApprovedVouchers.push({ sr: index + 1, ...item });
+    });
+
     return (
         <Box>
             <div>
@@ -136,14 +141,14 @@ export default function ApprovedVouchers() {
                         paginator
                         rows={10}
                         dataKey="id"
-                        value={vouchers}
                         globalFilter={globalFilter}
+                        value={updatedApprovedVouchers}
                         rowsPerPageOptions={[5, 10, 25]}
                         header={<Header title={'Manage pending vouchers'} onSearch={handleSearch} />}
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} vouchers"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     >
-                        <Column field="voucherId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                        <Column field="sr" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
                         <Column field="voucher_no" header="Voucher No" style={{ minWidth: '8rem' }} />
                         <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
                         <Column field="Shipper" header="Shipper" />

@@ -166,6 +166,11 @@ export default function Userlist() {
         setGlobalFilter(searchValue);
     }
 
+    const updatedUsers = [];
+    users.map((item, index) => {
+        updatedUsers.push({ sr: index + 1, ...item });
+    });
+
     return (
         <Box
             sx={{
@@ -192,15 +197,15 @@ export default function Userlist() {
                                     paginator
                                     rows={10}
                                     dataKey="id"
-                                    value={users}
                                     resizableColumns
+                                    value={updatedUsers}
                                     globalFilter={globalFilter}
                                     rowsPerPageOptions={[5, 10, 25]}
                                     header={<Header title={'Manage users'} onSearch={handleSearch} />}
                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 >
-                                    <Column field="userId" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
+                                    <Column field="sr" header="Sr.No" sortable style={{ minWidth: '4rem' }} />
                                     <Column field="userName" header="Name" style={{ minWidth: '8rem' }} />
                                     <Column field="Mobile" header="Mobile" />
                                     <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
