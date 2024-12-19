@@ -14,6 +14,7 @@ import {
   Destination,
   UserPayment,
   EditVoucher,
+  ViewVoucher,
   UserVoucherList,
 } from './pages/index'
 //components
@@ -90,6 +91,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "editVoucher/:Id",
         element: <EditVoucher />,
+      },
+      {
+        path: "viewVoucher/:status/:Id",
+        element: <ViewVoucher />,
       },
       //Payment screens
       {

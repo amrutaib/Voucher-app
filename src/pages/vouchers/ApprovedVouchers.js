@@ -16,7 +16,6 @@ import { Header, ActionBody } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //icons 
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export default function ApprovedVouchers() {
@@ -71,16 +70,10 @@ export default function ApprovedVouchers() {
         return (
             <>
                 <ActionBody
-                    arialabel='edit'
-                    icon={<ModeEditIcon />}
-                    tooltip='Edit voucher'
-                    handleClick={() => { navigate(`/editVoucher/${data.voucher_no}`) }}
-                />
-                <ActionBody
                     arialabel='view'
                     icon={<ReceiptIcon />}
                     tooltip='View voucher'
-                    handleClick={() => { }}
+                    handleClick={() => navigate(`/viewVoucher/approved/${data.voucherId}`)}
                 />
                 <ActionBody
                     color={"error"}
