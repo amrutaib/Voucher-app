@@ -34,7 +34,7 @@ const Data = [
         route: "/vouchers",
         key: "Voucher",
         routeName: "Voucher",
-        subRoutes: ['/editVoucher'],
+        subRoutes: ['/editVoucher', '/viewVoucher'],
         iconName: <HiOutlineTicket fontSize={24} />
     },
     {

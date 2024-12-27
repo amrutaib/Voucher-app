@@ -81,7 +81,7 @@ export default function PendingVouchers() {
                     arialabel='view'
                     icon={<ReceiptIcon />}
                     tooltip='View voucher'
-                    handleClick={() => navigate(`/viewVoucher/pending/${data.voucherId}`)}
+                    handleClick={() => navigate(`/viewVoucher/pending/${data.voucher_no}`)}
                 />
                 <ActionBody
                     color={"error"}

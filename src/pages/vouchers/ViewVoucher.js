@@ -22,7 +22,6 @@ import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 export default function ViewVoucher() {
 
     const { Id } = useParams();
-
     //ref
     const toast = useRef(null);
     //states
@@ -43,7 +42,6 @@ export default function ViewVoucher() {
             });
             const result = response.data;
             setVoucher(result);
-            console.log(response, "RESponse from voucher");
         } catch (error) {
             toast.current.show({ severity: "error", summary: "Error", detail: error.message, life: 3000 });
         } finally {
@@ -94,15 +92,9 @@ export default function ViewVoucher() {
             <Navbar HeaderTitle="View Voucher" />
             <Typography variant="body1" gutterBottom sx={{ width: "100vw" }}>
                 <Toast ref={toast} />
-
                 {voucher.map((item, index) => (
                     <Container Width="40%">
-                        <Box
-                            sx={{
-                                bgcolor: "#cfe8fc",
-                                padding: "20px",
-                            }}
-                        >
+                        <Box sx={{ bgcolor: "#cfe8fc", padding: "20px" }}>
                             {/* Invoice Information */}
                             <AddNewUser />
                             <Grid item xs={12} md={12} sx={{ textAlign: { md: "right" } }}>
@@ -110,11 +102,9 @@ export default function ViewVoucher() {
                                 <ArrowCircleDownIcon />
                             </Grid>
                             <Grid item xs={12} md={12} sx={{ textAlign: { md: "Left" } }}>
-                                <Typography variant="h4" gutterBottom color="primary">
-                                    Voucher
-                                </Typography>
+                                <Typography variant="h4" gutterBottom color="primary">Voucher</Typography>
                                 <Typography variant="body1">
-                                    Voucher Number: {item.voucher_no}
+                                    Voucher number: {item.voucher_no}
                                 </Typography>
                                 <Typography variant="body1">Date: {item.Date}</Typography>
                             </Grid>

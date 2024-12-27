@@ -67,13 +67,14 @@ export default function ApprovedVouchers() {
     };
 
     const actionBodyTemplate = (data) => {
+        console.log(data.voucher_no)
         return (
             <>
                 <ActionBody
                     arialabel='view'
                     icon={<ReceiptIcon />}
                     tooltip='View voucher'
-                    handleClick={() => navigate(`/viewVoucher/approved/${data.voucherId}`)}
+                    handleClick={() => navigate(`/viewVoucher/approved/${data.voucher_no}`)}
                 />
                 <ActionBody
                     color={"error"}
