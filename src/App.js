@@ -15,6 +15,7 @@ import {
   UserPayment,
   EditVoucher,
   ViewVoucher,
+  CustomFields,
   UserVoucherList,
 } from './pages/index'
 //components
@@ -110,6 +111,11 @@ export const appRouter = createBrowserRouter([
       {
         path: "scheme",
         element: <Scheme />,
+      },
+      //custom fields
+      {
+        path: "customformfields",
+        element: <CustomFields />,
       },
     ],
   },

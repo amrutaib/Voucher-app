@@ -1,4 +1,5 @@
 import { BsGeoAltFill } from "react-icons/bs";
+import { RxDropdownMenu } from "react-icons/rx";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { PiUserCircleBold } from "react-icons/pi";
 import { PiFlowArrowLight } from "react-icons/pi";
@@ -52,11 +53,18 @@ const Data = [
         iconName: <BsGeoAltFill fontSize={24} />
     },
     {
-        id: 5,
+        id: 6,
         route: "/scheme",
         key: "Scheme",
         routeName: "Scheme",
         iconName: <PiFlowArrowLight fontSize={24} />
+    },
+    {
+        id: 7,
+        route: "/customformfields",
+        key: "Custom",
+        routeName: "Custom Fields",
+        iconName: <RxDropdownMenu fontSize={24} />
     }
 ];
 
