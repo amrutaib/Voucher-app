@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import "../style.css"
+import "../style.css";
 import axios from 'axios';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -21,21 +21,22 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 
 export default function Userlist() {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-
-    //ref
+    // refs
     const dt = useRef(null);
     const toast = useRef(null);
 
-    //states
-    const [users, setUsers] = useState([])
-    const [loading, setLoading] = useState(true)
+    // states
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [statusMap, setStatusMap] = useState({}); // State for storing individual user statuses
 
+    // fetch users data
     async function fetchUsers() {
-        const clientId = localStorage.getItem("clientId")
-        const URL = `${BASE_URL}/allUsers/`
+        const clientId = localStorage.getItem("clientId");
+        const URL = `${BASE_URL}/allUsers/`;
         try {
             const response = await axios.get(URL, {
                 headers: {
@@ -46,6 +47,12 @@ export default function Userlist() {
             });
             const result = response.data;
             setUsers(result);
+            // Initialize statusMap with user statuses
+            const initialStatusMap = result.reduce((acc, user) => {
+                acc[user.userId] = user.userStatus === "1"; // Assuming "1" means active, "0" means inactive
+                return acc;
+            }, {});
+            setStatusMap(initialStatusMap);
         } catch (error) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         } finally {
@@ -53,115 +60,145 @@ export default function Userlist() {
         }
     }
 
+    // update user status
     async function updateUserStatus(id, status) {
-        const body = JSON.stringify({ userstatus: !status })
-        const URL = `${BASE_URL}/userdata/userstatus/`
+        const body = JSON.stringify({ userstatus: !status });
+        console.log(body)
+        const URL = `${BASE_URL}/userdata/userstatus/`;
         const headers = {
             'userid': id,
             'Authorization': TOKEN,
             "Content-Type": "application/json",
+        };
+
+        try {
+            const response = await axios.put(URL, body, { headers });
+            const data = response.data;
+            if (data.status === 200) {
+              toast.current.show({
+                severity: "success",
+                summary: "Success",
+                detail: "User status updated successfully",
+                life: 2000,
+              });
+              fetchUsers();
+            } else {
+              toast.current.show({
+                severity: "error",
+                summary: "Error",
+                detail: data.message || "Failed to update user status",
+                life: 3000,
+              });
+            }
+          } catch (error) {
+            console.error('Error updating user status:', error);
+            toast.current.show({ severity: "error", summary: "Error", detail: error.message || "An error occurred", life: 3000 });
         }
-        axios
-            .put(URL, body, { headers })
-            .then(function (response) {
-                const data = response.data;
-                if (data.status === 1) {
-                    toast.current.show({ severity: "success", summary: "success", detail: data.message, life: 2000 })
-                    fetchUsers();
-                } else {
-                    toast.current.show({ severity: "error", summary: "Error", detail: data.message, life: 3000 })
-                }
-            })
-            .catch((error) => console.log(error));
     }
 
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    const userStatus = (rowData) => {
-        const id = rowData.userId
-        const status = rowData.userStatus
+    const userStatus = ({ rowData }) => {
+        const id = rowData.userId;
+        const currentStatus = statusMap[id];
+        console.log(id, currentStatus);
+
+        const handleToggleChange = async () => {
+            const newStatus = !currentStatus;
+
+            setStatusMap(prevState => ({
+                ...prevState,
+                [id]: newStatus
+            }));
+
+            try {
+                await updateUserStatus(id, currentStatus); 
+            } catch (error) {
+                setStatusMap(prevState => ({
+                    ...prevState,
+                    [id]: currentStatus
+                }));
+            }
+        };
+
         return (
             <InputSwitch
-                tooltip='User Status'
-                checked={Boolean(status)}
+                tooltip="User Status"
+                checked={currentStatus} 
                 tooltipOptions={{ position: 'bottom' }}
-                onChange={() => updateUserStatus(id, status)}
+                onChange={handleToggleChange}
             />
-        )
+        );
     };
 
+    // Action buttons for each user
     const actionBodyTemplate = (data) => {
         return (
             <>
                 <ActionBody
-                    arialabel='vouchers'
+                    arialabel="vouchers"
                     icon={<ReceiptIcon />}
-                    tooltip='View Vouchers'
+                    tooltip="View Vouchers"
                     handleClick={() => navigate(`/uservouchers/${data.userId}`, {
-                        state: {
-                            id: data.userId,
-                            name: data.userName
-                        }
+                        state: { id: data.userId, name: data.userName }
                     })}
                 />
                 <ActionBody
-                    arialabel='payment'
+                    arialabel="payment"
                     icon={<RequestQuoteIcon />}
-                    tooltip='Payment Summary'
+                    tooltip="Payment Summary"
                     handleClick={() => navigate('/userpayment', {
-                        state: {
-                            id: data.userId,
-                            name: data.userName
-                        }
+                        state: { id: data.userId, name: data.userName }
                     })}
                 />
-                {data.userStatus === "1" &&
+                {data.userStatus === "1" && (
                     <ActionBody
-                        arialabel='edit'
+                        arialabel="edit"
                         icon={<ModeEditIcon />}
-                        tooltip='Edit User'
+                        tooltip="Edit User"
                         handleClick={() => navigate(`/editUser/${data.userId}`)}
                     />
-                }
+                )}
             </>
         );
     };
 
+    // Add New User button
     const AddNewUser = () => (
-        <div className='addbtn'>
+        <div className="addbtn">
             <Button
                 label="Add User"
-                className='button'
+                className="button"
                 onClick={() => navigate('/adduser')}
             />
         </div>
-    )
+    );
 
+    // Null state when no users are available
     const NullComponent = () => {
         return (
-            <Box
-                sx={{
-                    height: '70vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                }}
-            >
-                <FaExclamationTriangle size={140} elevation={3} />
-                <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+            <Box sx={{
+                height: '70vh',
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}>
+                <FaExclamationTriangle size={140} />
+                <Typography variant="h6" sx={{ mt: 3 }}>
                     No Users Available
                 </Typography>
                 <Typography variant="body2" color="textSecondary" my={2}>
                     No users have been created yet, Click on the add button to create a new user.
                 </Typography>
                 <AddNewUser />
-            </Box >
-        )
-    }
+            </Box>
+        );
+    };
 
+    // Search functionality
     function handleSearch(searchValue) {
         setGlobalFilter(searchValue);
     }
@@ -172,15 +209,8 @@ export default function Userlist() {
     });
 
     return (
-        <Box
-            sx={{
-                p: 3,
-                mt: 10,
-                flexGrow: 1,
-                display: 'flex'
-            }}
-        >
-            <Navbar HeaderTitle='User Management' />
+        <Box sx={{ p: 3, mt: 10, flexGrow: 1, display: 'flex' }}>
+            <Navbar HeaderTitle="User Management" />
             <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
@@ -210,7 +240,7 @@ export default function Userlist() {
                                     <Column field="Mobile" header="Mobile" />
                                     <Column field="email" header="Email" style={{ minWidth: '8rem' }} />
                                     <Column field="registration_date" header="Registration Date" style={{ minWidth: '8rem' }} />
-                                    <Column field="Userstatus" header="User Status" body={userStatus} style={{ minWidth: '6rem' }} />
+                                    <Column field="Userstatus" header="User Status" body={(data) => userStatus({ rowData: data })} style={{ minWidth: '6rem' }} />
                                     <Column header="Action" body={actionBodyTemplate} exportable={false} style={{ minWidth: '14rem' }} />
                                 </DataTable>
                             </>

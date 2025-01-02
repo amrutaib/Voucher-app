@@ -110,7 +110,7 @@ export default function UserVoucherList() {
                 justifyContent: 'center',
             }}
         >
-            <FaExclamationTriangle size={140} elevation={3} />
+            {/* <FaExclamationTriangle size={140} elevation={3} /> */}
             <Typography variant="h6" component="div" sx={{ mt: 3 }}>
                 No vouchers available
             </Typography>

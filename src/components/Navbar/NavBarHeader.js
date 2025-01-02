@@ -1,5 +1,5 @@
-import React from "react";
-import logOut from "../../utils/logOut";
+import React, { useEffect } from "react";
+import  { isTokenExpired, logOut } from "../../utils/logOut";
 import { useTheme } from "@mui/material/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,13 @@ const NavBarHeader = () => {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('token'); 
+        
+        if (token && isTokenExpired(token)) {
+            logOut(navigate); 
+        }
+    }, [navigate]);
 
     return (
         <Toolbar sx={{ position: 'absolute', right: '20px' }}>

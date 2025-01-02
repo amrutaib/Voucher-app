@@ -252,6 +252,27 @@ export default function Scheme() {
         setGlobalFilter(searchValue);
     }
 
+    const NullView = () => (
+        <Box
+          sx={{
+            display: "flex",
+            height: "70vh",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {/* <FaExclamationTriangle size={140} elevation={3} /> */}
+          <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+            No schemes available
+          </Typography>
+          <Typography variant="body2" color="textSecondary" my={2}>
+            No schemes have been created yet
+          </Typography>
+        </Box>
+      );
+    
+
     return (
         <Box
             sx={{
@@ -265,6 +286,9 @@ export default function Scheme() {
             <Typography variant="body1" gutterBottom sx={{ width: '100vw' }}>
                 <div>
                     <Toast ref={toast} />
+                     {scheme === 0 ? (
+                              <NullView />
+                            ) : (
                     <div className="card">
                         <AddNew />
                         <DataTable
@@ -284,6 +308,7 @@ export default function Scheme() {
                             <Column header="Action" body={formActions} style={{ minWidth: '12rem' }} />
                         </DataTable>
                     </div>
+                            )}
 
                     {/* add scheme dialog */}
                     <Dialog

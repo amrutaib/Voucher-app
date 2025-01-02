@@ -24,6 +24,27 @@ export default function Voucher() {
         approved: null
     })
     const [loading, setLoading] = useState(true)
+    
+    const NullView = () => (
+        <Box
+          sx={{
+            display: "flex",
+            height: "70vh",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {/* <FaExclamationTriangle size={140} elevation={3} /> */}
+          <Typography variant="h6" component="div" sx={{ mt: 3 }}>
+            No vouchers available
+          </Typography>
+          <Typography variant="body2" color="textSecondary" my={2}>
+            No vouchers have been created yet
+          </Typography>
+        </Box>
+      );
+    
 
     async function fetchVoucherCount() {
 
@@ -83,10 +104,16 @@ export default function Voucher() {
                     </TabsList>
 
                     <TabPanel value={1}>
+                        {count.pending === 0 ? <NullView/> :
                         <PendingVouchers />
+}
                     </TabPanel>
                     <TabPanel value={2}>
+                        {
+                            count.approved === 0 ? <NullView/> :
+                        
                         <ApprovedVouchers />
+}
                     </TabPanel>
                 </Tabs>
             </Typography>

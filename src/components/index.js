@@ -1,8 +1,8 @@
 import Error from "./error";
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 import Header from "./header";
-import Loader from './loader';
-import ActionBody from "./actionbody";
+import Loader from './Loader';
+import ActionBody from "./ActionBody"
 import PrivateRoute from "./private";
 
 export {
