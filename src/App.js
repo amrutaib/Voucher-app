@@ -22,6 +22,7 @@ import {
 import { Error } from "./components/index";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import SuperDashboard from "./pages/dashboard/superadmin";
 
 const theme = createTheme({
   typography: {
