@@ -18,11 +18,12 @@ import { FaExclamationTriangle } from 'react-icons/fa';
 import { Navbar, Loader, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Box, Typography, FormLabel, Stack, FormControl } from '@mui/material';
+import { getCookie } from '../../components/common/utils';
 
 export default function UserPayment() {
 
     //client ID
-    const clientId = localStorage.getItem('clientId')
+    const clientId = getCookie('clientId')
 
     //ref
     const dt = useRef(null);

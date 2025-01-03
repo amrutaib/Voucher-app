@@ -17,6 +17,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 //icons 
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { getCookie } from '../../components/common/utils';
 
 export default function ApprovedVouchers() {
 
@@ -32,7 +33,7 @@ export default function ApprovedVouchers() {
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
     async function fetchVouchers() {
-        const id = localStorage.getItem('clientId')
+        const id = getCookie('clientId')
         const URL = `${BASE_URL}/voucher/approvedvoucherslist/`
         try {
             const response = await axios.get(URL, {

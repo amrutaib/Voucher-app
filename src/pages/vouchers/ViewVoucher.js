@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import { BASE_URL, TOKEN } from "../../config/api";
 import { Loader, Navbar } from "../../components/index";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import { getCookie } from "../../components/common/utils";
 
 export default function ViewVoucher() {
 
@@ -53,7 +54,7 @@ export default function ViewVoucher() {
         try {
             const response = await axios.get(URL, {
                 headers: {
-                    clientid: localStorage.getItem("clientId"),
+                    clientid: getCookie("clientId"),
                     Authorization: TOKEN,
                     "Content-Type": "application/json",
                 }

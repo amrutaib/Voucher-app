@@ -13,6 +13,7 @@ import { FaExclamationTriangle } from 'react-icons/fa';
 import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import { Navbar, Loader, Header } from '../../components/index';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { getCookie } from '../../components/common/utils';
 
 export default function Payment() {
 
@@ -26,7 +27,7 @@ export default function Payment() {
     const [paymentSummary, setPaymentSummary] = useState([])
 
     const fetchUserPaymentSummary = async () => {
-        const clientId = localStorage.getItem("clientId");
+        const clientId = getCookie("clientId");
         try {
             const URL = `${BASE_URL}${api_routes.add_user_payment}/`
             const response = await axios.get(URL, {

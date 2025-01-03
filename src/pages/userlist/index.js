@@ -19,6 +19,7 @@ import { Navbar, ActionBody, Header, Loader } from '../../components/index';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import { getCookie } from '../../components/common/utils';
 
 export default function Userlist() {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Userlist() {
 
     // fetch users data
     async function fetchUsers() {
-        const clientId = localStorage.getItem("clientId");
+        const clientId = getCookie("clientId");
         const URL = `${BASE_URL}/allUsers/`;
         try {
             const response = await axios.get(URL, {

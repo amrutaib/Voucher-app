@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import SitemarkIcon from '../../assets/svg/SitemarkIcon';
 import { VisibilityOutlined, VisibilityOffOutlined, EmailOutlined } from '@mui/icons-material';  //icons
 import { Typography, TextField, Link, FormControl, FormLabel, Button, Box, createTheme, InputAdornment, IconButton } from '@mui/material';
+import { setCookie } from '../../components/common/utils';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -100,8 +101,8 @@ export default function LoginCard() {
                         setError(true)
                         setErrorMessage(data.message)
                     } else {
-                        localStorage.setItem("token", data.token);
-                        localStorage.setItem("clientId", data.clientId);
+                        setCookie("token", data.token);
+                        setCookie("clientId", data.clientId);
                         toast.current.show({ severity: 'success', summary: 'Success', detail: data.message });
                         navigate("/dashboard")
                     }

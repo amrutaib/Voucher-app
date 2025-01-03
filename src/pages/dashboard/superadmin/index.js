@@ -14,6 +14,7 @@ import {
   Grid,
   Avatar,
 } from "@mui/material/index";
+import { getCookie } from "../../../components/common/utils";
 
 export default function SuperDashboard() {
   //ref
@@ -25,7 +26,7 @@ export default function SuperDashboard() {
   const [clientCount, setClientCount] = useState(null);
 
   //clientId
-  const clientId = localStorage.getItem("clientId");
+  const clientId = getCookie("clientId");
 
   const fetchUsersCount = () => {
     const URL = `${BASE_URL}/clientcount/`;

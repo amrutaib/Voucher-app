@@ -19,11 +19,12 @@ import { Navbar, ActionBody, Header } from '../../components/index';
 //icons  
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { getCookie } from '../../components/common/utils';
 
 export default function Scheme() {
 
     const navigate = useNavigate();
-    const clientId = localStorage.getItem('clientId')
+    const clientId = getCookie('clientId')
 
     // states
     const [error, setError] = useState(null);

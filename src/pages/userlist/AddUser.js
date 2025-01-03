@@ -8,6 +8,7 @@ import { Navbar } from '../../components/index';
 import { api_routes, BASE_URL, TOKEN } from '../../config/api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { MenuItem, Select, InputLabel, FormControl, Box, TextField, Typography, Stack, InputAdornment, IconButton } from '@mui/material';
+import { getCookie } from '../../components/common/utils';
 
 export default function AddUser() {
 
@@ -26,7 +27,7 @@ export default function AddUser() {
     };
 
     const onSubmit = async (data) => {
-        const clientId = localStorage.getItem('clientId')
+        const clientId = getCookie('clientId')
         const newData = { ...data, clientid: clientId };
         const URL = `${BASE_URL}${api_routes.add_user}/`
         const headers = {

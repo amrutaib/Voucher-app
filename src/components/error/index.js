@@ -1,14 +1,34 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useRouteError, Link } from "react-router-dom";
+import { useRouteError, Link, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useTheme } from "@mui/material/styles";
+import { Toast } from "primereact/toast"; 
+import { useRef, useEffect } from "react"; 
 
 export default function Error() {
   const err = useRouteError();
   const theme = useTheme();
+  const toast = useRef(null); 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (toast.current) {
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Expired Token Code 463. Redirecting to login.",
+        life: 3000, 
+      });
+    }
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000); 
+  }, [navigate]);
+
   return (
     <Box
       sx={{
@@ -80,6 +100,7 @@ export default function Error() {
           </Button>
         </Link>
       </Box>
+      <Toast ref={toast} />
     </Box>
   );
 }

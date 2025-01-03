@@ -3,6 +3,7 @@ import { Toast } from "primereact/toast";
 import { BASE_URL, TOKEN } from "../../config/api";
 import { Navbar, Loader } from "../../components/index";
 import { Avatar, Box, Typography, Container, Paper, styled } from "@mui/material";
+import { getCookie } from "../../components/common/utils";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -49,7 +50,7 @@ export default function UserProfile() {
   const [UserData, setUserData] = useState(null)
 
   const fetchUserProfile = () => {
-    const clientId = localStorage.getItem("clientId")
+    const clientId = getCookie("clientId")
     const URL = `${BASE_URL}/admin/login/${clientId}`
     fetch(URL, {
       method: "get",

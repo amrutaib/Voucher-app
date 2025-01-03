@@ -14,6 +14,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { BASE_URL } from '../../config/api';
 import PendingVouchers from './PendingVouchers';
 import ApprovedVouchers from './ApprovedVouchers';
+import { getCookie } from '../../components/common/utils';
 
 export default function Voucher() {
 
@@ -48,8 +49,8 @@ export default function Voucher() {
 
     async function fetchVoucherCount() {
 
-        const TOKEN = localStorage.getItem('token')
-        const clientId = localStorage.getItem('clientId')
+        const TOKEN = getCookie('token')
+        const clientId = getCookie('clientId')
         const URL = `${BASE_URL}/voucher/vouchercount/`
 
         fetch(URL, {

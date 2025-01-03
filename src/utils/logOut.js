@@ -1,5 +1,8 @@
+import { deleteCookie } from "../components/common/utils";
+
 export const logOut = (navigate) => {
-    localStorage.clear();
+    deleteCookie('token');
+    deleteCookie('clientId');
     navigate('/login');
 }
 

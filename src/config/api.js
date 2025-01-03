@@ -1,4 +1,6 @@
-const TOKEN = localStorage.getItem('token')
+import { getCookie } from "../components/common/utils";
+
+const TOKEN = getCookie('token')
 // const BASE_URL = process.env.REACT_APP_BASE_URL;;
 const BASE_URL = "http://100.42.183.101/api";
 const api_routes = {

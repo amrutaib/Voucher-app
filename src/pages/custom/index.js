@@ -19,10 +19,11 @@ import { Box, Typography, FormLabel, Stack, FormControl } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PiWarningOctagonThin } from "react-icons/pi";
 import { useLocation } from "react-router-dom";
+import { getCookie } from "../../components/common/utils";
 
 export default function CustomField() {
   // Client ID
-  const clientId = localStorage.getItem("clientId");
+  const clientId = getCookie("clientId");
 
   // Ref
   const dt = useRef(null);

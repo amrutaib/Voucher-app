@@ -5,13 +5,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from "react-router-dom";
 import { IconButton, Toolbar, Tooltip } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { getCookie } from "../common/utils";
 
 const NavBarHeader = () => {
 
     const theme = useTheme();
     const navigate = useNavigate();
     useEffect(() => {
-        const token = localStorage.getItem('token'); 
+        const token = getCookie('token'); 
         
         if (token && isTokenExpired(token)) {
             logOut(navigate); 
